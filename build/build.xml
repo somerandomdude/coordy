@@ -1,0 +1,49 @@
+<project name="CoordyTasks" basedir=".." default="main">
+	
+	<condition property="FLEX_HOME" value="/Applications/Adobe Flex Builder 3/sdks/3.2.0">
+	        <os family="mac"/>
+	    </condition>
+	    
+	    <condition property="FLEX_HOME" value="${FLEX_HOME_WIN}">
+	        <os family="windows" />
+	    </condition>	
+	
+<taskdef resource="flexTasks.tasks" classpath="${FLEX_HOME}/ant/lib/flexTasks.jar" />
+	<target name="main" depends="clean-asdoc-directory, generate-coordy-docs, clean-swc-directory, coordy-swc-generator" />  
+	
+	
+<!-- =================================
+  target: build SWC  
+  ================================= -->	
+	<target name="coordy-swc-generator">
+	  <property file="build/build.properties" />
+	  <compc output="${basedir}/swc/coordy.swc" target-player="10.0.0">
+	  	<include-sources dir="${basedir}/src/com/somerandomdude/coordy" includes="*" />  	  	
+	  <source-path path-element="${fp10_classes}" />
+	  </compc>
+	  </target>
+	
+	<!-- deletes and recreates the asdoc directory -->  
+	    <target name="clean-asdoc-directory" >  
+	       <delete dir="${basedir}/docs/tres" />
+	       <mkdir  dir="${basedir}/docs/tres" />  
+	    </target>
+
+	<!-- deletes and recreates the swc directory -->  
+	    <target name="clean-swc-directory" >   
+	       <delete dir="${basedir}/swc" />  
+	       <mkdir  dir="${basedir}/swc" />  
+	    </target>
+	
+	<target name="generate-coordy-docs">
+	    <property file="build/build.properties" />
+	    <exec executable="${asdoc}" spawn="false">
+	      <arg line="-doc-sources '${basedir}/src/com/somerandomdude/coordy'
+	                 -output '${docsdir}/coordy'
+	      			 -target-player='10.0.0'
+	                 -main-title 'Coordy AS3 Library'
+	                 -window-title 'Coordy AS3 Library'" />
+	    </exec>
+	  </target>
+	
+</project>
