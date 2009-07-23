@@ -47,8 +47,8 @@ package com.somerandomdude.coordy.layouts.twodee {
 		protected var _order:String;
 		protected var _rows:uint;
 		protected var _columns:uint;
-		protected var _paddingX:uint=0;
-		protected var _paddingY:uint=0;
+		protected var _paddingX:Number=0;
+		protected var _paddingY:Number=0;
 		protected var _columnWidth:Number;
 		protected var _rowHeight:Number;
 		private var _latticeType:String=LatticeType.SQUARE;
@@ -250,6 +250,8 @@ package com.somerandomdude.coordy.layouts.twodee {
 			this._paddingY=vPadding;
 			this._x=x;
 			this._y=y;
+			this._columns=columns;
+			this._rows=rows;
 			this._columnWidth=width/columns;
 			this._rowHeight=height/rows;
 			this._width=width;
@@ -258,6 +260,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 			this._allowOverflow=allowOverflow;
 			this._jitterX=jitterX;
 			this._jitterY=jitterY;
+			
 		}
 		
 		/**
@@ -281,9 +284,11 @@ package com.somerandomdude.coordy.layouts.twodee {
 		override public function addToLayout(object:DisplayObject, moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode2d
 		{
 			if(!_allowOverflow&&size>=_maxCells) return null;
+			
 			var c:uint = (_order==LatticeOrder.ORDER_VERTICALLY) ? (size)%_columns:(size)%Math.floor(((size)/_rows));
 			var r:uint = (_order==LatticeOrder.ORDER_VERTICALLY) ? Math.floor((size)/_columns):(size)%_rows;
 			var node:GridNode = new GridNode(object, c,r);
+			//trace(c,r);
 			node.link=object;
 
 			this.addNode(node);
