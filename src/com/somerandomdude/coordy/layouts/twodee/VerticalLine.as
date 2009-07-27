@@ -150,7 +150,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		* 
 		* @return VerticalLine clone of object
 		*/
-		public function clone():ILayout2d
+		override public function clone():ILayout2d
 		{
 			return new VerticalLine(_target, _vPadding, _x, _y, _jitterX, this._jitterY);
 		}

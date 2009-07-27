@@ -53,7 +53,7 @@ package com.somerandomdude.coordy.utils
 			
 			if(_tweenFunction==null) 
 			{
-				if(layout is ILayout2d) for(i=0; i<layout.size; i++) layout.nodes[i].link.z=0;
+				if(layout is ILayout2d) for(i=0; i<layout.size; i++) if(layout.nodes[i].link.z) layout.nodes[i].link.z=0;
 				layout.updateAndRender();
 				return;
 			}

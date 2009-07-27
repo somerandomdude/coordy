@@ -184,7 +184,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		* 
 		* @return Stack clone of object
 		*/
-		public function clone():ILayout2d
+		override public function clone():ILayout2d
 		{
 			return new Stack(_target, _angle, _offset, _x, _y, _order, _jitterX, _jitterY);
 		}

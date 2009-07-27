@@ -320,7 +320,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		* 
 		* @return Grid3d clone of object
 		*/
-		public function clone():ILayout3d
+		override public function clone():ILayout3d
 		{
 			return new Grid3d(_target, _width, _height, _depth, _columns, _rows, _layers, paddingX, paddingY, paddingZ, _x, _y, _z, _jitterX, _jitterY, _jitterZ);
 		}

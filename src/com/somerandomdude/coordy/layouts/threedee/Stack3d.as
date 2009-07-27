@@ -210,7 +210,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		* 
 		* @return Stack3d clone of object
 		*/
-		public function clone():ILayout3d
+		override public function clone():ILayout3d
 		{
 			return new Stack3d(_target, _angle, _offset, _zOffset, _x, _y, _z, _order, _jitterX, _jitterY, _jitterZ);
 		}

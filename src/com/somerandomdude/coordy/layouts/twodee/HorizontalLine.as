@@ -151,7 +151,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		* 
 		* @return HorizontalLine clone of object
 		*/
-		public function clone():ILayout2d
+		override public function clone():ILayout2d
 		{
 			return new HorizontalLine(_target, _hPadding, _x, _y, _jitterX, _jitterY);
 		}

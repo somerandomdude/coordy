@@ -275,7 +275,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		* 
 		* @return Spheroid3d clone of object
 		*/	
-		public function clone():ILayout3d
+		override public function clone():ILayout3d
 		{
 			return new Spheroid3d(this._target, this._width, this._height, this._depth, this._x, this._y, this._z, this._rotation, this._rotationY, this._rotationZ, this._jitterX, this._jitterY, this._jitterZ);
 		}

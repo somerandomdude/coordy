@@ -101,7 +101,7 @@ THE SOFTWARE.
 		* 
 		* @return Snapshot3d clone of object
 		*/
-		public function clone():ILayout3d
+		override public function clone():ILayout3d
 		{
 			return new Snapshot3d(this._target);
 		}

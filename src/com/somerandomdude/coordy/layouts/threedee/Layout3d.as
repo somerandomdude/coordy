@@ -32,16 +32,17 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
+	import com.somerandomdude.coordy.helpers.SimpleZSorter;
 	import com.somerandomdude.coordy.layouts.ILayout;
 	import com.somerandomdude.coordy.layouts.Layout;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
-
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 
-	public class Layout3d extends Layout implements ILayout
+	public class Layout3d extends Layout implements ILayout3d
 	{
 		protected var _target:DisplayObjectContainer;
 		
@@ -56,8 +57,9 @@ package com.somerandomdude.coordy.layouts.threedee {
 		protected var _jitterY:Number;
 		protected var _jitterZ:Number;
 		
-		protected var _updateMethod:String;
-		protected var _updateFunction:Function;
+		protected var _updateMethod:String=LayoutUpdateMode.AUTO_UPDATE;
+		protected var _updateFunction:Function=invalidate;
+		protected var _autoZSort:Boolean=true;
 		
 		/**
 		 * Accessor for layout target
@@ -65,6 +67,9 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * @return	Display target of layout organizer   
 		 */
 		public function get target():DisplayObjectContainer { return _target; }
+		
+		public function get autoZSort():Boolean { return _autoZSort; }
+		public function set autoZSort(value:Boolean):void { _autoZSort=value; }
 		
 		/**
 		 * Specifies whether layout properties (x, y, width, height, etc.) adjust the layout 
@@ -227,8 +232,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		public function Layout3d(target:DisplayObjectContainer)
 		{
 			this._target=target;
-			(this._target.stage)?this.invalidate():this._target.addEventListener(Event.ADDED_TO_STAGE, targetAddedHandler);
-			this.updateMethod=LayoutUpdateMode.AUTO_UPDATE;
 		}
 		
 		/**
@@ -274,6 +277,17 @@ package com.somerandomdude.coordy.layouts.threedee {
 		}
 		
 		/**
+		* Clones the current object's properties (does not include links to DisplayObjects)
+		* 
+		* @return Wave3d clone of object
+		*/
+		public function clone():ILayout3d
+		{
+			throw(new Error('Method must be overriden by child class'));
+			return null;
+		}
+		
+		/**
 		 * Performs an update on all the nodes' positions and renders each node's corresponding link
 		 * 
 		 */		
@@ -305,6 +319,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 				n = this._nodes[i];
 				n.link.x=n.x, n.link.y=n.y, n.link.z=n.z;
 			}
+			if(_autoZSort) SimpleZSorter.sortLayout(this);
 		}
 		
 		/**
@@ -329,15 +344,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 			}
 			_target.stage.addEventListener(Event.RENDER, renderHandler);
 			_target.stage.invalidate();
-		}
-		
-		/**
-		 * @private 
-		 */	
-		private function targetAddedHandler(event:Event):void
-		{
-			this._target.removeEventListener(Event.ADDED_TO_STAGE, targetAddedHandler);
-			if(LayoutUpdateMode.AUTO_UPDATE) this.invalidate();
 		}
 		
 		/**

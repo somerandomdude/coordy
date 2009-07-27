@@ -32,9 +32,10 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
+	import com.somerandomdude.coordy.helpers.SimpleZSorter;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
 	import com.somerandomdude.coordy.nodes.threedee.ScatterNode3d;
-
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 
@@ -157,6 +158,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 				this._nodes[i].link.z=this._nodes[i].z;
 				this._nodes[i].link.rotationX=this._nodes[i].rotation;
 			}
+			if(_autoZSort) SimpleZSorter.sortLayout(this);
 		}
 		
 		/**

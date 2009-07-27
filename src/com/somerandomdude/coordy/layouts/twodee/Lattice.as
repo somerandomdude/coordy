@@ -344,7 +344,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		* 
 		* @return SquareLatticeOrganizer clone of object
 		*/
-		public function clone():ILayout2d
+		override public function clone():ILayout2d
 		{
 			return new Lattice(_target, _width, _height, _columns, _rows, _allowOverflow, _order, _paddingX, _paddingY, _x, _y, _jitterX, _jitterY);
 		}
