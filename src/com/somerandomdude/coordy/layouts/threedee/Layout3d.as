@@ -68,6 +68,14 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 */
 		public function get target():DisplayObjectContainer { return _target; }
 		
+		/**
+		 * Specifies whether layout's nodes automatically z-sorted during the render cycle
+		 *
+		 * @see com.somerandomdude.coordy.helpers.SimpleZSorter
+		 * @see #render()
+		 * 
+		 * @return  Current setting of auto-adjust (defaults to false)   
+		 */
 		public function get autoZSort():Boolean { return _autoZSort; }
 		public function set autoZSort(value:Boolean):void { _autoZSort=value; }
 		

@@ -229,6 +229,8 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * Updates the nodes' virtual coordinates. <strong>Note</strong> - this method does not update
 		 * the actual objects linked to the layout.
 		 * 
+		 * Much of the code in this method was scooped up at http://reflektions.com/miniml/template_permalink.asp?id=293
+		 * 
 		 */			
 		override public function update():void
 		{
@@ -247,27 +249,21 @@ package com.somerandomdude.coordy.layouts.threedee {
 				c.x=(this._verts[i].x*this._width/2);
 				c.y=(this._verts[i].y*this._height/2);
 				c.z=(this._verts[i].z*this._depth/2);
-				
-				
-				//--> rotate around y-axis				
+						
 				var tempX:Number = (c.x * Math.cos(rY)) - (c.z * Math.sin(rY));
 				var tempZ:Number = (c.x * Math.sin(rY)) + (c.z * Math.cos(rY));
-		
-				//--> rotate around x-axis		
+			
 				var dz:Number	 =  (tempZ * Math.cos(rX)) - (c.y * Math.sin(rX));
 				var tempY:Number =  (tempZ * Math.sin(rX)) + (c.y * Math.cos(rX));
 		
-				//--> rotate around z-axis
 				var dx:Number	=  (tempX * Math.cos(rZ)) + (tempY * Math.sin(rZ));
 				var dy:Number	=  (tempY * Math.cos(rZ)) - (tempX * Math.sin(rZ));
 				
 				c.x=(_x)+dx+(c.jitterX*this._jitterX);
 				c.y=(_y)+dy+(c.jitterY*this._jitterY);
 				c.z=(_z)+dz+(c.jitterZ*this._jitterZ);
-				
-				
+
 			}
-			
 		}
 		
 		/**
