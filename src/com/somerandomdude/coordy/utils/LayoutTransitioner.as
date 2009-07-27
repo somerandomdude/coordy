@@ -29,7 +29,6 @@ package com.somerandomdude.coordy.utils
 {
 	import com.somerandomdude.coordy.layouts.ILayout;
 	import com.somerandomdude.coordy.layouts.twodee.ILayout2d;
-	import com.somerandomdude.coordy.nodes.INode;
 	
 	public class LayoutTransitioner
 	{

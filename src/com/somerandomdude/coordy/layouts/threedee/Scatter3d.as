@@ -207,7 +207,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		* 
 		* @return ScatterOrganizer clone of object
 		*/
-		public function clone():ILayout3d
+		override public function clone():ILayout3d
 		{
 			return new Scatter3d(_target, _width, _height, _depth, _jitter, _x, _y, _z, _jitterRotation);
 		}
