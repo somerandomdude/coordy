@@ -61,6 +61,8 @@ import flash.display.Shape;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFieldAutoSize;
+import flash.text.engine.Kerning;
+import flash.text.AntiAliasType;
 
 internal class Square extends Shape
 {
@@ -68,7 +70,7 @@ internal class Square extends Shape
 	{
 		graphics.lineStyle(1);
 		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(0, 0, 20, 20);
+		graphics.drawRect(-10, -10, 20, 20);
 		graphics.endFill();
 	}
 }
@@ -82,8 +84,10 @@ internal class Text extends TextField
 		_format = new TextFormat();
 		_format.font='Arial';
 		_format.size=11;
+		_format.kerning=Kerning.ON;
 	
 		textColor=0x333333;
+		antiAliasType=AntiAliasType.ADVANCED;
 		wordWrap=true;
 		multiline=true;
 		autoSize=TextFieldAutoSize.LEFT;

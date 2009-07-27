@@ -36,6 +36,10 @@ package
 		{
 			_size=60;
 			
+			/* 
+			* For explanations on basic setup and adding items to the layout, refer to the
+			* 'AddChildren' and/or 'AddToLayout' example clases.
+			*/
 			_stack = new Stack(this, 135, 6, 350, 50);
 			_verticalLine = new VerticalLine(this, 3, 200, 0);
 			_horizontalLine = new HorizontalLine(this, 3, 0, 200);
@@ -145,6 +149,8 @@ import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFieldAutoSize;
+import flash.text.engine.Kerning;
+import flash.text.AntiAliasType;
 
 internal class LayoutButton extends Sprite
 {
@@ -194,7 +200,7 @@ internal class Square extends Shape
 	{
 		graphics.lineStyle(1);
 		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(0, 0, 20, 20);
+		graphics.drawRect(-10, -10, 20, 20);
 		graphics.endFill();
 	}
 }
@@ -208,8 +214,10 @@ internal class Text extends TextField
 		_format = new TextFormat();
 		_format.font='Arial';
 		_format.size=11;
+		_format.kerning=Kerning.ON;
 	
 		textColor=0x333333;
+		antiAliasType=AntiAliasType.ADVANCED;
 		wordWrap=true;
 		multiline=true;
 		autoSize=TextFieldAutoSize.LEFT;

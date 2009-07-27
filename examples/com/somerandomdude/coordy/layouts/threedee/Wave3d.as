@@ -32,10 +32,11 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
+	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.constants.WaveFunction;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
 	import com.somerandomdude.coordy.nodes.threedee.Node3d;
-
+	
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 
@@ -52,6 +53,36 @@ package com.somerandomdude.coordy.layouts.threedee {
 		
 		private static const PI:Number = Math.PI;
 		private static const PI_180:Number = PI/180;
+		
+		private var _alignType:String;
+		private var _alignAngleOffset:Number;
+		
+		/**
+		 * The additional angle offset of each node from it's original path-aligned angle (in degrees)
+		 * @return Angle in degrees
+		 * 
+		 */		
+		public function get alignAngleOffset():Number { return this._alignAngleOffset; }
+		public function set alignAngleOffset(value:Number):void
+		{
+			this._alignAngleOffset=value;
+			this._updateFunction();
+		}
+		
+		/**
+		 * The type of path alignment each node executes (parallel or perpendicular)
+		 * 
+		 * @see com.somerandomdude.coordy.layouts.PathAlignType
+		 * 
+		 * @return String value of the path alignment type
+		 * 
+		 */	
+		public function get alignType():String { return this._alignType; }
+		public function set alignType(value:String):void
+		{
+			this._alignType=value;
+			this._updateFunction();
+		}
 
 		/**
 		 * Mutator/accessor for waveFunctionY property
@@ -201,7 +232,9 @@ package com.somerandomdude.coordy.layouts.threedee {
 							waveFunctionZ:String=WaveFunction.COSINE,
 							jitterX:Number=0, 
 							jitterY:Number=0, 
-							jitterZ:Number=0):void
+							jitterZ:Number=0,
+							alignType:String=PathAlignType.ALIGN_PERPENDICULAR, 
+							alignOffset:Number=0):void
 		{
 			super(target);
 			this._width=width;
@@ -216,6 +249,8 @@ package com.somerandomdude.coordy.layouts.threedee {
 			this._frequency=frequency;
 			this.waveFunctionY=waveFunctionY;
 			this.waveFunctionZ=waveFunctionZ;
+			this._alignType=alignType;
+			this.alignAngleOffset=alignOffset;
 		}
 		
 		/**
@@ -267,13 +302,37 @@ package com.somerandomdude.coordy.layouts.threedee {
 		{
 			var c:Node3d;
 			var r:Number = this._rotation*PI_180;
-			
+			trace((_functionY==Math.sin));
 			for(var i:int=0; i<this._size; i++)
 			{
 				c = this._nodes[i];
 				c.x = (i*(this._width/this._size))+_x+(c.jitterX*this._jitterX);
 				c.y = ((_functionY((Math.PI*(i+1)/(this._size/2)+r)*_frequency)*((this._height+(_heightMultiplier*i))/2)))+_y+(c.jitterY*this._jitterY);
 				c.z = ((_functionZ((Math.PI*(i+1)/(this._size/2)+r)*_frequency)*((this._depth+(_depthMultiplier*i))/2)))+_z+(c.jitterZ*this._jitterZ);
+			
+				if(_functionY==Math.sin) c.rotation = Math.cos(PI*(i+1)/(_size/2)*_frequency)*180/PI;
+				else if(_functionY==Math.cos) c.rotation = Math.sin(PI*(i+1)/(_size/2)*_frequency)*180/PI;
+				else c.rotation = 0;
+				
+				if(this._alignType==PathAlignType.ALIGN_PERPENDICULAR) c.rotation+=90; 
+				c.rotation+=this._alignAngleOffset;
+			}
+		}
+		
+		/**
+		 * Applies all layout property values to all cells/display objects in the collection
+		 *
+		 */
+		override public function render():void
+		{
+			var c:Node3d;
+			for(var i:int=0; i<this._size; i++)
+			{
+				c=this._nodes[i];
+				c.link.x=c.x;
+				c.link.y=c.y;
+				c.link.z=c.z;
+				c.link.rotation=(this._alignType==PathAlignType.NONE)?0:c.rotation;
 			}
 		}
 

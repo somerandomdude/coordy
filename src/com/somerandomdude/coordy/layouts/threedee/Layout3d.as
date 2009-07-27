@@ -57,7 +57,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		protected var _jitterY:Number;
 		protected var _jitterZ:Number;
 		
-		protected var _updateMethod:String=LayoutUpdateMode.AUTO_UPDATE;
+		protected var _updateMethod:String=LayoutUpdateMode.UPDATE_AND_RENDER;
 		protected var _updateFunction:Function=invalidate;
 		protected var _autoZSort:Boolean=true;
 		
@@ -85,10 +85,10 @@ package com.somerandomdude.coordy.layouts.threedee {
 			this._updateMethod = value; 
 			switch(value)
 			{
-				case LayoutUpdateMode.MANUAL_UPDATE:
+				case LayoutUpdateMode.NONE:
 					this._updateFunction=function():void {};
 					break;
-				case LayoutUpdateMode.SEMI_AUTO_UPDATE:
+				case LayoutUpdateMode.UPDATE_ONLY:
 					this._updateFunction=update;
 					break;
 				default :
@@ -351,7 +351,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 */	
 		private function renderHandler(event:Event):void
 		{
-			if(_updateMethod==LayoutUpdateMode.AUTO_UPDATE) {
+			if(_updateMethod==LayoutUpdateMode.UPDATE_AND_RENDER) {
 				this._target.stage.removeEventListener(Event.RENDER, renderHandler);
 				this.update();
 				this.render();				

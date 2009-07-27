@@ -36,17 +36,17 @@ THE SOFTWARE.
 		/**
 		 * 
 		 */		
-		public static const MANUAL_UPDATE:String="updateManual";
+		public static const NONE:String="none";
 		
 		/**
 		 * 
 		 */		
-		public static const SEMI_AUTO_UPDATE:String="updateSemiAuto";
+		public static const UPDATE_ONLY:String="updateOnly";
 		
 		/**
 		 * 
 		 */		
-		public static const AUTO_UPDATE:String="updateAuto";
+		public static const UPDATE_AND_RENDER:String="updateAndRender";
 
 	}
 }
