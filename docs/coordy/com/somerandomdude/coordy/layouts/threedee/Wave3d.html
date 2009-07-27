@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print">
-<meta content="Wave3d,com.somerandomdude.coordy.layouts.threedee.Wave3d,depthMultiplier,frequency,heightMultiplier,waveFunctionY,waveFunctionZ,addToLayout,clone,toString,update" name="keywords">
+<meta content="Wave3d,com.somerandomdude.coordy.layouts.threedee.Wave3d,alignAngleOffset,alignType,depthMultiplier,frequency,heightMultiplier,waveFunctionY,waveFunctionZ,addToLayout,clone,render,toString,update" name="keywords">
 <title>com.somerandomdude.coordy.layouts.threedee.Wave3d</title>
 </head>
 <body>
@@ -63,6 +63,25 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#alignAngleOffset">alignAngleOffset</a> : Number<div class="summaryTableDescription">
+   The additional angle offset of each node from it's original path-aligned angle (in degrees)
+   </div>
+</td><td class="summaryTableOwnerCol">Wave3d</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#alignType">alignType</a> : String<div class="summaryTableDescription">
+   The type of path alignment each node executes (parallel or perpendicular)
+   
+   </div>
+</td><td class="summaryTableOwnerCol">Wave3d</td>
+</tr>
+<tr class="hideInheritedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout3d.html#autoZSort">autoZSort</a> : Boolean<div class="summaryTableDescription">
+   Specifies whether layout's nodes automatically z-sorted during the render cycle
+      </div>
+</td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
 </tr>
 <tr class="hideInheritedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout3d.html#depth">depth</a> : Number<div class="summaryTableDescription">
@@ -196,6 +215,10 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="hideInheritedProtectedProperty">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout3d.html#_autoZSort">_autoZSort</a> : Boolean = true<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
+</tr>
+<tr class="hideInheritedProtectedProperty">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout3d.html#_depth">_depth</a> : Number<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
 </tr>
@@ -236,7 +259,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
 </tr>
 <tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout3d.html#_updateMethod">_updateMethod</a> : String<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout3d.html#_updateMethod">_updateMethod</a> : String = "updateAndRender"<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
 </tr>
 <tr class="hideInheritedProtectedProperty">
@@ -275,7 +298,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#Wave3d()">Wave3d</a>(target:DisplayObjectContainer, width:Number, height:Number, depth:Number, x:Number = 0, y:Number = 0, z:Number = 0, frequency:Number = 1, waveFunctionY:String, waveFunctionZ:String, jitterX:Number = 0, jitterY:Number = 0, jitterZ:Number = 0)</div>
+<a class="signatureLink" href="#Wave3d()">Wave3d</a>(target:DisplayObjectContainer, width:Number, height:Number, depth:Number, x:Number = 0, y:Number = 0, z:Number = 0, frequency:Number = 1, waveFunctionY:String, waveFunctionZ:String, jitterX:Number = 0, jitterY:Number = 0, jitterZ:Number = 0, alignType:String, alignOffset:Number = 0)</div>
 <div class="summaryTableDescription">
    Distributes nodes in a 3d wave.</div>
 </td><td class="summaryTableOwnerCol">Wave3d</td>
@@ -383,14 +406,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
       </div>
 </td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
 </tr>
-<tr class="hideInheritedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="Layout3d.html#render()">render</a>():void</div>
+<a class="signatureLink" href="#render()">render</a>():void</div>
 <div class="summaryTableDescription">
-   Renders all layout property values to all objects in the collection
+   Applies all layout property values to all cells/display objects in the collection
       </div>
-</td><td class="summaryTableOwnerCol"><a href="Layout3d.html">Layout3d</a></td>
+</td><td class="summaryTableOwnerCol">Wave3d</td>
 </tr>
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
@@ -497,10 +520,47 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="alignAngleOffset"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">alignAngleOffset</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>alignAngleOffset:Number</code>&nbsp;&nbsp;[read-write]<p>
+   The additional angle offset of each node from it's original path-aligned angle (in degrees)
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get alignAngleOffset():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set alignAngleOffset(value:Number):void</code>
+<br>
+</div>
+<a name="alignType"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">alignType</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>alignType:String</code>&nbsp;&nbsp;[read-write]<p>
+   The type of path alignment each node executes (parallel or perpendicular)
+   
+   </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get alignType():String</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set alignType(value:String):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">com.somerandomdude.coordy.layouts.PathAlignType</div>
+</div>
 <a name="depthMultiplier"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">depthMultiplier</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">depthMultiplier</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
@@ -586,7 +646,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function Wave3d(target:DisplayObjectContainer, width:Number, height:Number, depth:Number, x:Number = 0, y:Number = 0, z:Number = 0, frequency:Number = 1, waveFunctionY:String, waveFunctionZ:String, jitterX:Number = 0, jitterY:Number = 0, jitterZ:Number = 0)</code><p>
+<code>public function Wave3d(target:DisplayObjectContainer, width:Number, height:Number, depth:Number, x:Number = 0, y:Number = 0, z:Number = 0, frequency:Number = 1, waveFunctionY:String, waveFunctionZ:String, jitterX:Number = 0, jitterY:Number = 0, jitterZ:Number = 0, alignType:String, alignOffset:Number = 0)</code><p>
    Distributes nodes in a 3d wave.
    
    </p><span class="label">Parameters</span>
@@ -680,6 +740,18 @@ showHideInherited();
    
    </td>
 </tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">alignType</span>:String</code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">alignOffset</span>:Number</code> (default = <code>0</code>)<code></code></td>
+</tr>
 </table>
 </div>
 <a name="methodDetail"></a>
@@ -734,7 +806,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function clone():<a href="../threedee/ILayout3d.html">ILayout3d</a></code><p>
+<code>public override function clone():<a href="../threedee/ILayout3d.html">ILayout3d</a></code><p>
   Clones the current object's properties (does not include links to DisplayObjects)
   
   </p><p></p>
@@ -749,6 +821,16 @@ showHideInherited();
 </tr>
 </table>
 </div>
+<a name="render()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">render</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function render():void</code><p>
+   Applies all layout property values to all cells/display objects in the collection
+      </p></div>
 <a name="toString()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="LayoutUpdateMode,com.somerandomdude.coordy.constants.LayoutUpdateMode,AUTO_UPDATE,MANUAL_UPDATE,SEMI_AUTO_UPDATE" name="keywords">
+<meta content="LayoutUpdateMode,com.somerandomdude.coordy.constants.LayoutUpdateMode,NONE,UPDATE_AND_RENDER,UPDATE_ONLY" name="keywords">
 <title>com.somerandomdude.coordy.constants.LayoutUpdateMode</title>
 </head>
 <body>
@@ -51,21 +51,20 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Constant</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#AUTO_UPDATE">AUTO_UPDATE</a> : String = "updateAuto"<div class="summaryTableDescription">[static]
-   
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#NONE">NONE</a> : String = "none"<div class="summaryTableDescription">[static]
+   No update or render occurs when layout properties are changed.</div>
+</td><td class="summaryTableOwnerCol">LayoutUpdateMode</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#UPDATE_AND_RENDER">UPDATE_AND_RENDER</a> : String = "updateAndRender"<div class="summaryTableDescription">[static]
+   The layout is updated and rendered whenever a property is changed
    </div>
 </td><td class="summaryTableOwnerCol">LayoutUpdateMode</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#MANUAL_UPDATE">MANUAL_UPDATE</a> : String = "updateManual"<div class="summaryTableDescription">[static]
-   
-   </div>
-</td><td class="summaryTableOwnerCol">LayoutUpdateMode</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#SEMI_AUTO_UPDATE">SEMI_AUTO_UPDATE</a> : String = "updateSemiAuto"<div class="summaryTableDescription">[static]
-   
-   </div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#UPDATE_ONLY">UPDATE_ONLY</a> : String = "updateOnly"<div class="summaryTableDescription">[static]
+   The layout's <em>update()</em> method is called when layout properties are changed - which only updates 
+   each node's virtual coordinates, but not the actual DisplayObjects' coordinates.</div>
 </td><td class="summaryTableOwnerCol">LayoutUpdateMode</td>
 </tr>
 </table>
@@ -77,35 +76,37 @@ showHideInherited();
 <div class="MainContent">
 <a name="constantDetail"></a>
 <div class="detailSectionHeader">Constant detail</div>
-<a name="AUTO_UPDATE"></a>
+<a name="NONE"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">AUTO_UPDATE</td><td class="detailHeaderType">constant</td>
+<td class="detailHeaderName">NONE</td><td class="detailHeaderType">constant</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public static const AUTO_UPDATE:String = "updateAuto"</code><p>
-   
+<code>public static const NONE:String = "none"</code><p>
+   No update or render occurs when layout properties are changed. The layout's <em>updateAndRender()</em>
+   must be called for updating/rendering to occur.
    </p></div>
-<a name="MANUAL_UPDATE"></a>
+<a name="UPDATE_AND_RENDER"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">MANUAL_UPDATE</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">UPDATE_AND_RENDER</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public static const MANUAL_UPDATE:String = "updateManual"</code><p>
-   
+<code>public static const UPDATE_AND_RENDER:String = "updateAndRender"</code><p>
+   The layout is updated and rendered whenever a property is changed
    </p></div>
-<a name="SEMI_AUTO_UPDATE"></a>
+<a name="UPDATE_ONLY"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">SEMI_AUTO_UPDATE</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
+<td class="detailHeaderName">UPDATE_ONLY</td><td class="detailHeaderType">constant</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
-<code>public static const SEMI_AUTO_UPDATE:String = "updateSemiAuto"</code><p>
-   
+<code>public static const UPDATE_ONLY:String = "updateOnly"</code><p>
+   The layout's <em>update()</em> method is called when layout properties are changed - which only updates 
+   each node's virtual coordinates, but not the actual DisplayObjects' coordinates.
    </p></div>
 <br>
 <br>

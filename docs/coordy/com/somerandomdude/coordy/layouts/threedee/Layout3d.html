@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print">
-<meta content="Layout3d,com.somerandomdude.coordy.layouts.threedee.Layout3d,_depth,_height,_jitterX,_jitterY,_jitterZ,_rotation,_target,_updateFunction,_updateMethod,_width,_x,_y,_z,depth,height,jitterX,jitterY,jitterZ,rotation,target,updateMethod,width,x,y,z,addChildren,addToLayout,invalidate,removeNode,render,renderNode,update,updateAndRender" name="keywords">
+<meta content="Layout3d,com.somerandomdude.coordy.layouts.threedee.Layout3d,_autoZSort,_depth,_height,_jitterX,_jitterY,_jitterZ,_rotation,_target,_updateFunction,_updateMethod,_width,_x,_y,_z,autoZSort,depth,height,jitterX,jitterY,jitterZ,rotation,target,updateMethod,width,x,y,z,addChildren,addToLayout,clone,invalidate,removeNode,render,renderNode,update,updateAndRender" name="keywords">
 <title>com.somerandomdude.coordy.layouts.threedee.Layout3d</title>
 </head>
 <body>
@@ -41,7 +41,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Layout3d <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../images/inherit-arrow.gif"> <a href="../Layout.html">Layout</a></td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Implements</td><td><a href="../ILayout.html">ILayout</a></td>
+<td class="classHeaderTableLabel">Implements</td><td><a href="ILayout3d.html">ILayout3d</a></td>
 </tr>
 <tr>
 <td class="classHeaderTableLabel">Subclasses</td><td><a href="../threedee/Ellipse3d.html">Ellipse3d</a>, <a href="../threedee/Grid3d.html">Grid3d</a>, <a href="../threedee/Scatter3d.html">Scatter3d</a>, <a href="../threedee/Snapshot3d.html">Snapshot3d</a>, <a href="../threedee/Spheroid3d.html">Spheroid3d</a>, <a href="../threedee/Stack3d.html">Stack3d</a>, <a href="../threedee/Wave3d.html">Wave3d</a>, <a href="../threedee/WaveEllipse3d.html">WaveEllipse3d</a></td>
@@ -66,6 +66,12 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <table id="summaryTableProperty" class="summaryTable " cellpadding="3" cellspacing="0">
 <tr>
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#autoZSort">autoZSort</a> : Boolean<div class="summaryTableDescription">
+   Specifies whether layout's nodes automatically z-sorted during the render cycle
+      </div>
+</td><td class="summaryTableOwnerCol">Layout3d</td>
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#depth">depth</a> : Number<div class="summaryTableDescription">
@@ -169,6 +175,10 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_autoZSort">_autoZSort</a> : Boolean = true<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">Layout3d</td>
+</tr>
+<tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_depth">_depth</a> : Number<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Layout3d</td>
 </tr>
@@ -209,7 +219,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol">Layout3d</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_updateMethod">_updateMethod</a> : String<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_updateMethod">_updateMethod</a> : String = "updateAndRender"<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Layout3d</td>
 </tr>
 <tr class="">
@@ -279,6 +289,17 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </div>
 <div class="summaryTableDescription">
    Adds DisplayObject to layout in next available position.</div>
+</td><td class="summaryTableOwnerCol">Layout3d</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#clone()">clone</a>():<a href="../threedee/ILayout3d.html">ILayout3d</a>
+</div>
+<div class="summaryTableDescription">
+  Clones the current object's properties (does not include links to DisplayObjects)
+  
+  </div>
 </td><td class="summaryTableOwnerCol">Layout3d</td>
 </tr>
 <tr class="hideInheritedMethod">
@@ -455,10 +476,43 @@ showHideInherited();
 <div class="MainContent">
 <a name="propertyDetail"></a>
 <div class="detailSectionHeader">Property detail</div>
+<a name="_autoZSort"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">_autoZSort</td><td class="detailHeaderType">property</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected var _autoZSort:Boolean = true</code>
+</div>
+<a name="autoZSort"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">autoZSort</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>autoZSort:Boolean</code>&nbsp;&nbsp;[read-write]<p>
+   Specifies whether layout's nodes automatically z-sorted during the render cycle
+      </p><span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get autoZSort():Boolean</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set autoZSort(value:Boolean):void</code>
+<br>
+<p>
+<span class="label">See also</span>
+</p>
+<div class="seeAlso">
+<a href="../../helpers/SimpleZSorter.html" target="">com.somerandomdude.coordy.helpers.SimpleZSorter</a>
+<br>
+<a href="../threedee/Layout3d.html#render()" target="">render()</a>
+</div>
+</div>
 <a name="_depth"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
-<td class="detailHeaderName">_depth</td><td class="detailHeaderType">property</td>
+<td class="detailHeaderName">_depth</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
 </tr>
 </table>
 <div class="detailBody">
@@ -651,7 +705,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var _updateMethod:String</code>
+<code>protected var _updateMethod:String = "updateAndRender"</code>
 </div>
 <a name="updateMethod"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -854,6 +908,28 @@ showHideInherited();
 <td width="20"></td><td><code><a href="../../nodes/threedee/INode3d.html">INode3d</a></code> &mdash; 
                         newly created node object containing a link to the object
    
+                        
+                     </td>
+</tr>
+</table>
+</div>
+<a name="clone()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">clone</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function clone():<a href="../threedee/ILayout3d.html">ILayout3d</a></code><p>
+  Clones the current object's properties (does not include links to DisplayObjects)
+  
+  </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code><a href="../threedee/ILayout3d.html">ILayout3d</a></code> &mdash; 
+                        Wave3d clone of object
+  
                         
                      </td>
 </tr>

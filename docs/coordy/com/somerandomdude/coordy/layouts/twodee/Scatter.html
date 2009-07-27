@@ -192,7 +192,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="Layout2d.html">Layout2d</a></td>
 </tr>
 <tr class="hideInheritedProtectedProperty">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout2d.html#_updateMethod">_updateMethod</a> : String<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol"><a class="signatureLink" href="Layout2d.html#_updateMethod">_updateMethod</a> : String = "updateAndRender"<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="Layout2d.html">Layout2d</a></td>
 </tr>
 <tr class="hideInheritedProtectedProperty">
@@ -227,7 +227,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#Scatter()">Scatter</a>(target:DisplayObjectContainer, width:Number, height:Number, jitter:Number = 1, x:Number = 0, y:Number = 0, jitterRotation:Boolean = false)</div>
+<a class="signatureLink" href="#Scatter()">Scatter</a>(target:DisplayObjectContainer, width:Number, height:Number, x:Number = 0, y:Number = 0, jitter:Number = 1, jitterRotation:Boolean = false)</div>
 <div class="summaryTableDescription">
    Distributes nodes in a scattered fashion.</div>
 </td><td class="summaryTableOwnerCol">Scatter</td>
@@ -499,7 +499,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function Scatter(target:DisplayObjectContainer, width:Number, height:Number, jitter:Number = 1, x:Number = 0, y:Number = 0, jitterRotation:Boolean = false)</code><p>
+<code>public function Scatter(target:DisplayObjectContainer, width:Number, height:Number, x:Number = 0, y:Number = 0, jitter:Number = 1, jitterRotation:Boolean = false)</code><p>
    Distributes nodes in a scattered fashion.
    
    </p><span class="label">Parameters</span>
@@ -526,21 +526,21 @@ showHideInherited();
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">jitter</span>:Number</code> (default = <code>1</code>)<code></code> &mdash;   Jitter multiplier of scatter
+<td width="20px"></td><td><code><span class="label">x</span>:Number</code> (default = <code>0</code>)<code></code> &mdash;   Jitter multiplier of scatter
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">x</span>:Number</code> (default = <code>0</code>)<code></code> &mdash;     x position of the scatter
+<td width="20px"></td><td><code><span class="label">y</span>:Number</code> (default = <code>0</code>)<code></code> &mdash;     x position of the scatter
    </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">y</span>:Number</code> (default = <code>0</code>)<code></code> &mdash;     y position of the scatter
+<td width="20px"></td><td><code><span class="label">jitter</span>:Number</code> (default = <code>1</code>)<code></code> &mdash;     y position of the scatter
    </td>
 </tr>
 <tr>
@@ -605,7 +605,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function clone():<a href="../twodee/ILayout2d.html">ILayout2d</a></code><p>
+<code>public override function clone():<a href="../twodee/ILayout2d.html">ILayout2d</a></code><p>
   Clones the current object's properties (does not include links to DisplayObjects)
   
   </p><p></p>
