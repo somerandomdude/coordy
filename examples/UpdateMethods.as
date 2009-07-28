@@ -44,7 +44,7 @@ package
 			stage.addEventListener(MouseEvent.CLICK, clickHandler);
 			
 			_caption = new Text();
-			_caption.text='A basic example of tweening a layout\'s properties. Click anywhere to tween the layout randomly';
+			_caption.text='Am example of how to use different layout updating methods. See source code of UpdateMethods.as for details';
 			_caption.y=400;
 			addChild(_caption);
 			
@@ -83,9 +83,9 @@ package
 			
 			var x:Number=Math.random()*50+175;
 			var y:Number=Math.random()*50+175;
-			var width:Number=200+Math.random()*200;
-			var height:Number=200+Math.random()*200;
-			var depth:Number=200+Math.random()*200;
+			var width:Number=100+Math.random()*200;
+			var height:Number=100+Math.random()*200;
+			var depth:Number=100+Math.random()*200;
 			var rotationX:Number=Math.random()*360;
 			var rotationY:Number=Math.random()*360;
 			var rotationZ:Number=Math.random()*360;
@@ -113,9 +113,9 @@ package
 			
 			var x:Number=Math.random()*50+175;
 			var y:Number=Math.random()*50+175;
-			var width:Number=200+Math.random()*200;
-			var height:Number=200+Math.random()*200;
-			var depth:Number=200+Math.random()*200;
+			var width:Number=100+Math.random()*200;
+			var height:Number=100+Math.random()*200;
+			var depth:Number=100+Math.random()*200;
 			var rotationX:Number=Math.random()*360;
 			var rotationY:Number=Math.random()*360;
 			var rotationZ:Number=Math.random()*360;
@@ -147,9 +147,9 @@ package
 			
 			var x:Number=Math.random()*50+175;
 			var y:Number=Math.random()*50+175;
-			var width:Number=200+Math.random()*200;
-			var height:Number=200+Math.random()*200;
-			var depth:Number=200+Math.random()*200;
+			var width:Number=100+Math.random()*200;
+			var height:Number=100+Math.random()*200;
+			var depth:Number=100+Math.random()*200;
 			var rotationX:Number=Math.random()*360;
 			var rotationY:Number=Math.random()*360;
 			var rotationZ:Number=Math.random()*360;

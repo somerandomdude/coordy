@@ -34,6 +34,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.constants.WaveFunction;
+	import com.somerandomdude.coordy.helpers.SimpleZSorter;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
 	import com.somerandomdude.coordy.nodes.threedee.Node3d;
 	
@@ -337,6 +338,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 				c.link.z=c.z;
 				c.link.rotation=(this._alignType==PathAlignType.NONE)?0:c.rotation;
 			}
+			if(_autoZSort) SimpleZSorter.sortLayout(this);
 		}
 
 	}

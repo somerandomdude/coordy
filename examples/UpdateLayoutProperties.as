@@ -27,7 +27,7 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_wave = new Wave(this, 300, 300, 150, 150);
+			_wave = new Wave(this, 360, 360, 20, 200);
 			
 			var s:Square;
 			for(var i:int=0; i<100; i++)

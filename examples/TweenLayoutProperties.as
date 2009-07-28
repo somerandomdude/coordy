@@ -31,7 +31,7 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_wave3d = new Wave3d(this, 300, 300, 300);
+			_wave3d = new Wave3d(this, 400, 300, 300);
 			
 			/*
 			 * Wave layouts are centered along the middle y axis of the wave. So setting the layout to 
