@@ -50,7 +50,7 @@ package
 			stage.addEventListener(MouseEvent.CLICK, clickHandler);
 			
 			_caption = new Text();
-			_caption.text='A basic example of changing a layout\'s properties. Click anywhere to tween the layout randomly';
+			_caption.text='An example of data exporting for a layout\'s properties (in this case JSON format). Data can be exported in XML or JSON format. Click anywhere to update layout.';
 			_caption.y=400;
 			addChild(_caption);
 		
