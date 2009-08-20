@@ -38,12 +38,12 @@ package com.somerandomdude.coordy.nodes.threedee
 	
 	public class Node3d extends Node implements INode3d
 	{
-		protected var _x:Number;
-		protected var _y:Number;
-		protected var _jitterX:Number;
-		protected var _jitterY:Number;
-		protected var _z:Number;
-		protected var _jitterZ:Number;
+		protected var _x:Number=0;
+		protected var _y:Number=0;
+		protected var _jitterX:Number=0;
+		protected var _jitterY:Number=0;
+		protected var _z:Number=0;
+		protected var _jitterZ:Number=0;
 		protected var _rotation:Number=0;
 		
 		/**
@@ -145,6 +145,16 @@ package com.somerandomdude.coordy.nodes.threedee
 			var n:Node3d = new Node3d(link, x, y, z, jitterX, jitterY, jitterZ);
 			n.rotation=_rotation;
 			return n; 
+		}
+		
+		/**
+		 * Packages the node as a generic object - mainly used for exporting layout data.
+		 *
+		 * @return Generic object containing all the node's layout properties
+		*/
+		override public function toObject():Object
+		{
+			return {x:_x, y:_y, z:_z, rotation:_rotation};
 		}
 
 	}

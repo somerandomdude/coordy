@@ -58,7 +58,6 @@ package
 			_caption.text='A basic example of populating a layout with the \'addChildren()\' method';
 			_caption.y=400;
 			addChild(_caption);
-			
 		}
 
 	}

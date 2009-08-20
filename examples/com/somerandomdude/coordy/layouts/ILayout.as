@@ -50,6 +50,8 @@ package com.somerandomdude.coordy.layouts
 		function render():void;
 		
 		function toString():String;
+		function toJSON():String;
+		function toXML():XML;
 		
 	}
 }

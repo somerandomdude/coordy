@@ -75,5 +75,15 @@ package com.somerandomdude.coordy.nodes.twodee
 		 */	
 		override public function clone():INode2d { return new OrderedNode(_link, _order, _x, _y, _jitterX, _jitterY); }
 		
+		/**
+		 * Packages the node as a generic object - mainly used for exporting layout data.
+		 *
+		 * @return Generic object containing all the node's layout properties
+		*/	
+		override public function toObject():Object
+		{
+			return {order:_order, x:_x, y:_y, rotation:_rotation};
+		}
+		
 	}
 }

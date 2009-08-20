@@ -38,5 +38,7 @@ package com.somerandomdude.coordy.nodes
 	{
 		function get link():DisplayObject
 		function set link(value:DisplayObject):void;
+		
+		function toObject():Object;
 	}
 }

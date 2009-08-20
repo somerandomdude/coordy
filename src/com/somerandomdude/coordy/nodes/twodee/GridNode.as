@@ -84,5 +84,15 @@ package com.somerandomdude.coordy.nodes.twodee
 		 * 
 		 */	
 		override public function clone():INode2d { return new GridNode(_link, _column, _row, _x, _y, _jitterX, _jitterY); }
+		
+		/**
+		 * Packages the node as a generic object - mainly used for exporting layout data.
+		 *
+		 * @return Generic object containing all the node's layout properties
+		*/
+		override public function toObject():Object
+		{
+			return {row:_row, column:_column, x:_x, y:_y, rotation:_rotation};
+		}
 	}
 }

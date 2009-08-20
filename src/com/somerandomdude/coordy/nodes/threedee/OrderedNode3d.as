@@ -80,5 +80,15 @@ package com.somerandomdude.coordy.nodes.threedee
 			return n; 
 		}
 		
+		/**
+		 * Packages the node as a generic object - mainly used for exporting layout data.
+		 *
+		 * @return Generic object containing all the node's layout properties
+		*/
+		override public function toObject():Object
+		{
+			return {order:_order, x:_x, y:_y, z:_z, rotation:_rotation};
+		}
+		
 	}
 }

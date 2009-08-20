@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print">
-<meta content="Node2d,com.somerandomdude.coordy.nodes.twodee.Node2d,_jitterX,_jitterY,_rotation,_x,_y,jitterX,jitterY,rotation,x,y,clone" name="keywords">
+<meta content="Node2d,com.somerandomdude.coordy.nodes.twodee.Node2d,_jitterX,_jitterY,_rotation,_x,_y,jitterX,jitterY,rotation,x,y,clone,toObject" name="keywords">
 <title>com.somerandomdude.coordy.nodes.twodee.Node2d</title>
 </head>
 <body>
@@ -125,11 +125,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <th>&nbsp;</th><th colspan="2">Property</th><th class="summaryTableOwnerCol">Defined&nbsp;by</th>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_jitterX">_jitterX</a> : Number<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_jitterX">_jitterX</a> : Number = 0<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Node2d</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_jitterY">_jitterY</a> : Number<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_jitterY">_jitterY</a> : Number = 0<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Node2d</td>
 </tr>
 <tr class="hideInheritedProtectedProperty">
@@ -137,15 +137,15 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </td><td class="summaryTableOwnerCol"><a href="../Node.html">Node</a></td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_rotation">_rotation</a> : Number<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_rotation">_rotation</a> : Number = 0<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Node2d</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_x">_x</a> : Number<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_x">_x</a> : Number = 0<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Node2d</td>
 </tr>
 <tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_y">_y</a> : Number<div class="summaryTableDescription"></div>
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#_y">_y</a> : Number = 0<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">Node2d</td>
 </tr>
 </table>
@@ -176,6 +176,14 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
    </div>
 </td><td class="summaryTableOwnerCol">Node2d</td>
 </tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#toObject()">toObject</a>():Object</div>
+<div class="summaryTableDescription">
+   Packages the node as a generic object - mainly used for exporting layout data.</div>
+</td><td class="summaryTableOwnerCol">Node2d</td>
+</tr>
 </table>
 </div>
 <script type="text/javascript" language="javascript">
@@ -192,7 +200,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var _jitterX:Number</code>
+<code>protected var _jitterX:Number = 0</code>
 </div>
 <a name="jitterX"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -218,7 +226,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var _jitterY:Number</code>
+<code>protected var _jitterY:Number = 0</code>
 </div>
 <a name="jitterY"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -244,7 +252,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var _rotation:Number</code>
+<code>protected var _rotation:Number = 0</code>
 </div>
 <a name="rotation"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -269,7 +277,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var _x:Number</code>
+<code>protected var _x:Number = 0</code>
 </div>
 <a name="x"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -295,7 +303,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected var _y:Number</code>
+<code>protected var _y:Number = 0</code>
 </div>
 <a name="y"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
@@ -393,6 +401,24 @@ showHideInherited();
    
                         
                      </td>
+</tr>
+</table>
+</div>
+<a name="toObject()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">toObject</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public override function toObject():Object</code><p>
+   Packages the node as a generic object - mainly used for exporting layout data.
+      </p><p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>Object</code> &mdash; Generic object containing all the node's layout properties
+  </td>
 </tr>
 </table>
 </div>

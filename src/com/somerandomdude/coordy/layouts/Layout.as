@@ -1,4 +1,4 @@
- /*
+/*
 The MIT License
 
 Copyright (c) 2009 P.J. Onori (pj@somerandomdude.com)
@@ -32,6 +32,7 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts
 {
+	import com.serialization.json.JSON;
 	import com.somerandomdude.coordy.nodes.INode;
 	
 	import flash.display.DisplayObject;
@@ -66,6 +67,53 @@ package com.somerandomdude.coordy.layouts
 		}
 		
 		public function toString():String { return ""; }
+		
+		/**
+		 * Serializes the layout data of each node as a JSON string. Includes the 'type', 'size' and 'nodes' properties.
+		 *
+		 * @return JSON representation of the layout's composition
+		*/
+		public function toJSON():String
+		{
+			var nodes:Array = new Array();
+			var layout:Object = new Object();
+			
+			for(var i:int=0; i<_size; i++)
+			{
+				nodes.push(_nodes[i].toObject());
+			}
+			
+			layout.type=toString();
+			layout.size=_size;
+			layout.nodes=nodes;
+			
+			return JSON.serialize(layout);
+		}
+		
+		/**
+		 * Generates XML for the layout's properties.
+		 *
+		 * @return XML representation of the layout's composition
+		*/
+		public function toXML():XML
+		{			
+			var xml:XML = <layout></layout>;
+			xml.@type = toString();
+			xml.@size = _size;
+			for(var i:int=0; i<_size; i++)
+			{
+				var node:XML = <node />
+				var obj:Object=_nodes[i].toObject();
+				for(var j:String in obj)
+				{
+					node[String('@'+j)] = obj[j];
+				}
+    
+    			xml.appendChild(node);
+			}
+			
+			return xml;
+		}
 		
 		/**
 		 * Returns node object by specified display object

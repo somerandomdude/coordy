@@ -59,7 +59,17 @@ package com.somerandomdude.coordy.nodes
 		 * 
 		 */			
 		public function get link():DisplayObject { return _link; }
-		public function set link(value:DisplayObject):void { this._link=value; }	
-		
+		public function set link(value:DisplayObject):void { this._link=value; }
+			
+		/**
+		 * Packages the node as a generic object - mainly used for exporting layout data.
+		 *
+		 * @return Generic object containing all the node's layout properties
+		*/	
+		public function toObject():Object
+		{
+			throw(new Error('Method must be called in Node descendant'));
+			return null;
+		}
 	}
 }

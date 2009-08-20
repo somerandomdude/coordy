@@ -18,7 +18,8 @@
 	<target name="coordy-swc-generator">
 	  <property file="build/build.properties" />
 	  <compc output="${basedir}/swc/coordy.swc" target-player="10.0.0">
-	  	<include-sources dir="${basedir}/src/com/somerandomdude/coordy" includes="*" />  	  	
+	  	<include-sources dir="${basedir}/src/com/somerandomdude/coordy" includes="*" />  	  
+	  	<include-sources dir="${basedir}/src/com/serialization/json" includes="*" />
 	  <source-path path-element="${fp10_classes}" />
 	  </compc>
 	  </target>
@@ -39,6 +40,7 @@
 	    <property file="build/build.properties" />
 	    <exec executable="${asdoc}" spawn="false">
 	      <arg line="-doc-sources '${basedir}/src/com/somerandomdude/coordy'
+	      			 -source-path 'src'
 	                 -output '${docsdir}/coordy'
 	      			 -target-player='10.0.0'
 	                 -main-title 'Coordy AS3 Library'
