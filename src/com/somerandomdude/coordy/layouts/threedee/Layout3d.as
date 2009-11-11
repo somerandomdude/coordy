@@ -325,6 +325,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 			for(var i:int=0; i<_size; i++)
 			{
 				n = this._nodes[i];
+				if(!n.link) continue;
 				n.link.x=n.x, n.link.y=n.y, n.link.z=n.z;
 			}
 			if(_autoZSort) SimpleZSorter.sortLayout(this);
