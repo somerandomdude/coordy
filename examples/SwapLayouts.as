@@ -40,9 +40,9 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_stack = new Stack(this, 135, 6, 350, 50);
-			_verticalLine = new VerticalLine(this, 3, 200, 0);
-			_horizontalLine = new HorizontalLine(this, 3, 0, 200);
+			_stack = new Stack(135, 6, 350, 50);
+			_verticalLine = new VerticalLine(3, 200, 0);
+			_horizontalLine = new HorizontalLine(3, 0, 200);
 			
 			var s:Square;
 			for(var i:int=0; i<_size; i++)
@@ -54,15 +54,10 @@ package
 				* greater the performance will be hampered by automatically calculating the
 				* new node's position. It is advised to set the 'moveToCoordinates' property 
 				* to 'false'.
-				* 
-				* The second parameter, 'addToStage' should always be set to 'false' when dealing
-				* with multiple layouts in a loop such as this as you will just be repeatedly
-				* adding the same DisplayObject to each layout's target - which is almost always
-				* the same.
 				*/
-				_stack.addToLayout(s, false, false);
-				_verticalLine.addToLayout(s, false, false);
-				_horizontalLine.addToLayout(s, false, false);
+				_stack.addToLayout(s, false);
+				_verticalLine.addToLayout(s, false);
+				_horizontalLine.addToLayout(s, false);
 				addChild(s);
 			}
 		

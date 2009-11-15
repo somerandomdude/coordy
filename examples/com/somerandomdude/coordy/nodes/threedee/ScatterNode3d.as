@@ -81,10 +81,12 @@ package com.somerandomdude.coordy.nodes.threedee
 		 * @param rotation Node's rotational value
 		 * 
 		 */		
-		public function ScatterNode3d(link:DisplayObject=null, x:Number=0, y:Number=0, z:Number=0, rotation:Number=0)
+		public function ScatterNode3d(link:Object=null, x:Number=0, y:Number=0, z:Number=0, rotationX:Number=0, rotationY:Number=0, rotationZ:Number=0)
 		{
 			super(link, x, y, z);
-			this._rotation=rotation;
+			this._rotationX=rotationX;
+			this._rotationY=rotationY;
+			this._rotationZ=rotationZ;
 		}
 
 		/**
@@ -95,7 +97,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		 */
 		override public function clone():INode3d 
 		{ 
-			var n:ScatterNode3d = new ScatterNode3d(link, x, y, z, rotation);
+			var n:ScatterNode3d = new ScatterNode3d(link, x, y, z, rotationX, rotationY, rotationZ);
 			n.xRelation=_xRelation;
 			n.yRelation=_yRelation;
 			n.zRelation=_zRelation;

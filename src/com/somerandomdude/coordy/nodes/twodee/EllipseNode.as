@@ -51,7 +51,7 @@ package com.somerandomdude.coordy.nodes.twodee
 		 * @param jitterY Node's y-jitter value
 		 * 
 		 */		
-		public function EllipseNode(link:DisplayObject=null, x:Number=0, y:Number=0, rotation:Number=0, jitterX:Number=0, jitterY:Number=0)
+		public function EllipseNode(link:Object=null, x:Number=0, y:Number=0, rotation:Number=0, jitterX:Number=0, jitterY:Number=0)
 		{
 			super(link, x, y, jitterX, jitterY);
 			_rotation=rotation;

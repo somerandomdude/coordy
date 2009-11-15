@@ -41,7 +41,7 @@ package com.somerandomdude.coordy.layouts
 	{
 		
 		protected var _nodes:Array;
-		protected var _size:int;
+		protected var _size:int;		
 		
 		/**
 		 * Returns the number of nodes currently stored and managed
@@ -88,6 +88,11 @@ package com.somerandomdude.coordy.layouts
 			layout.nodes=nodes;
 			
 			return JSON.serialize(layout);
+		}
+		
+		public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
+		{
+			return null;
 		}
 		
 		/**
@@ -160,6 +165,19 @@ package com.somerandomdude.coordy.layouts
 		}
 		
 		/**
+		 * Returns true if a link (DisplayObject owned by a layout's node) exists in the layout
+		 *
+		 * @param  link  DisplayObject in question
+		 * @return      True if link exists in layout, false if not.
+		 * @see         Node
+		 */
+		public function linkExists(link:Object):Boolean
+		{
+			for(var i:int=0; i<size; i++) if(link==_nodes[i].link) return true;
+			return false;
+		}
+		
+		/**
 		 * Swaps links of two node objects
 		 *
 		 * @param  nodeTo  
@@ -167,7 +185,7 @@ package com.somerandomdude.coordy.layouts
 		 */
 		public function swapNodeLinks(nodeTo:INode, nodeFrom:INode):void
 		{
-			var tmpLink:DisplayObject = nodeTo.link;
+			var tmpLink:Object = nodeTo.link;
 			nodeTo.link = nodeFrom.link;
 			nodeFrom.link = tmpLink;
 		}
@@ -207,6 +225,15 @@ package com.somerandomdude.coordy.layouts
 			this.clearNodes();
 			this._size=0;
 		}
+		
+		public function removeNodeByLink(link:DisplayObject):void
+		{
+			for(var i:int=0; i<_size; i++)
+			{
+				if(_nodes[i].link==link) removeNode(_nodes[i]);
+			}
+		}
+		
 		
 		/**
 		 * Adds a link between the specified display object to the node object at the specified index

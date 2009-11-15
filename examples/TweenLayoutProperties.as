@@ -1,8 +1,9 @@
 package
 {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.layouts.threedee.Wave3d;
+	import com.somerandomdude.coordy.proxyupdaters.InvalidationZSortUpdaterProxy;
 	
 	import fl.motion.easing.Cubic;
 	import fl.transitions.Tween;
@@ -31,7 +32,18 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_wave3d = new Wave3d(this, 400, 300, 300);
+			_wave3d = new Wave3d(400, 300, 300);
+			
+			/*
+			* The proxyUpdater property is a alternate method of defining how you would like 
+			* your layout to update. The more traditional way is to set updateMethod to either
+			* LayoutUpdateMethod.NONE, LayoutUpdateMethod.UPDATE or LayoutUpdateMethod.UPDATE_AND_REDNER.
+			*
+			* Proxy updaters allow for more custom methods of updating layouts. The proxy updater below
+			* uses a potentially more efficent manner of updating by taking advantage of the stage.invalidate()
+			* method in addition to running a Z-Sorting routine on all objects in the layout
+			*/
+			_wave3d.proxyUpdater=new InvalidationZSortUpdaterProxy(this, _wave3d);
 			
 			/*
 			 * Wave layouts are centered along the middle y axis of the wave. So setting the layout to 
@@ -44,9 +56,9 @@ package
 			{
 				s = new Square();
 				_wave3d.addToLayout(s, false);
+				addChild(s);
 			}
 			_wave3d.updateAndRender();
-			_wave3d.updateMethod=LayoutUpdateMode.UPDATE_AND_RENDER;
 			_wave3d.alignType=PathAlignType.ALIGN_PARALLEL;
 			
 			_caption = new Text();

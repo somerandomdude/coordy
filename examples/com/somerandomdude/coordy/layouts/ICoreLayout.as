@@ -21,34 +21,37 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
-  /**
- *
- *
- * @author      P.J. Onori
- * @version     0.1
- * @description
- * @url 
- */
- package com.somerandomdude.coordy.constants
-{
-	public class LayoutUpdateMode
-	{
-		/**
-		 * No update or render occurs when layout properties are changed. The layout's <em>updateAndRender()</em>
-		 * must be called for updating/rendering to occur.
-		 */		
-		public static const NONE:String="none";
-		
-		/**
-		 * The layout's <em>update()</em> method is called when layout properties are changed - which only updates 
-		 * each node's virtual coordinates, but not the actual DisplayObjects' coordinates.
-		 */		
-		public static const UPDATE_ONLY:String="updateOnly";
-		
-		/**
-		 * The layout is updated and rendered whenever a property is changed
-		 */		
-		public static const UPDATE_AND_RENDER:String="updateAndRender";
 
+package com.somerandomdude.coordy.layouts
+{
+	import com.somerandomdude.coordy.nodes.INode;
+	
+	import flash.display.DisplayObject;
+	import flash.display.DisplayObjectContainer;
+	
+	public interface ICoreLayout
+	{
+		function get nodes():Array;
+		function get size():int;
+		
+		function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode;
+		function getNodeByLink(link:DisplayObject):INode;
+		function getNodeIndex(node:INode):uint;
+		function getNodeAt(index:uint):INode;
+		function addLinkAt(object:DisplayObject, index:uint):void;
+		function removeLinks():void;
+		function removeLinkAt(index:uint):void;
+		function removeNode(node:INode):void;
+		function removeNodeByLink(object:DisplayObject):void;
+		function swapNodeLinks(nodeTo:INode, nodeFrom:INode):void;
+		
+		function updateAndRender():void;
+		function update():void;
+		function render():void;
+		
+		function toString():String;
+		function toJSON():String;
+		function toXML():XML;
+		
 	}
 }

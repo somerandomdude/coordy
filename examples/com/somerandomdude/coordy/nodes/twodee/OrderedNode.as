@@ -61,7 +61,7 @@ package com.somerandomdude.coordy.nodes.twodee
 		 * @param jitterY 		Node's y-jitter value
 		 * 
 		 */		
-		public function OrderedNode(link:DisplayObject=null, order:int=0, x:Number=0, y:Number=0, jitterX:Number=0, jitterY:Number=0)
+		public function OrderedNode(link:Object=null, order:int=0, x:Number=0, y:Number=0, jitterX:Number=0, jitterY:Number=0)
 		{
 			super(link, x, y, jitterX, jitterY);
 			this._order=order;

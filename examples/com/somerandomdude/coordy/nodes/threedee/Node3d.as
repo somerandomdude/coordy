@@ -40,11 +40,13 @@ package com.somerandomdude.coordy.nodes.threedee
 	{
 		protected var _x:Number=0;
 		protected var _y:Number=0;
+		protected var _z:Number=0;
 		protected var _jitterX:Number=0;
 		protected var _jitterY:Number=0;
-		protected var _z:Number=0;
 		protected var _jitterZ:Number=0;
-		protected var _rotation:Number=0;
+		protected var _rotationX:Number=0;
+		protected var _rotationY:Number=0;
+		protected var _rotationZ:Number=0;
 		
 		/**
 		 * Mutator/accessor for node's x position
@@ -101,12 +103,28 @@ package com.somerandomdude.coordy.nodes.threedee
 		public function set jitterZ(value:Number):void { this._jitterZ=value; }
 		
 		/**
-		 * Mutator/accessor for node's rotational value
-		 * @return Node's rotation
+		 * Mutator/accessor for node's rotational value on the x-axis axis
+		 * @return Node's x-axis rotation
 		 * 
 		 */		
-		public function get rotation():Number { return this._rotation; }	
-		public function set rotation(value:Number):void { this._rotation=value; }
+		public function get rotationX():Number { return this._rotationX; }	
+		public function set rotationX(value:Number):void { this._rotationX=value; }
+		
+		/**
+		 * Mutator/accessor for node's rotational value on the y-axis axis
+		 * @return Node's y-axis rotation
+		 * 
+		 */		
+		public function get rotationY():Number { return this._rotationY; }	
+		public function set rotationY(value:Number):void { this._rotationY=value; }
+		
+		/**
+		 * Mutator/accessor for node's rotational value on the z-axis axis
+		 * @return Node's z-axis rotation
+		 * 
+		 */		
+		public function get rotationZ():Number { return this._rotationZ; }	
+		public function set rotationZ(value:Number):void { this._rotationZ=value; }
 		
 		/**
 		 * Base node for all 3D layouts. Contains basic information for recording and projecting 3D positioning. Used in Sphere3d and Snapshot3d layouts.
@@ -114,7 +132,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		 * @see com.somerandomdude.coordy.layouts.threedee.Sphere3d
 		 * @see com.somerandomdude.coordy.layouts.threedee.Snapshot3d
 		 * 
-		 * @param link The node's target DisplayObject
+		 * @param link The node's target object
 		 * @param x Node's x position
 		 * @param y Node's y position
 		 * @param z Node's z position
@@ -123,7 +141,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		 * @param jitterZ Node's z-jitter value
 		 * 
 		 */		
-		public function Node3d(link:DisplayObject=null, x:Number=0, y:Number=0, z:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
+		public function Node3d(link:Object=null, x:Number=0, y:Number=0, z:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
 		{
 			super(link);
 			this._x=x;
@@ -143,7 +161,9 @@ package com.somerandomdude.coordy.nodes.threedee
 		public function clone():INode3d 
 		{ 
 			var n:Node3d = new Node3d(link, x, y, z, jitterX, jitterY, jitterZ);
-			n.rotation=_rotation;
+			n.rotationX=_rotationX;
+			n.rotationY=_rotationY;
+			n.rotationZ=_rotationZ;
 			return n; 
 		}
 		
@@ -154,7 +174,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		*/
 		override public function toObject():Object
 		{
-			return {x:_x, y:_y, z:_z, rotation:_rotation};
+			return {x:_x, y:_y, z:_z, rotationX:_rotationX, rotationY:_rotationY, rotationZ:rotationZ};
 		}
 
 	}

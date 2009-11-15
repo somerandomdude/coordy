@@ -21,7 +21,7 @@ package
 		
 		private function init():void
 		{
-			_ellipse = new Ellipse(this, 350, 350, 200, 200);
+			_ellipse = new Ellipse(350, 350, 200, 200);
 			
 			/*
 			 * 'alignType' sets the way in which each node is rotated in respect to 
@@ -39,11 +39,12 @@ package
 				 * simply calling 'updateAndRender()' after the loop. This will allow the layout to only
 				 * need to calculate and position all elements once, instead of each time through the loop.
 				*/
-				_ellipse.addToLayout(s, false, true);
+				_ellipse.addToLayout(s, false);
+				addChild(s);
 			}
 			
 			/*
-			 * Updating the layout and moving all the nodes' linked DisplayObjects into their correct position
+			 * Updating the layout and moving all the nodes' linked objects into their correct position
 			*/
 			_ellipse.updateAndRender();
 			

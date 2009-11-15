@@ -38,6 +38,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.helpers.Distribute;
 	import com.somerandomdude.coordy.helpers.Vertex;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.Node3d;
 
 	import flash.display.DisplayObject;
@@ -109,7 +110,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		/**
 		 * Distributes nodes in a 3d spheroid.
 		 * 
-		 * @param target		DisplayObjectContainer which parents all objects in the layout
 		 * @param width			Width of the spheroid
 		 * @param height		Height of the spheroid
 		 * @param depth			Depth of the spheroid
@@ -142,8 +142,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * _spheroid.updateAndRender();
 		 * </pre>			
 		 */		
-		public function Spheroid3d(target:DisplayObjectContainer, 
-								width:Number, 
+		public function Spheroid3d(width:Number, 
 								height:Number, 
 								depth:Number, 
 								x:Number=0, 
@@ -156,8 +155,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 								jitterY:Number=0, 
 								jitterZ:Number=0):void
 		{
-			
-			super(target);
 			
 			this._nodes = new Array();
 			this._width=width;
@@ -185,23 +182,21 @@ package com.somerandomdude.coordy.layouts.threedee {
 		override public function toString():String { return LayoutType.SPHEROID_3D; }
 		
 		/**
-		 * Adds DisplayObject to layout in next available position
+		 * Adds object to layout in next available position
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */
-		override public function addToLayout(object:DisplayObject,  moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
+		override public function addToLayout(object:Object,  moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(linkExists(object)) return null;
 			var node:Node3d = new Node3d(object,0,0,0,Math.random()*((Math.random()>.5?1:-1)), Math.random()*((Math.random()>.5?1:-1)), Math.random()*((Math.random()>.5?1:-1)));
 			this.addNode(node);
 			
-			//this.update();
-			
 			if(moveToCoordinates) this.render();
-			if(addToStage) this._target.addChild(object);
 			
 			return node;
 		}
@@ -229,6 +224,8 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * Updates the nodes' virtual coordinates. <strong>Note</strong> - this method does not update
 		 * the actual objects linked to the layout.
 		 * 
+		 * Much of the code in this method was scooped up at http://reflektions.com/miniml/template_permalink.asp?id=293
+		 * 
 		 */			
 		override public function update():void
 		{
@@ -247,27 +244,21 @@ package com.somerandomdude.coordy.layouts.threedee {
 				c.x=(this._verts[i].x*this._width/2);
 				c.y=(this._verts[i].y*this._height/2);
 				c.z=(this._verts[i].z*this._depth/2);
-				
-				
-				//--> rotate around y-axis				
+						
 				var tempX:Number = (c.x * Math.cos(rY)) - (c.z * Math.sin(rY));
 				var tempZ:Number = (c.x * Math.sin(rY)) + (c.z * Math.cos(rY));
-		
-				//--> rotate around x-axis		
+			
 				var dz:Number	 =  (tempZ * Math.cos(rX)) - (c.y * Math.sin(rX));
 				var tempY:Number =  (tempZ * Math.sin(rX)) + (c.y * Math.cos(rX));
 		
-				//--> rotate around z-axis
 				var dx:Number	=  (tempX * Math.cos(rZ)) + (tempY * Math.sin(rZ));
 				var dy:Number	=  (tempY * Math.cos(rZ)) - (tempX * Math.sin(rZ));
 				
 				c.x=(_x)+dx+(c.jitterX*this._jitterX);
 				c.y=(_y)+dy+(c.jitterY*this._jitterY);
 				c.z=(_z)+dz+(c.jitterZ*this._jitterZ);
-				
-				
+
 			}
-			
 		}
 		
 		/**
@@ -277,7 +268,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		*/	
 		override public function clone():ILayout3d
 		{
-			return new Spheroid3d(this._target, this._width, this._height, this._depth, this._x, this._y, this._z, this._rotation, this._rotationY, this._rotationZ, this._jitterX, this._jitterY, this._jitterZ);
+			return new Spheroid3d(this._width, this._height, this._depth, this._x, this._y, this._z, this._rotation, this._rotationY, this._rotationZ, this._jitterX, this._jitterY, this._jitterZ);
 		}
 
 	}

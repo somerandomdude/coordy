@@ -34,6 +34,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.helpers.SimpleZSorter;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.ScatterNode3d;
 	
 	import flash.display.DisplayObject;
@@ -72,7 +73,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		/**
 		 * Distributes nodes in a scattered fashion in all 3 dimensions.
 		 * 
-		 * @param target			DisplayObjectContainer which parents all objects in the layout
 		 * @param width 			Width of the scatter
 		 * @param height 			Height of the scatter
 		 * @param depth 			Depth of the scatter
@@ -83,8 +83,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * @param jitterRotation	Boolean determining if nodes are randomly rotated
 		 * 
 		 */		
-		public function Scatter3d(target:DisplayObjectContainer, 
-								width:Number, 
+		public function Scatter3d(width:Number, 
 								height:Number, 
 								depth:Number, 
 								jitter:Number=1, 
@@ -93,7 +92,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 								z:Number=0, 
 								jitterRotation:Boolean=false):void
 		{
-			super(target);
 			this._width = width;
 			this._height = height;
 			this._depth=depth;
@@ -115,16 +113,17 @@ package com.somerandomdude.coordy.layouts.threedee {
 		override public function toString():String { return LayoutType.SCATTER_3D; }
 			
 		/**
-		 * Adds DisplayObject to layout in next available position
+		 * Adds object to layout in next available position
 		 *
-		 * @param  object  DisplayObject to add to organizer
+		 * @param  object  Object to add to organizer
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding cell's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */	
-		override public function addToLayout(object:DisplayObject, moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
+		override public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(linkExists(object)) return null;
 			var p:int = (Math.round(Math.random())) ? -1:1;
 			var xPos:Number = (_width/2+((Math.random()*_width*_jitter)/2)*p)+_x;
 			p = (Math.round(Math.random())) ? -1:1;
@@ -138,7 +137,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 			
 			this.addNode(node);
 			
-			if(addToStage) this._target.addChild(node.link);
 			if(moveToCoordinates) node.link.x=node.x,node.link.y=node.y, node.link.z=node.z;
 			
 			return node;
@@ -158,7 +156,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 				this._nodes[i].link.z=this._nodes[i].z;
 				this._nodes[i].link.rotationX=this._nodes[i].rotation;
 			}
-			if(_autoZSort) SimpleZSorter.sortLayout(this);
 		}
 		
 		/**
@@ -209,7 +206,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		*/
 		override public function clone():ILayout3d
 		{
-			return new Scatter3d(_target, _width, _height, _depth, _jitter, _x, _y, _z, _jitterRotation);
+			return new Scatter3d(_width, _height, _depth, _jitter, _x, _y, _z, _jitterRotation);
 		}
 		
 	}

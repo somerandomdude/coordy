@@ -26,14 +26,13 @@
 	
 	<!-- deletes and recreates the asdoc directory -->  
 	    <target name="clean-asdoc-directory" >  
-	       <delete dir="${basedir}/docs/tres" />
-	       <mkdir  dir="${basedir}/docs/tres" />  
+	       <delete dir="${basedir}/docs/coordy" />
+	       <mkdir  dir="${basedir}/docs/coordy" />  
 	    </target>
 
 	<!-- deletes and recreates the swc directory -->  
 	    <target name="clean-swc-directory" >   
-	       <delete dir="${basedir}/swc" />  
-	       <mkdir  dir="${basedir}/swc" />  
+	       <delete file="${basedir}/swc/coordy.swc" />  
 	    </target>
 	
 	<target name="generate-coordy-docs">

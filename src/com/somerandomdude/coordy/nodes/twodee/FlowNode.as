@@ -48,7 +48,7 @@ THE SOFTWARE.
 		 * @param y 		Node's y position
 		 * 
 		 */		
-		public function FlowNode(link:DisplayObject=null, x:Number=0, y:Number=0)
+		public function FlowNode(link:Object=null, x:Number=0, y:Number=0)
 		{
 			super(link, x, y);
 		}

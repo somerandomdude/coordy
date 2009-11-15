@@ -22,36 +22,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+  /**
+ *
+ *
+ * @author      P.J. Onori
+ * @version     0.1
+ * @description
+ * @url 
+ */
+
 package com.somerandomdude.coordy.layouts
 {
 	import com.somerandomdude.coordy.nodes.INode;
+	import com.somerandomdude.coordy.proxyupdaters.IProxyUpdater;
 	
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	
-	public interface ILayout
+	public interface ILayout extends ICoreLayout
 	{
-		function get nodes():Array;
-		function get size():int;
-		function get target():DisplayObjectContainer;
+		function get updateMethod():String;
+		function set updateMethod(value:String):void;
 		
-		function getNodeByLink(link:DisplayObject):INode;
-		function getNodeIndex(node:INode):uint;
-		function getNodeAt(index:uint):INode;
-		function addChildren(moveToCoordinates:Boolean=true):void;
-		function addLinkAt(object:DisplayObject, index:uint):void;
-		function removeLinks():void;
-		function removeLinkAt(index:uint):void;
-		function removeNode(node:INode):void;
-		function swapNodeLinks(nodeTo:INode, nodeFrom:INode):void;
-		
-		function updateAndRender():void;
-		function update():void;
-		function render():void;
-		
-		function toString():String;
-		function toJSON():String;
-		function toXML():XML;
+		function get proxyUpdater():IProxyUpdater;
+		function set proxyUpdater(value:IProxyUpdater):void;
 		
 	}
 }

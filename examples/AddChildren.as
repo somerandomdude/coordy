@@ -1,5 +1,6 @@
 package
 {
+	import com.somerandomdude.coordy.behaviors.AutoAddToLayoutBehavior;
 	import com.somerandomdude.coordy.constants.LatticeOrder;
 	import com.somerandomdude.coordy.constants.LatticeType;
 	import com.somerandomdude.coordy.layouts.twodee.Lattice;
@@ -12,6 +13,7 @@ package
 	{
 		private var _lattice:Lattice;
 		private var _caption:Text;
+		private var _container:Sprite;
 		
 		public function AddChildren()
 		{
@@ -22,7 +24,21 @@ package
 		
 		private function init():void
 		{
-			_lattice = new Lattice(this, 360, 360, 10, 10);
+			_container = new Sprite();
+			
+	
+			_lattice = new Lattice(360, 360, 10, 10);
+			
+			/*
+			* The AutoAddToLayoutBehavior binds a DisplayObjectContainer to a layout.
+			* In doing so, anytime a DisplayObject is added to the target's display list, 
+			* the child is automatically added to the specified layout and rendered in the 
+			* appropriate location using the Event.ADDED event.
+			*
+			* Additionally, any children of the target that are removed from the display list
+			* will automatically be removed from the layout using the Event.REMOVED event
+			*/
+			var behavior:AutoAddToLayoutBehavior = new AutoAddToLayoutBehavior(_container, _lattice);
 			
 			/*
 			 * Basic display properties (such as x, y, width, height, etc.) 
@@ -37,8 +53,10 @@ package
 			for(var i:int=0; i<100; i++)
 			{
 				s = new Square();				
-				addChild(s);
+				_container.addChild(s);
 			}
+			
+			addChild(_container);
 			
 			/*
 			 * Some basic layout properties of how the lattice is set
@@ -46,13 +64,7 @@ package
 			_lattice.order=LatticeOrder.ORDER_HORIZONTALLY;
 			_lattice.latticeType=LatticeType.DIAGONAL;
 			
-			/*
-			 * Add all children from the layout's target set in the constructor. 
-			 * Setting the 'moveToCoordinates' parameter to 'true' will move all 
-			 * the newly added nodes and their linked DisplayObjects to the appropriate
-			 * coordinates.
-			*/
-			_lattice.addChildren(true);
+			
 			
 			_caption = new Text();
 			_caption.text='A basic example of populating a layout with the \'addChildren()\' method';
@@ -67,7 +79,6 @@ import flash.display.Shape;
 import flash.text.TextField;
 import flash.text.TextFormat;
 import flash.text.TextFieldAutoSize;
-import flash.text.engine.Kerning;
 import flash.text.AntiAliasType;
 
 internal class Square extends Shape
@@ -90,7 +101,6 @@ internal class Text extends TextField
 		_format = new TextFormat();
 		_format.font='Arial';
 		_format.size=11;
-		_format.kerning=Kerning.ON;
 	
 		textColor=0x333333;
 		antiAliasType=AntiAliasType.ADVANCED;

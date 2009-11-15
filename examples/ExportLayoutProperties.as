@@ -1,6 +1,6 @@
 package
 {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.layouts.twodee.Ellipse;
 	
@@ -30,16 +30,17 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_ellipse = new Ellipse(this, 200, 200, 100, 100);
+			_ellipse = new Ellipse(200, 200, 100, 100);
 			
 			var s:Square;
 			for(var i:int=0; i<20; i++)
 			{
 				s = new Square();				
 				_ellipse.addToLayout(s, false);
+				addChild(s);
 			}
 			_ellipse.updateAndRender();
-			_ellipse.updateMethod=LayoutUpdateMode.NONE;
+			_ellipse.updateMethod=LayoutUpdateMethod.NONE;
 			
 			/*
 			* This property will align each node to fit the path in terms of its rotation (in either a parallel 

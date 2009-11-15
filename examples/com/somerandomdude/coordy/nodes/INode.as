@@ -36,8 +36,8 @@ package com.somerandomdude.coordy.nodes
 	
 	public interface INode
 	{
-		function get link():DisplayObject
-		function set link(value:DisplayObject):void;
+		function get link():Object
+		function set link(value:Object):void;
 		
 		function toObject():Object;
 	}

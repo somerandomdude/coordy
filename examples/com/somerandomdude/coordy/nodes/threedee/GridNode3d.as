@@ -86,7 +86,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		 * @param jitterZ Node's z-jitter value
 		 * 
 		 */	
-		public function GridNode3d(link:DisplayObject=null, column:int=-1, row:int=-1, layer:int=-1, x:Number=0, y:Number=0, z:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
+		public function GridNode3d(link:Object=null, column:int=-1, row:int=-1, layer:int=-1, x:Number=0, y:Number=0, z:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
 		{
 			super(link, x, y, z, jitterX, jitterY, jitterZ);
 			this._row=row;
@@ -113,7 +113,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		*/
 		override public function toObject():Object
 		{
-			return {row:_row, column:_column, layer:_layer, x:_x, y:_y, z:_z, rotation:_rotation};
+			return {row:_row, column:_column, layer:_layer, x:_x, y:_y, z:_z};
 		}
 		
 	}

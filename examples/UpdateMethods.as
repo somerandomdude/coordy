@@ -1,6 +1,6 @@
 package
 {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.helpers.SimpleZSorter;
 	import com.somerandomdude.coordy.layouts.threedee.Ellipse3d;
 	
@@ -30,8 +30,8 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_ellipse3d = new Ellipse3d(this, 360, 360, 200, 200, 0, 0, 1);
-			_ellipse3d.updateMethod=LayoutUpdateMode.NONE;
+			_ellipse3d = new Ellipse3d(360, 360, 200, 200, 0, 0, 1);
+			_ellipse3d.updateMethod=LayoutUpdateMethod.NONE;
 
 			var s:Square;
 			for(var i:int=0; i<_size; i++)
@@ -79,7 +79,7 @@ package
 			* also the least efficient method since the update/render/z-sort cycle is run for each
 			* property change.
 			*/
-			_updateLabel.text='Updated with LayoutUpdateMode.UPDATE_AND_RENDER and auto Z-Sorting';
+			_updateLabel.text='Updated with LayoutUpdateMode.UPDATE_AND_RENDER';
 			
 			var x:Number=Math.random()*50+175;
 			var y:Number=Math.random()*50+175;
@@ -90,8 +90,7 @@ package
 			var rotationY:Number=Math.random()*360;
 			var rotationZ:Number=Math.random()*360;
 			
-			_ellipse3d.updateMethod=LayoutUpdateMode.UPDATE_AND_RENDER;
-			_ellipse3d.autoZSort=true;
+			_ellipse3d.updateMethod=LayoutUpdateMethod.UPDATE_AND_RENDER;
 			
 			_ellipse3d.x=x;
 			_ellipse3d.y=y;
@@ -99,7 +98,8 @@ package
 			_ellipse3d.depth=depth;
 			_ellipse3d.rotationX=rotationX;
 			_ellipse3d.rotationY=rotationY;
-			_ellipse3d.rotationZ=rotationZ;			
+			_ellipse3d.rotationZ=rotationZ;	
+			SimpleZSorter.sortLayout(this, _ellipse3d);		
 		}
 		
 		private function updateOnly():void
@@ -109,7 +109,7 @@ package
 			* DisplayObjects and Z-Sorting them are done manually. It is much more efficient than the
 			* fully automated approach, but there is still unnecessary CPU usage. 
 			*/
-			_updateLabel.text='Updated with LayoutUpdateMode.UPDATE_ONLY and manual Z-Sorting';
+			_updateLabel.text='Updated with LayoutUpdateMode.UPDATE_ONLY';
 			
 			var x:Number=Math.random()*50+175;
 			var y:Number=Math.random()*50+175;
@@ -120,8 +120,8 @@ package
 			var rotationY:Number=Math.random()*360;
 			var rotationZ:Number=Math.random()*360;
 			
-			_ellipse3d.updateMethod=LayoutUpdateMode.UPDATE_ONLY;
-			_ellipse3d.autoZSort=true;
+			_ellipse3d.updateMethod=LayoutUpdateMethod.UPDATE_ONLY;
+			
 			
 			_ellipse3d.x=x;
 			_ellipse3d.y=y;
@@ -133,7 +133,7 @@ package
 			
 			_ellipse3d.render();
 			
-			SimpleZSorter.sortLayout(_ellipse3d);
+			SimpleZSorter.sortLayout(this, _ellipse3d);
 		}
 		
 		private function manualUpdate():void
@@ -143,7 +143,7 @@ package
 			* once - after all properties have been altered. This is by far the most efficient approach
 			* to changing a layout, especially if tweening the layout.
 			*/
-			_updateLabel.text='Updated with LayoutUpdateMode.NONE and manual Z-Sorting';
+			_updateLabel.text='Updated with LayoutUpdateMode.NONE';
 			
 			var x:Number=Math.random()*50+175;
 			var y:Number=Math.random()*50+175;
@@ -154,8 +154,7 @@ package
 			var rotationY:Number=Math.random()*360;
 			var rotationZ:Number=Math.random()*360;
 			
-			_ellipse3d.updateMethod=LayoutUpdateMode.NONE;
-			_ellipse3d.autoZSort=false;
+			_ellipse3d.updateMethod=LayoutUpdateMethod.NONE;
 			
 			_ellipse3d.x=x;
 			_ellipse3d.y=y;
@@ -166,7 +165,7 @@ package
 			_ellipse3d.rotationZ=rotationZ;
 			
 			_ellipse3d.updateAndRender();
-			SimpleZSorter.sortLayout(_ellipse3d);
+			SimpleZSorter.sortLayout(this, _ellipse3d);
 		}
 		
 	}

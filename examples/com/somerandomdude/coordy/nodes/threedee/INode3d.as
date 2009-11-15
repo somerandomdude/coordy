@@ -43,8 +43,13 @@ package com.somerandomdude.coordy.nodes.threedee
 		function get y():Number;
 		function get jitterX():Number;
 		function get jitterY():Number;	
-		function get rotation():Number;
-		function set rotation(value:Number):void;
+		function get rotationX():Number;
+		function set rotationX(value:Number):void;
+		function get rotationY():Number;
+		function set rotationY(value:Number):void;
+		function get rotationZ():Number;
+		function set rotationZ(value:Number):void;
+		
 		
 		function clone():INode3d;
 	}

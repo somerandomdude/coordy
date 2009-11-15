@@ -1,6 +1,6 @@
 package
 {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.layouts.twodee.Wave;
 	
@@ -27,16 +27,17 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_wave = new Wave(this, 360, 360, 20, 200);
+			_wave = new Wave(360, 360, 20, 200);
 			
 			var s:Square;
 			for(var i:int=0; i<100; i++)
 			{
 				s = new Square();				
 				_wave.addToLayout(s, false);
+				addChild(s);
 			}
 			_wave.updateAndRender();
-			_wave.updateMethod=LayoutUpdateMode.NONE;
+			_wave.updateMethod=LayoutUpdateMethod.NONE;
 			
 			/*
 			* This property will align each node to fit the path in terms of its rotation (in either a parallel 

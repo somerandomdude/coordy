@@ -45,7 +45,7 @@ package com.somerandomdude.coordy.nodes.twodee
 		 * 
 		 * @see com.somerandomdude.coordy.layouts.twodee.Grid
 		 * 
-		 * @param link 			The node's target DisplayObject
+		 * @param link 			The node's target object
 		 * @param column 		Column in the grid in which the node resides
 		 * @param row			Row in the grid in which the node resides
 		 * @param x 			Node's x position
@@ -54,7 +54,7 @@ package com.somerandomdude.coordy.nodes.twodee
 		 * @param jitterY 		Node's y-jitter value
 		 * 
 		 */		
-		public function GridNode(link:DisplayObject=null, column:int=-1, row:int=-1, x:Number=0, y:Number=0, jitterX:Number=0, jitterY:Number=0)
+		public function GridNode(link:Object=null, column:int=-1, row:int=-1, x:Number=0, y:Number=0, jitterX:Number=0, jitterY:Number=0)
 		{
 			super(link, x, y, jitterX, jitterY);
 			this._row=row;

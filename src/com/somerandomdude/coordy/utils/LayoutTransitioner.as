@@ -27,7 +27,7 @@ THE SOFTWARE.
 */
 package com.somerandomdude.coordy.utils
 {
-	import com.somerandomdude.coordy.layouts.ILayout;
+	import com.somerandomdude.coordy.layouts.ICoreLayout;
 	import com.somerandomdude.coordy.layouts.twodee.ILayout2d;
 	
 	public class LayoutTransitioner
@@ -46,7 +46,7 @@ package com.somerandomdude.coordy.utils
 		 * @param layout
 		 * 
 		 */		
-		static public function syncNodesTo(layout:ILayout):void
+		static public function syncNodesTo(layout:ICoreLayout):void
 		{
 			var i:int;
 			

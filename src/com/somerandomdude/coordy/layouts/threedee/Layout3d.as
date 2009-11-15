@@ -31,16 +31,13 @@ THE SOFTWARE.
  * @url 
  */
 package com.somerandomdude.coordy.layouts.threedee {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
-	import com.somerandomdude.coordy.helpers.SimpleZSorter;
-	import com.somerandomdude.coordy.layouts.ILayout;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.layouts.Layout;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.proxyupdaters.IProxyUpdater;
 	
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.events.Event;
 
 	public class Layout3d extends Layout implements ILayout3d
 	{
@@ -57,9 +54,27 @@ package com.somerandomdude.coordy.layouts.threedee {
 		protected var _jitterY:Number;
 		protected var _jitterZ:Number;
 		
-		protected var _updateMethod:String=LayoutUpdateMode.UPDATE_AND_RENDER;
-		protected var _updateFunction:Function=invalidate;
-		protected var _autoZSort:Boolean=true;
+		protected var _updateMethod:String=LayoutUpdateMethod.UPDATE_AND_RENDER;
+		protected var _updateFunction:Function=updateAndRender;
+		
+		protected var _proxyUpdater:IProxyUpdater;
+		
+		/**
+		 * Sets a proxy update method for altering layouts as opposed to internal update methods
+		 * such as update(), render() or updateAndRender()
+		 * 
+		 * This allows more customization for the updating sequence.
+		 * 
+		 * @see com.somerandomdude.coordy.proxyupdaters.IProxyUpdater
+		 * @see #updateMethod
+		 * 
+		 */
+		public function get proxyUpdater():IProxyUpdater { return _proxyUpdater; }
+		public function set proxyUpdater(value:IProxyUpdater):void
+		{
+			this._updateMethod=value.name;
+			this._updateFunction=value.update;
+		}
 		
 		/**
 		 * Accessor for layout target
@@ -69,22 +84,15 @@ package com.somerandomdude.coordy.layouts.threedee {
 		public function get target():DisplayObjectContainer { return _target; }
 		
 		/**
-		 * Specifies whether layout's nodes automatically z-sorted during the render cycle
-		 *
-		 * @see com.somerandomdude.coordy.helpers.SimpleZSorter
-		 * @see #render()
-		 * 
-		 * @return  Current setting of auto-adjust (defaults to false)   
-		 */
-		public function get autoZSort():Boolean { return _autoZSort; }
-		public function set autoZSort(value:Boolean):void { _autoZSort=value; }
-		
-		/**
 		 * Specifies whether layout properties (x, y, width, height, etc.) adjust the layout 
-		 * automatically without calling apply() method 
+		 * automatically without calling apply() method.
 		 * 
-		 * @see com.somerandomdude.coordy.layouts.LayoutUpdateMode
-		 *
+		 * An alternative method for updating layouts is to define a proxy updater using 
+		 * the proxyUpdater property 
+		 * 
+		 * @see com.somerandomdude.coordy.layouts.LayoutUpdateMethod
+		 * @see #proxyUpdater
+		 * 
 		 * @return  Current setting of auto-adjust (defaults to false)   
 		 */
 		public function get updateMethod():String { return this._updateMethod; }
@@ -93,14 +101,14 @@ package com.somerandomdude.coordy.layouts.threedee {
 			this._updateMethod = value; 
 			switch(value)
 			{
-				case LayoutUpdateMode.NONE:
+				case LayoutUpdateMethod.NONE:
 					this._updateFunction=function():void {};
 					break;
-				case LayoutUpdateMode.UPDATE_ONLY:
+				case LayoutUpdateMethod.UPDATE_ONLY:
 					this._updateFunction=update;
 					break;
 				default :
-					this._updateFunction=invalidate;
+					this._updateFunction=updateAndRender;
 			}
 		}
 		
@@ -234,25 +242,21 @@ package com.somerandomdude.coordy.layouts.threedee {
 		/**
 		 * Core class for all 3D layouts. Cannot be instantiated as is - use child classes.
 		 * 
-		 * @param target The object which contains all objects linked to the layout
-		 * 
 		 */		
-		public function Layout3d(target:DisplayObjectContainer)
+		public function Layout3d()
 		{
-			this._target=target;
 		}
 		
 		/**
-		 * Adds DisplayObject to layout in next available position. <strong>Note</strong> - This method is to be 
+		 * Adds object to layout in next available position. <strong>Note</strong> - This method is to be 
 		 * overridden by child classes for implmentation.
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */		
-		public function addToLayout(object:DisplayObject,  moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
+		override public function addToLayout(object:Object,  moveToCoordinates:Boolean=true):INode
 		{
 			throw(new Error('Method must be overriden by child class'));
 			return null;
@@ -269,7 +273,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 			removeAllNodes();
 			for(var i:int=0; i<_target.numChildren; i++)
 			{
-				this.addToLayout(_target.getChildAt(i), moveToCoordinates, false);
+				this.addToLayout(_target.getChildAt(i), moveToCoordinates);
 			}
 		}
 		
@@ -328,7 +332,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 				if(!n.link) continue;
 				n.link.x=n.x, n.link.y=n.y, n.link.z=n.z;
 			}
-			if(_autoZSort) SimpleZSorter.sortLayout(this);
+			
 		}
 		
 		/**
@@ -342,29 +346,22 @@ package com.somerandomdude.coordy.layouts.threedee {
 		}
 		
 		/**
-		 * @protected 
-		 */	
-		protected function invalidate():void
+		 * Determines if an object added to the layout contains the properties/methods 
+		 * required from the layout.
+		 *
+		 * @see #addToLayout()
+		 */
+		protected function validateObject(object:Object):Boolean
 		{
-			if(!_target.stage) 
-			{
-				update();
-				return;
-			}
-			_target.stage.addEventListener(Event.RENDER, renderHandler);
-			_target.stage.invalidate();
-		}
-		
-		/**
-		 * @private 
-		 */	
-		private function renderHandler(event:Event):void
-		{
-			if(_updateMethod==LayoutUpdateMode.UPDATE_AND_RENDER) {
-				this._target.stage.removeEventListener(Event.RENDER, renderHandler);
-				this.update();
-				this.render();				
-			}
+			if(	object.hasOwnProperty('x')&&
+				object.hasOwnProperty('y')&&
+				object.hasOwnProperty('z')&&
+				object.hasOwnProperty('rotationX')&&
+				object.hasOwnProperty('rotationY')&&
+				object.hasOwnProperty('rotationZ')
+			) return true;
+			
+			return false;
 		}
 
 	}

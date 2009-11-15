@@ -34,6 +34,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.constants.StackOrder;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.OrderedNode3d;
 
 	import flash.display.DisplayObject;
@@ -107,7 +108,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		/**
 		 * Distributes nodes in a 3d stack.
 		 * 
-		 * @param target		DisplayObjectContainer which parents all objects in the layout
 		 * @param angle			Offset angle (in degrees)
 		 * @param offset		x & y offset for each node
 		 * @param zOffset		z offset for each node
@@ -120,8 +120,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * @param jitterZ		Jitter multiplier for the layout's nodes on the z axis
 		 * 
 		 */		
-		public function Stack3d(target:DisplayObjectContainer, 
-								angle:Number=45, 
+		public function Stack3d(angle:Number=45, 
 								offset:Number=5, 
 								zOffset:Number=5, 
 								x:Number=0, 
@@ -132,7 +131,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 								jitterY:Number=0, 
 								jitterZ:Number=0):void
 		{
-			super(target);
 			this._angle=angle;
 			this._offset=offset;
 			this._zOffset=zOffset;
@@ -155,16 +153,17 @@ package com.somerandomdude.coordy.layouts.threedee {
 		override public function toString():String { return LayoutType.STACK_3D; }
 			
 		/**
-		 * Adds DisplayObject to layout in next available position
+		 * Adds object to layout in next available position
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */
-		override public function addToLayout(object:DisplayObject, moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
+		override public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(linkExists(object)) return null;
 			var node:OrderedNode3d = new OrderedNode3d(object, this._size);
 			this.addNode(node);
 			
@@ -172,7 +171,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 			
 			
 			if(moveToCoordinates) this.render();
-			if(addToStage) this._target.addChild(object);
 			
 			this.cleanOrder();
 			
@@ -212,7 +210,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		*/
 		override public function clone():ILayout3d
 		{
-			return new Stack3d(_target, _angle, _offset, _zOffset, _x, _y, _z, _order, _jitterX, _jitterY, _jitterZ);
+			return new Stack3d(_angle, _offset, _zOffset, _x, _y, _z, _order, _jitterX, _jitterY, _jitterZ);
 		}
 		
 		/**

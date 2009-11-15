@@ -32,10 +32,10 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.twodee {
 	import com.somerandomdude.coordy.constants.LayoutType;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.twodee.INode2d;
 	import com.somerandomdude.coordy.nodes.twodee.OrderedNode;
-
-	import flash.display.DisplayObject;
+	
 	import flash.display.DisplayObjectContainer;
 
 	public class VerticalLine extends Layout2d implements ILayout2d
@@ -59,7 +59,6 @@ package com.somerandomdude.coordy.layouts.twodee {
 		/**
 		 * Distributes nodes in a vertical line
 		 * 
-		 * @param target			DisplayObjectContainer which parents all objects in the layout
 		 * @param vPadding			Vertical padding between each node in the line
 		 * @param x					x position of the vertical line
 		 * @param y					y position of the vertical line
@@ -67,14 +66,12 @@ package com.somerandomdude.coordy.layouts.twodee {
 		 * @param jitterY			Jitter multiplier for the layout's nodes on the y axis
 		 * 
 		 */	
-		public function VerticalLine(target:DisplayObjectContainer, 
-									vPadding:Number=0, 
+		public function VerticalLine(vPadding:Number=0, 
 									x:Number=0, 
 									y:Number=0, 
 									jitterX:Number=0, 
 									jitterY:Number=0):void
 		{
-			super(target);
 			this._vPadding=vPadding;
 			this._x=x;
 			this._y=y;
@@ -92,16 +89,17 @@ package com.somerandomdude.coordy.layouts.twodee {
 		override public function toString():String { return LayoutType.VERTICAL_LINE; }
 			
 		 /**
-		 * Adds DisplayObject to layout in next available position
+		 * Adds object to layout in next available position
 		 *
 		 * @param  object  DisplayObject to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */
-		override public function addToLayout(object:DisplayObject,  moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode2d
+		override public function addToLayout(object:Object,  moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
+			if(linkExists(object)) return null;
 			var node:OrderedNode = new OrderedNode(object, this._size);
 			this.cleanOrder();
 			this.addNode(node);
@@ -109,23 +107,23 @@ package com.somerandomdude.coordy.layouts.twodee {
 			this.update();
 			
 			if(moveToCoordinates) this.render();
-			if(addToStage) this._target.addChild(object);
 			
 			return node;
 		}
 		
 		/**
-		 * Adds DisplayObject to layout in the specified order within the layout
+		 * Adds object to layout in the specified order within the layout
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  order   Order in which the DisplayObject is put in the layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */	
-		public function addToLayoutAt(object:DisplayObject, order:int, moveToCoordinates:Boolean=true, addToStage:Boolean=true):void
+		public function addToLayoutAt(object:Object, order:int, moveToCoordinates:Boolean=true):INode2d
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
+			if(linkExists(object)) return null;
 			if(!_nodes) _nodes = new Array;
 			var node:OrderedNode = new OrderedNode(object,order,0,0);
 			
@@ -138,11 +136,8 @@ package com.somerandomdude.coordy.layouts.twodee {
 			{
 				this.render();
 			}
-			if(addToStage)
-			{
-				this._target.addChild(object);
-			}
 			
+			return node;
 		}
 		
 		/**
@@ -152,7 +147,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		*/
 		override public function clone():ILayout2d
 		{
-			return new VerticalLine(_target, _vPadding, _x, _y, _jitterX, this._jitterY);
+			return new VerticalLine(_vPadding, _x, _y, _jitterX, this._jitterY);
 		}
 		
 		/**

@@ -1,6 +1,6 @@
 package
 {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMode;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.layouts.twodee.Scatter;
 	import com.somerandomdude.coordy.nodes.twodee.INode2d;
 	import com.somerandomdude.coordy.utils.LayoutTransitioner;
@@ -33,14 +33,15 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_scatter = new Scatter(this, 400, 400, 0, 0, 1, true);
-			_scatter.updateMethod=LayoutUpdateMode.NONE;
+			_scatter = new Scatter(400, 400, 0, 0, 1, true);
+			_scatter.updateMethod=LayoutUpdateMethod.NONE;
 			
 			var s:Square;
 			for(var i:int=0; i<100; i++)
 			{
 				s = new Square();
 				_scatter.addToLayout(s);
+				addChild(s);
 			}
 			
 			_scatter.updateAndRender();
@@ -84,7 +85,7 @@ package
 		
 		private function tweenItem(node:INode2d):void
 		{ 
-			var link:DisplayObject=node.link;
+			var link:Object=node.link;
 			/*
 			* Please, do not ever use Adobe's internal Tween class. This class was used only for increased
 			* compatibility.

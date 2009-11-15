@@ -62,7 +62,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		 * @param jitterZ
 		 * 
 		 */		
-		public function OrderedNode3d(link:DisplayObject=null, order:int=0, x:Number=0, y:Number=0, z:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
+		public function OrderedNode3d(link:Object=null, order:int=0, x:Number=0, y:Number=0, z:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
 		{
 			super(link, x, y, z, jitterX, jitterY, jitterZ);
 			this._order=order;
@@ -87,7 +87,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		*/
 		override public function toObject():Object
 		{
-			return {order:_order, x:_x, y:_y, z:_z, rotation:_rotation};
+			return {order:_order, x:_x, y:_y, z:_z};
 		}
 		
 	}

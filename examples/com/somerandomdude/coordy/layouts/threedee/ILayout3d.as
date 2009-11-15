@@ -53,7 +53,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		
 		function renderNode(node:INode3d):void;
 		
-		function addToLayout(object:DisplayObject,  moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
 		function clone():ILayout3d
 	}
 }

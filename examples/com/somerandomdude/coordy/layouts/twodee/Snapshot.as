@@ -33,6 +33,7 @@ THE SOFTWARE.
  package com.somerandomdude.coordy.layouts.twodee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.nodes.twodee.INode2d;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.twodee.Node2d;
 
 	import flash.display.DisplayObject;
@@ -62,24 +63,22 @@ THE SOFTWARE.
 		override public function toString():String { return LayoutType.SNAPSHOT; }
 		
 		/**
-		 * Adds DisplayObject to layout
+		 * Adds object to layout
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */
-		override public function addToLayout(object:DisplayObject, 
-											moveToCoordinates:Boolean=true, 
-											addToStage:Boolean=true):INode2d
+		override public function addToLayout(object:DisplayObject, moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
+			if(linkExists(object)) return null;
 			var node:Node2d = new Node2d(object,0,0);
 			this.addNode(node);
 			node.x=object.x, node.y=object.y;
 			
 			if(moveToCoordinates) this.render();
-			if(addToStage) this._target.addChild(object);
 			
 			return node;
 		}

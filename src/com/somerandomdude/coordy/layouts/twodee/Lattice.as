@@ -215,7 +215,6 @@ package com.somerandomdude.coordy.layouts.twodee {
 		/**
 		 * Distributes nodes in a lattice.
 		 * 
-		 * @param target			DisplayObjectContainer which parents all objects in the layout
 		 * @param width				Width of the lattice
 		 * @param height			Height of the lattice
 		 * @param columns			Number of columns in the lattice
@@ -230,8 +229,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		 * @param jitterY			Jitter multiplier for the layout's nodes on the y axis
 		 * 
 		 */		
-		public function Lattice(target:DisplayObjectContainer, 
-								width:Number, 
+		public function Lattice(width:Number, 
 								height:Number, 
 								columns:uint=1, 
 								rows:uint=1, 
@@ -245,7 +243,6 @@ package com.somerandomdude.coordy.layouts.twodee {
 								jitterY:Number=0):void
 		{
 			
-			super(target);
 			this._paddingX=hPadding;
 			this._paddingY=vPadding;
 			this._x=x;
@@ -273,22 +270,22 @@ package com.somerandomdude.coordy.layouts.twodee {
 		override public function toString():String { return LayoutType.LATTICE; }
 		
 		/**
-		 * Adds DisplayObject to layout in next available position
+		 * Adds object to layout in next available position
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */
-		override public function addToLayout(object:DisplayObject, moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode2d
+		override public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
+			if(linkExists(object)) return null;
 			if(!_allowOverflow&&size>=_maxCells) return null;
 			
 			var c:uint = (_order==LatticeOrder.ORDER_VERTICALLY) ? (size)%_columns:(size)%Math.floor(((size)/_rows));
 			var r:uint = (_order==LatticeOrder.ORDER_VERTICALLY) ? Math.floor((size)/_columns):(size)%_rows;
 			var node:GridNode = new GridNode(object, c,r);
-			//trace(c,r);
 			node.link=object;
 
 			this.addNode(node);
@@ -296,7 +293,6 @@ package com.somerandomdude.coordy.layouts.twodee {
 			this.update();
 			
 			if(moveToCoordinates) this.render();
-			if(addToStage) this.target.addChild(object);
 			
 			if(_order==LatticeOrder.ORDER_VERTICALLY) this._columns = Math.ceil(this._size/_rows);
 			else if(_order==LatticeOrder.ORDER_HORIZONTALLY) this._rows = Math.ceil(this._size/_columns);
@@ -346,7 +342,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 		*/
 		override public function clone():ILayout2d
 		{
-			return new Lattice(_target, _width, _height, _columns, _rows, _allowOverflow, _order, _paddingX, _paddingY, _x, _y, _jitterX, _jitterY);
+			return new Lattice(_width, _height, _columns, _rows, _allowOverflow, _order, _paddingX, _paddingY, _x, _y, _jitterX, _jitterY);
 		}
 		
 		/**

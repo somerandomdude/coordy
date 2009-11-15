@@ -52,10 +52,12 @@ package com.somerandomdude.coordy.nodes.threedee
 		 * @param jitterZ Node's z-jitter value
 		 * 
 		 */		
-		public function EllipseNode3d(link:DisplayObject=null, x:Number=0, y:Number=0, z:Number=0, rotation:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
+		public function EllipseNode3d(link:Object=null, x:Number=0, y:Number=0, z:Number=0, rotationX:Number=0, rotationY:Number=0, rotationZ:Number=0, jitterX:Number=0, jitterY:Number=0, jitterZ:Number=0)
 		{
 			super(link, x, y, z, jitterX, jitterY, jitterZ);
-			_rotation=rotation;
+			_rotationX=rotationX;
+			_rotationY=rotationY;
+			_rotationZ=rotationZ;
 		}
 		
 		/**
@@ -66,7 +68,7 @@ package com.somerandomdude.coordy.nodes.threedee
 		 */
 		override public function clone():INode3d 
 		{ 
-			var n:EllipseNode3d = new EllipseNode3d(link, x, y, z, rotation, jitterX, jitterY, jitterZ);
+			var n:EllipseNode3d = new EllipseNode3d(link, x, y, z, rotationX, rotationY, rotationZ, jitterX, jitterY, jitterZ);
 			return n; 
 		}		
 	}

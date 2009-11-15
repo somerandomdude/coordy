@@ -37,7 +37,7 @@ package com.somerandomdude.coordy.nodes
 	
 	public class Node implements INode
 	{
-		protected var _link:DisplayObject;
+		protected var _link:Object;
 		
 		/**
 		 * Core class for all 2d and 3d nodes
@@ -48,7 +48,7 @@ package com.somerandomdude.coordy.nodes
 		 * @param link DisplayObject to which the node reflects coordinate data
 		 * 
 		 */		
-		public function Node(link:DisplayObject=null)
+		public function Node(link:Object=null)
 		{
 			this._link=link;
 		}
@@ -58,8 +58,8 @@ package com.somerandomdude.coordy.nodes
 		 * @return DisplayObject to which the node reflects coordinate data
 		 * 
 		 */			
-		public function get link():DisplayObject { return _link; }
-		public function set link(value:DisplayObject):void { this._link=value; }
+		public function get link():Object { return _link; }
+		public function set link(value:Object):void { this._link=value; }
 			
 		/**
 		 * Packages the node as a generic object - mainly used for exporting layout data.

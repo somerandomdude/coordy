@@ -33,6 +33,7 @@ THE SOFTWARE.
  package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.Node3d;
 
 	import flash.display.DisplayObject;
@@ -44,12 +45,10 @@ THE SOFTWARE.
 		 * 
 		 * Records the x, y & z coordinates of all DisplayObjects added to the layout
 		 * 
-		 * @param target		DisplayObjectContainer which parents all objects in the layout
-		 * 
 		 */		
-		public function Snapshot3d(target:DisplayObjectContainer):void
+		public function Snapshot3d():void
 		{
-			super(target);
+			
 		}
 		
 		/**
@@ -62,21 +61,21 @@ THE SOFTWARE.
 		override public function toString():String { return LayoutType.SNAPSHOT_3D; }
 		
 		/**
-		 * Adds DisplayObject to layout in next available position
+		 * Adds object to layout in next available position
 		 *
-		 * @param  object  DisplayObject to add to layout
+		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
-		 * @param  addToStage  adds a child DisplayObject instance to target's DisplayObjectContainer instance
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */
-		override public function addToLayout(object:DisplayObject, moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
+		override public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
 		{
+			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(linkExists(object)) return null;
 			var node:Node3d = new Node3d(object,object.x,object.y,object.z);
 			this.addNode(node);
 			
 			if(moveToCoordinates) this.render();
-			if(addToStage) this._target.addChild(object);
 			
 			return node;
 		}
@@ -103,7 +102,7 @@ THE SOFTWARE.
 		*/
 		override public function clone():ILayout3d
 		{
-			return new Snapshot3d(this._target);
+			return new Snapshot3d();
 		}
 	}
 }
