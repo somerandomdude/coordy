@@ -300,6 +300,19 @@ package com.somerandomdude.coordy.layouts.threedee {
 		}
 		
 		/**
+		 * Performs the update method defined by the <em>updateMethod</em> property. Is helpful for 
+		 * for behaviors and proxy updaters to work within the defined functiality set at runtime.
+		 * 
+		 * @see com.somerandomdude.coordy.layouts.LayoutUpdateMethod
+		 * @see #updateMethod
+		 * 
+		 */
+		public function executeUpdateMethod():void
+		{
+			_updateFunction();
+		}
+		
+		/**
 		 * Performs an update on all the nodes' positions and renders each node's corresponding link
 		 * 
 		 */		

@@ -46,5 +46,7 @@ package com.somerandomdude.coordy.layouts
 		function get proxyUpdater():IProxyUpdater;
 		function set proxyUpdater(value:IProxyUpdater):void;
 		
+		function executeUpdateMethod():void;
+		
 	}
 }

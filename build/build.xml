@@ -22,6 +22,7 @@
 	  	<include-sources dir="${basedir}/src/com/serialization/json" includes="*" />
 	  <source-path path-element="${fp10_classes}" />
 	  </compc>
+	  <copy file="${basedir}/swc/coordy.swc" tofile="${basedir}/examples/libs/coordy.swc"/>	
 	  </target>
 	
 	<!-- deletes and recreates the asdoc directory -->  
@@ -33,6 +34,7 @@
 	<!-- deletes and recreates the swc directory -->  
 	    <target name="clean-swc-directory" >   
 	       <delete file="${basedir}/swc/coordy.swc" />  
+	       <delete file="${basedir}/examples/libs/coordy.swc" />  
 	    </target>
 	
 	<target name="generate-coordy-docs">

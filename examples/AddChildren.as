@@ -3,6 +3,7 @@ package
 	import com.somerandomdude.coordy.behaviors.AutoAddToLayoutBehavior;
 	import com.somerandomdude.coordy.constants.LatticeOrder;
 	import com.somerandomdude.coordy.constants.LatticeType;
+	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.layouts.twodee.Lattice;
 	
 	import flash.display.Sprite;

@@ -58,14 +58,14 @@ THE SOFTWARE.
 			if(event.target.parent!=_target) return;
 			for(var i:int=0; i<_layout.size; i++) if(event.target==_layout.nodes[i].link) return;
 			_layout.addToLayout(event.target as DisplayObject, false);
-			_layout.updateAndRender();
+			_layout.executeUpdateMethod();
 		}
 		
 		private function removedHandler(event:Event):void
 		{
 			if(event.target.parent!=_target) return;
 			_layout.removeNodeByLink(event.target as DisplayObject);
-			_layout.updateAndRender();
+			_layout.executeUpdateMethod();
 		}
 
 	}
