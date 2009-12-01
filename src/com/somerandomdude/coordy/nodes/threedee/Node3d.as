@@ -146,9 +146,9 @@ package com.somerandomdude.coordy.nodes.threedee
 			super(link);
 			this._x=x;
 			this._y=y;
+			this._z=z;
 			this._jitterX=jitterX;
 			this._jitterY=jitterY;
-			this._z=z;
 			this._jitterZ=jitterZ;
 		}
 		

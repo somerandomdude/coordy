@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../print.css" type="text/css" media="print">
-<meta content="Layout,com.somerandomdude.coordy.layouts.Layout,_nodes,_size,nodes,size,addLinkAt,addNode,addToLayout,clearNodes,getNextAvailableNode,getNodeAt,getNodeByLink,getNodeIndex,linkExists,removeAllNodes,removeLinkAt,removeLinks,removeNode,removeNodeByLink,swapNodeLinks,toJSON,toString,toXML" name="keywords">
+<meta content="Layout,com.somerandomdude.coordy.layouts.Layout,_nodes,_size,nodes,size,addLinkAt,addNode,addNodes,addToLayout,clearNodes,getNextAvailableNode,getNodeAt,getNodeByLink,getNodeIndex,linkExists,removeAllNodes,removeLinkAt,removeLinks,removeNode,removeNodeByLink,storeNode,storeNodeAt,swapNodeLinks,toJSON,toString,toXML" name="keywords">
 <title>com.somerandomdude.coordy.layouts.Layout</title>
 </head>
 <body>
@@ -36,6 +36,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 </tr>
 <tr>
 <td class="classHeaderTableLabel">Class</td><td class="classSignature">public class Layout</td>
+</tr>
+<tr>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Layout <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
 </tr>
 <tr>
 <td class="classHeaderTableLabel">Subclasses</td><td><a href="twodee/Layout2d.html">Layout2d</a>, <a href="threedee/Layout3d.html">Layout3d</a></td>
@@ -102,10 +105,28 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#addLinkAt()">addLinkAt</a>(object:DisplayObject, index:uint):void</div>
+<a class="signatureLink" href="#addLinkAt()">addLinkAt</a>(object:Object, index:uint):void</div>
 <div class="summaryTableDescription">
    Adds a link between the specified display object to the node object at the specified index
       </div>
+</td><td class="summaryTableOwnerCol">Layout</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addNode()">addNode</a>(object:Object = null, moveToCoordinates:Boolean = true):<a href="../nodes/INode.html">INode</a>
+</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">Layout</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#addNodes()">addNodes</a>(count:int):void</div>
+<div class="summaryTableDescription">
+   Adds a specified number of empty nodes to the layout
+   
+   </div>
 </td><td class="summaryTableOwnerCol">Layout</td>
 </tr>
 <tr class="">
@@ -129,7 +150,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#getNodeByLink()">getNodeByLink</a>(link:DisplayObject):<a href="../nodes/INode.html">INode</a>
+<a class="signatureLink" href="#getNodeByLink()">getNodeByLink</a>(link:Object):<a href="../nodes/INode.html">INode</a>
 </div>
 <div class="summaryTableDescription">
    Returns node object by specified display object
@@ -158,7 +179,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#removeAllNodes()">removeAllNodes</a>():void</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Removes all nodes from the layout
+   </div>
 </td><td class="summaryTableOwnerCol">Layout</td>
 </tr>
 <tr class="">
@@ -191,8 +214,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#removeNodeByLink()">removeNodeByLink</a>(link:DisplayObject):void</div>
-<div class="summaryTableDescription"></div>
+<a class="signatureLink" href="#removeNodeByLink()">removeNodeByLink</a>(link:Object):void</div>
+<div class="summaryTableDescription">
+   Removes the node that is linked to the specified object
+   
+   </div>
 </td><td class="summaryTableOwnerCol">Layout</td>
 </tr>
 <tr class="">
@@ -239,14 +265,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="#addNode()">addNode</a>(node:<a href="../nodes/INode.html">INode</a>):int</div>
-<div class="summaryTableDescription">
-   </div>
-</td><td class="summaryTableOwnerCol">Layout</td>
-</tr>
-<tr class="">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
 <a class="signatureLink" href="#clearNodes()">clearNodes</a>():void</div>
 <div class="summaryTableDescription">
    </div>
@@ -257,6 +275,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="#getNextAvailableNode()">getNextAvailableNode</a>():<a href="../nodes/INode.html">INode</a>
 </div>
+<div class="summaryTableDescription">
+   </div>
+</td><td class="summaryTableOwnerCol">Layout</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#storeNode()">storeNode</a>(node:<a href="../nodes/INode.html">INode</a>):int</div>
+<div class="summaryTableDescription">
+   </div>
+</td><td class="summaryTableOwnerCol">Layout</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="#storeNodeAt()">storeNodeAt</a>(node:<a href="../nodes/INode.html">INode</a>, index:int):int</div>
 <div class="summaryTableDescription">
    </div>
 </td><td class="summaryTableOwnerCol">Layout</td>
@@ -338,12 +372,12 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function addLinkAt(object:DisplayObject, index:uint):void</code><p>
+<code>public function addLinkAt(object:Object, index:uint):void</code><p>
    Adds a link between the specified display object to the node object at the specified index
       </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">object</span>:DisplayObject</code> &mdash; object item to add to collection
+<td width="20px"></td><td><code><span class="label">object</span>:Object</code> &mdash; object item to add to collection
    </td>
 </tr>
 <tr>
@@ -362,18 +396,41 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>protected function addNode(node:<a href="../nodes/INode.html">INode</a>):int</code><p>
-   </p><span class="label">Parameters</span>
+<code>public function addNode(object:Object = null, moveToCoordinates:Boolean = true):<a href="../nodes/INode.html">INode</a></code><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">node</span>:<a href="../nodes/INode.html">INode</a></code></td>
+<td width="20px"></td><td><code><span class="label">object</span>:Object</code> (default = <code>null</code>)<code></code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">moveToCoordinates</span>:Boolean</code> (default = <code>true</code>)<code></code></td>
 </tr>
 </table>
 <p></p>
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20"></td><td><code>int</code></td>
+<td width="20"></td><td><code><a href="../nodes/INode.html">INode</a></code></td>
+</tr>
+</table>
+</div>
+<a name="addNodes()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">addNodes</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>public function addNodes(count:int):void</code><p>
+   Adds a specified number of empty nodes to the layout
+   
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">count</span>:int</code> &mdash; The number of nodes to add to the layout 
+  </td>
 </tr>
 </table>
 </div>
@@ -468,12 +525,12 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function getNodeByLink(link:DisplayObject):<a href="../nodes/INode.html">INode</a></code><p>
+<code>public function getNodeByLink(link:Object):<a href="../nodes/INode.html">INode</a></code><p>
    Returns node object by specified display object
       </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">link</span>:DisplayObject</code> &mdash; link  an absolute URL giving the base location of the image
+<td width="20px"></td><td><code><span class="label">link</span>:Object</code> &mdash; link  an absolute URL giving the base location of the image
    </td>
 </tr>
 </table>
@@ -558,8 +615,9 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function removeAllNodes():void</code>
-</div>
+<code>public function removeAllNodes():void</code><p>
+   Removes all nodes from the layout
+   </p></div>
 <a name="removeLinkAt()"></a>
 <table cellspacing="0" cellpadding="0" class="detailHeader">
 <tr>
@@ -611,10 +669,63 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function removeNodeByLink(link:DisplayObject):void</code><span class="label">Parameters</span>
+<code>public function removeNodeByLink(link:Object):void</code><p>
+   Removes the node that is linked to the specified object
+   
+   </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">link</span>:DisplayObject</code></td>
+<td width="20px"></td><td><code><span class="label">link</span>:Object</code></td>
+</tr>
+</table>
+</div>
+<a name="storeNode()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">storeNode</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function storeNode(node:<a href="../nodes/INode.html">INode</a>):int</code><p>
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">node</span>:<a href="../nodes/INode.html">INode</a></code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>int</code></td>
+</tr>
+</table>
+</div>
+<a name="storeNodeAt()"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">storeNodeAt</td><td class="detailHeaderParens">()</td><td class="detailHeaderType">method</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>protected function storeNodeAt(node:<a href="../nodes/INode.html">INode</a>, index:int):int</code><p>
+   </p><span class="label">Parameters</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20px"></td><td><code><span class="label">node</span>:<a href="../nodes/INode.html">INode</a></code></td>
+</tr>
+<tr>
+<td class="paramSpacer">&nbsp;</td>
+</tr>
+<tr>
+<td width="20px"></td><td><code><span class="label">index</span>:int</code></td>
+</tr>
+</table>
+<p></p>
+<span class="label">Returns</span>
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td width="20"></td><td><code>int</code></td>
 </tr>
 </table>
 </div>
@@ -667,7 +778,7 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function toString():String</code>
+<code>public override function toString():String</code>
 <p></p>
 <span class="label">Returns</span>
 <table border="0" cellspacing="0" cellpadding="0">

@@ -4,7 +4,7 @@
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="../../../../../style.css" type="text/css" media="screen">
 <link rel="stylesheet" href="../../../../../print.css" type="text/css" media="print">
-<meta content="ILayout3d,com.somerandomdude.coordy.layouts.threedee.ILayout3d,depth,height,width,x,y,z,clone,renderNode" name="keywords">
+<meta content="ILayout3d,com.somerandomdude.coordy.layouts.threedee.ILayout3d,depth,height,jitterX,jitterY,jitterZ,width,x,y,z,clone,renderNode" name="keywords">
 <title>com.somerandomdude.coordy.layouts.threedee.ILayout3d</title>
 </head>
 <body>
@@ -38,7 +38,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <td class="classHeaderTableLabel">Interface</td><td class="classSignature">public interface ILayout3d extends <a href="../ILayout.html">ILayout</a>, <a href="../ICoreLayout.html">ICoreLayout</a></td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Implementors</td><td><a href="../threedee/Ellipse3d.html">Ellipse3d</a>, <a href="../threedee/Grid3d.html">Grid3d</a>, <a href="../threedee/Layout3d.html">Layout3d</a>, <a href="../threedee/Scatter3d.html">Scatter3d</a>, <a href="../threedee/Snapshot3d.html">Snapshot3d</a>, <a href="../threedee/Spheroid3d.html">Spheroid3d</a>, <a href="../threedee/Stack3d.html">Stack3d</a>, <a href="../threedee/Wave3d.html">Wave3d</a>, <a href="../threedee/WaveEllipse3d.html">WaveEllipse3d</a></td>
+<td class="classHeaderTableLabel">Implementors</td><td><a href="../threedee/Ellipse3d.html">Ellipse3d</a>, <a href="../threedee/Grid3d.html">Grid3d</a>, <a href="../threedee/Layout3d.html">Layout3d</a>, <a href="../threedee/Scatter3d.html">Scatter3d</a>, <a href="../threedee/Spheroid3d.html">Spheroid3d</a>, <a href="../threedee/Stack3d.html">Stack3d</a>, <a href="../threedee/Wave3d.html">Wave3d</a>, <a href="../threedee/WaveEllipse3d.html">WaveEllipse3d</a></td>
 </tr>
 </table>
 <p></p>
@@ -67,6 +67,18 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 </tr>
 <tr class="">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#height">height</a> : Number<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">ILayout3d</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#jitterX">jitterX</a> : Number<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">ILayout3d</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#jitterY">jitterY</a> : Number<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol">ILayout3d</td>
+</tr>
+<tr class="">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol"><a class="signatureLink" href="#jitterZ">jitterZ</a> : Number<div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol">ILayout3d</td>
 </tr>
 <tr class="hideInheritedProperty">
@@ -122,7 +134,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../ICoreLayout.html#addLinkAt()">addLinkAt</a>(object:DisplayObject, index:uint):void</div>
+<a class="signatureLink" href="../ICoreLayout.html#addLinkAt()">addLinkAt</a>(object:Object, index:uint):void</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="../ICoreLayout.html">ICoreLayout</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../ICoreLayout.html#addNode()">addNode</a>(object:Object = null, moveToCoordinates:Boolean = true):<a href="../../nodes/INode.html">INode</a>
+</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="../ICoreLayout.html">ICoreLayout</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../ICoreLayout.html#addNodes()">addNodes</a>(count:int):void</div>
 <div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="../ICoreLayout.html">ICoreLayout</a></td>
 </tr>
@@ -160,7 +187,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../ICoreLayout.html#getNodeByLink()">getNodeByLink</a>(link:DisplayObject):<a href="../../nodes/INode.html">INode</a>
+<a class="signatureLink" href="../ICoreLayout.html#getNodeByLink()">getNodeByLink</a>(link:Object):<a href="../../nodes/INode.html">INode</a>
 </div>
 <div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="../ICoreLayout.html">ICoreLayout</a></td>
@@ -196,7 +223,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../ICoreLayout.html#removeNodeByLink()">removeNodeByLink</a>(object:DisplayObject):void</div>
+<a class="signatureLink" href="../ICoreLayout.html#removeNodeByLink()">removeNodeByLink</a>(object:Object):void</div>
 <div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="../ICoreLayout.html">ICoreLayout</a></td>
 </tr>
@@ -291,6 +318,48 @@ showHideInherited();
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function get height():Number</code>
 <br>
 <code>&nbsp;&nbsp;&nbsp;&nbsp;public function set height(value:Number):void</code>
+<br>
+</div>
+<a name="jitterX"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">jitterX</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>jitterX:Number</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get jitterX():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set jitterX(value:Number):void</code>
+<br>
+</div>
+<a name="jitterY"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">jitterY</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>jitterY:Number</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get jitterY():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set jitterY(value:Number):void</code>
+<br>
+</div>
+<a name="jitterZ"></a>
+<table cellspacing="0" cellpadding="0" class="detailHeader">
+<tr>
+<td class="detailHeaderName">jitterZ</td><td class="detailHeaderType">property</td><td class="detailHeaderRule">&nbsp;</td>
+</tr>
+</table>
+<div class="detailBody">
+<code>jitterZ:Number</code>&nbsp;&nbsp;[read-write]<span class="label">Implementation</span>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function get jitterZ():Number</code>
+<br>
+<code>&nbsp;&nbsp;&nbsp;&nbsp;public function set jitterZ(value:Number):void</code>
 <br>
 </div>
 <a name="width"></a>

@@ -38,13 +38,13 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="classHeaderTableLabel">Class</td><td class="classSignature">public class Layout2d</td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Layout2d <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../images/inherit-arrow.gif"> <a href="../Layout.html">Layout</a></td>
+<td class="classHeaderTableLabel">Inheritance</td><td class="inheritanceList">Layout2d <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../images/inherit-arrow.gif"> <a href="../Layout.html">Layout</a> <img class="inheritArrow" alt="Inheritance" title="Inheritance" src="../../../../../images/inherit-arrow.gif"> flash.events.EventDispatcher</td>
 </tr>
 <tr>
 <td class="classHeaderTableLabel">Implements</td><td><a href="ILayout2d.html">ILayout2d</a></td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Subclasses</td><td><a href="../twodee/Ellipse.html">Ellipse</a>, <a href="../twodee/Flow.html">Flow</a>, <a href="../twodee/Grid.html">Grid</a>, <a href="../twodee/HorizontalLine.html">HorizontalLine</a>, <a href="../twodee/Lattice.html">Lattice</a>, <a href="../twodee/Scatter.html">Scatter</a>, <a href="../twodee/Snapshot.html">Snapshot</a>, <a href="../twodee/Spiral.html">Spiral</a>, <a href="../twodee/Stack.html">Stack</a>, <a href="../twodee/VerticalLine.html">VerticalLine</a>, <a href="../twodee/Wave.html">Wave</a></td>
+<td class="classHeaderTableLabel">Subclasses</td><td><a href="../twodee/Ellipse.html">Ellipse</a>, <a href="../twodee/Flow.html">Flow</a>, <a href="../twodee/Grid.html">Grid</a>, <a href="../twodee/HorizontalLine.html">HorizontalLine</a>, <a href="../twodee/Lattice.html">Lattice</a>, <a href="../twodee/Scatter.html">Scatter</a>, <a href="../twodee/Spiral.html">Spiral</a>, <a href="../twodee/Stack.html">Stack</a>, <a href="../twodee/VerticalLine.html">VerticalLine</a>, <a href="../twodee/Wave.html">Wave</a></td>
 </tr>
 </table>
 <p></p>
@@ -229,10 +229,28 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../Layout.html#addLinkAt()">addLinkAt</a>(object:DisplayObject, index:uint):void</div>
+<a class="signatureLink" href="../Layout.html#addLinkAt()">addLinkAt</a>(object:Object, index:uint):void</div>
 <div class="summaryTableDescription">
    Adds a link between the specified display object to the node object at the specified index
       </div>
+</td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../Layout.html#addNode()">addNode</a>(object:Object = null, moveToCoordinates:Boolean = true):<a href="../../nodes/INode.html">INode</a>
+</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../Layout.html#addNodes()">addNodes</a>(count:int):void</div>
+<div class="summaryTableDescription">
+   Adds a specified number of empty nodes to the layout
+   
+   </div>
 </td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
 </tr>
 <tr class="">
@@ -276,7 +294,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../Layout.html#getNodeByLink()">getNodeByLink</a>(link:DisplayObject):<a href="../../nodes/INode.html">INode</a>
+<a class="signatureLink" href="../Layout.html#getNodeByLink()">getNodeByLink</a>(link:Object):<a href="../../nodes/INode.html">INode</a>
 </div>
 <div class="summaryTableDescription">
    Returns node object by specified display object
@@ -305,7 +323,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="../Layout.html#removeAllNodes()">removeAllNodes</a>():void</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Removes all nodes from the layout
+   </div>
 </td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
 </tr>
 <tr class="hideInheritedMethod">
@@ -338,8 +358,11 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../Layout.html#removeNodeByLink()">removeNodeByLink</a>(link:DisplayObject):void</div>
-<div class="summaryTableDescription"></div>
+<a class="signatureLink" href="../Layout.html#removeNodeByLink()">removeNodeByLink</a>(link:Object):void</div>
+<div class="summaryTableDescription">
+   Removes the node that is linked to the specified object
+   
+   </div>
 </td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
 </tr>
 <tr class="">
@@ -430,14 +453,6 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <tr class="hideInheritedProtectedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="../Layout.html#addNode()">addNode</a>(node:<a href="../../nodes/INode.html">INode</a>):int</div>
-<div class="summaryTableDescription">
-   </div>
-</td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
-</tr>
-<tr class="hideInheritedProtectedMethod">
-<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
-<div class="summarySignature">
 <a class="signatureLink" href="../Layout.html#clearNodes()">clearNodes</a>():void</div>
 <div class="summaryTableDescription">
    </div>
@@ -448,6 +463,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <div class="summarySignature">
 <a class="signatureLink" href="../Layout.html#getNextAvailableNode()">getNextAvailableNode</a>():<a href="../../nodes/INode.html">INode</a>
 </div>
+<div class="summaryTableDescription">
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../Layout.html#storeNode()">storeNode</a>(node:<a href="../../nodes/INode.html">INode</a>):int</div>
+<div class="summaryTableDescription">
+   </div>
+</td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>
+</tr>
+<tr class="hideInheritedProtectedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="../Layout.html#storeNodeAt()">storeNodeAt</a>(node:<a href="../../nodes/INode.html">INode</a>, index:int):int</div>
 <div class="summaryTableDescription">
    </div>
 </td><td class="summaryTableOwnerCol"><a href="../Layout.html">Layout</a></td>

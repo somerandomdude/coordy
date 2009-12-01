@@ -27,22 +27,23 @@ package com.somerandomdude.coordy.layouts
 	import com.somerandomdude.coordy.nodes.INode;
 	
 	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 	
 	public interface ICoreLayout
 	{
 		function get nodes():Array;
 		function get size():int;
 		
+		function addNodes(count:int):void;
+		function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode;
 		function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode;
-		function getNodeByLink(link:DisplayObject):INode;
+		function getNodeByLink(link:Object):INode;
 		function getNodeIndex(node:INode):uint;
 		function getNodeAt(index:uint):INode;
-		function addLinkAt(object:DisplayObject, index:uint):void;
+		function addLinkAt(object:Object, index:uint):void;
 		function removeLinks():void;
 		function removeLinkAt(index:uint):void;
 		function removeNode(node:INode):void;
-		function removeNodeByLink(object:DisplayObject):void;
+		function removeNodeByLink(object:Object):void;
 		function swapNodeLinks(nodeTo:INode, nodeFrom:INode):void;
 		
 		function updateAndRender():void;

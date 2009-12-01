@@ -1,52 +1,45 @@
-package
+package conceptsbasic
 {
 	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.helpers.SimpleZSorter;
 	import com.somerandomdude.coordy.layouts.threedee.Ellipse3d;
 	
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 
 	public class UpdateMethods extends Sprite
 	{
+		public static const SIZE:int=100;
+		public static const LAYOUT_WIDTH:Number=750;
+		public static const LAYOUT_HEIGHT:Number=350;
+		
 		private var _ellipse3d:Ellipse3d;
-		private var _size:int;
-		private var _caption:Text;
 		private var _updateLabel:Label;
 		
 		public function UpdateMethods()
 		{
-			stage.scaleMode=StageScaleMode.NO_SCALE;
-			stage.align=StageAlign.TOP_LEFT;
-			init();
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
 		
 		private function init():void
 		{
-			_size=100;
 			/* 
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_ellipse3d = new Ellipse3d(360, 360, 200, 200, 0, 0, 1);
+			_ellipse3d = new Ellipse3d(360, 360, LAYOUT_WIDTH/2, LAYOUT_HEIGHT/2, 0, 0, 1);
 			_ellipse3d.updateMethod=LayoutUpdateMethod.NONE;
 
-			var s:Square;
-			for(var i:int=0; i<_size; i++)
+			var c:Circle;
+			for(var i:int=0; i<SIZE; i++)
 			{
-				s = new Square();
-				_ellipse3d.addToLayout(s, false);
-				addChild(s);
+				c = new Circle(10);
+				_ellipse3d.addToLayout(c, false);
+				addChild(c);
 			}
 			
 			stage.addEventListener(MouseEvent.CLICK, clickHandler);
-			
-			_caption = new Text();
-			_caption.text='Am example of how to use different layout updating methods. See source code of UpdateMethods.as for details';
-			_caption.y=400;
-			addChild(_caption);
 			
 			_updateLabel = new Label();
 			addChild(_updateLabel);
@@ -71,6 +64,11 @@ package
 			
 		}
 		
+		private function addedToStageHandler(event:Event):void
+		{
+			init();
+		}
+		
 		private function updateAndRender():void
 		{
 			/*
@@ -81,8 +79,6 @@ package
 			*/
 			_updateLabel.text='Updated with LayoutUpdateMode.UPDATE_AND_RENDER';
 			
-			var x:Number=Math.random()*50+175;
-			var y:Number=Math.random()*50+175;
 			var width:Number=100+Math.random()*200;
 			var height:Number=100+Math.random()*200;
 			var depth:Number=100+Math.random()*200;
@@ -92,8 +88,6 @@ package
 			
 			_ellipse3d.updateMethod=LayoutUpdateMethod.UPDATE_AND_RENDER;
 			
-			_ellipse3d.x=x;
-			_ellipse3d.y=y;
 			_ellipse3d.width=width;
 			_ellipse3d.depth=depth;
 			_ellipse3d.rotationX=rotationX;
@@ -111,8 +105,6 @@ package
 			*/
 			_updateLabel.text='Updated with LayoutUpdateMode.UPDATE_ONLY';
 			
-			var x:Number=Math.random()*50+175;
-			var y:Number=Math.random()*50+175;
 			var width:Number=100+Math.random()*200;
 			var height:Number=100+Math.random()*200;
 			var depth:Number=100+Math.random()*200;
@@ -122,9 +114,6 @@ package
 			
 			_ellipse3d.updateMethod=LayoutUpdateMethod.UPDATE_ONLY;
 			
-			
-			_ellipse3d.x=x;
-			_ellipse3d.y=y;
 			_ellipse3d.width=width;
 			_ellipse3d.depth=depth;
 			_ellipse3d.rotationX=rotationX;
@@ -145,8 +134,6 @@ package
 			*/
 			_updateLabel.text='Updated with LayoutUpdateMode.NONE';
 			
-			var x:Number=Math.random()*50+175;
-			var y:Number=Math.random()*50+175;
 			var width:Number=100+Math.random()*200;
 			var height:Number=100+Math.random()*200;
 			var depth:Number=100+Math.random()*200;
@@ -155,9 +142,7 @@ package
 			var rotationZ:Number=Math.random()*360;
 			
 			_ellipse3d.updateMethod=LayoutUpdateMethod.NONE;
-			
-			_ellipse3d.x=x;
-			_ellipse3d.y=y;
+
 			_ellipse3d.width=width;
 			_ellipse3d.depth=depth;
 			_ellipse3d.rotationX=rotationX;
@@ -173,19 +158,21 @@ package
 
 import flash.display.Shape;
 import flash.text.TextField;
-import flash.text.engine.Kerning;
-import flash.text.AntiAliasType;
 import flash.text.TextFormat;
-import flash.text.TextFieldAutoSize;
+import flash.text.AntiAliasType;
+import flash.text.TextFieldAutoSize;	
 
-internal class Square extends Shape
+internal class Circle extends Shape
 {
-	public function Square():void
+	public function Circle(radius:Number)
 	{
-		graphics.lineStyle(1);
-		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(-10, -10, 20, 20);
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.beginFill(0xded3d1, .75);
+		graphics.drawCircle(0, 0, radius);
 		graphics.endFill();
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.moveTo(0,0);
+		graphics.lineTo(0, radius);
 	}
 }
 
@@ -198,7 +185,6 @@ internal class Text extends TextField
 		_format = new TextFormat();
 		_format.font='Arial';
 		_format.size=11;
-		_format.kerning=Kerning.ON;
 	
 		textColor=0x333333;
 		antiAliasType=AntiAliasType.ADVANCED;

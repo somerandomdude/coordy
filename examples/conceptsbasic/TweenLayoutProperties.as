@@ -1,29 +1,28 @@
-package
+package conceptsbasic
 {
-	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.layouts.threedee.Wave3d;
-	import com.somerandomdude.coordy.proxyupdaters.InvalidationZSortUpdaterProxy;
+	import com.somerandomdude.coordy.proxyupdaters.InvalidationZSortProxyUpdater;
 	
 	import fl.motion.easing.Cubic;
 	import fl.transitions.Tween;
 	
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	public class TweenLayoutProperties extends Sprite
 	{
+		public static const SIZE:int=100;
+		public static const LAYOUT_WIDTH:Number=750;
+		public static const LAYOUT_HEIGHT:Number=350;
+		
 		private var _wave3d:Wave3d;
-		private var _caption:Text;
 		private var _tweens:Array;
 		
 		public function TweenLayoutProperties()
 		{
-			stage.scaleMode=StageScaleMode.NO_SCALE;
-			stage.align=StageAlign.TOP_LEFT;
-			init();
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
 		
 		private function init():void
@@ -32,7 +31,7 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_wave3d = new Wave3d(400, 300, 300);
+			_wave3d = new Wave3d(LAYOUT_WIDTH-40, LAYOUT_HEIGHT-40, LAYOUT_HEIGHT-40, 20, LAYOUT_HEIGHT/2);
 			
 			/*
 			* The proxyUpdater property is a alternate method of defining how you would like 
@@ -43,7 +42,7 @@ package
 			* uses a potentially more efficent manner of updating by taking advantage of the stage.invalidate()
 			* method in addition to running a Z-Sorting routine on all objects in the layout
 			*/
-			_wave3d.proxyUpdater=new InvalidationZSortUpdaterProxy(this, _wave3d);
+			_wave3d.proxyUpdater=new InvalidationZSortProxyUpdater(this, _wave3d);
 			
 			/*
 			 * Wave layouts are centered along the middle y axis of the wave. So setting the layout to 
@@ -51,20 +50,15 @@ package
 			*/
 			_wave3d.y=200;
 			
-			var s:Square;
-			for(var i:int=0; i<100; i++)
+			var c:Circle;
+			for(var i:int=0; i<SIZE; i++)
 			{
-				s = new Square();
-				_wave3d.addToLayout(s, false);
-				addChild(s);
+				c = new Circle(10);
+				_wave3d.addToLayout(c, false);
+				addChild(c);
 			}
 			_wave3d.updateAndRender();
 			_wave3d.alignType=PathAlignType.ALIGN_PARALLEL;
-			
-			_caption = new Text();
-			_caption.text='A basic example of tweening a layout\'s properties. Click anywhere to tween the layout randomly';
-			_caption.y=400;
-			addChild(_caption);
 			
 			stage.addEventListener(MouseEvent.CLICK, clickHandler);
 		}
@@ -74,10 +68,9 @@ package
 			if(_tweens) clearTweens();
 			_tweens=new Array();
 			
-			var width:Number=200+Math.random()*200;
-			var height:Number=100+Math.random()*200;
+			var width:Number=500+Math.random()*200;
+			var height:Number=200+Math.random()*200;
 			var depth:Number=200+Math.random()*200;
-			var x:Number=Math.random()*50;
 			var frequency:Number=Math.random()*5;
 			var rotation:Number=Math.random()*360;
 			
@@ -92,7 +85,7 @@ package
 			* I highly suggest using basically anything other than this class for normal circumstances 
 			* as most third party tween engines could tween all these properties in one call.
 			*/
-			_tweens.push(new Tween(_wave3d, 'x', Cubic.easeInOut, _wave3d.x, x, 3, true));
+			_tweens.push(new Tween(_wave3d, 'x', Cubic.easeInOut, _wave3d.x, (LAYOUT_WIDTH-width)/2, 3, true));
 			_tweens.push(new Tween(_wave3d, 'width', Cubic.easeInOut, _wave3d.width, width, 3, true));
 			_tweens.push(new Tween(_wave3d, 'height', Cubic.easeInOut, _wave3d.height, height, 3, true));
 			_tweens.push(new Tween(_wave3d, 'depth', Cubic.easeInOut, _wave3d.depth, depth, 3, true));
@@ -115,44 +108,26 @@ package
 		{
 			tweenLayout();
 		}
+		
+		private function addedToStageHandler(event:Event):void
+		{
+			init();
+		}
 	}
 }
 
-import flash.display.Shape;
-import flash.text.TextField;
-import flash.text.TextFormat;
-import flash.text.TextFieldAutoSize;
-import flash.text.engine.Kerning;
-import flash.text.AntiAliasType;
+import flash.display.Shape;	
 
-internal class Square extends Shape
+internal class Circle extends Shape
 {
-	public function Square():void
+	public function Circle(radius:Number)
 	{
-		graphics.lineStyle(1);
-		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(-10, -10, 20, 20);
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.beginFill(0xded3d1, .75);
+		graphics.drawCircle(0, 0, radius);
 		graphics.endFill();
-	}
-}
-
-internal class Text extends TextField
-{
-	private var _format:TextFormat;
-	
-	public function Text()
-	{
-		_format = new TextFormat();
-		_format.font='Arial';
-		_format.size=11;
-		_format.kerning=Kerning.ON;
-	
-		textColor=0x333333;
-		antiAliasType=AntiAliasType.ADVANCED;
-		wordWrap=true;
-		multiline=true;
-		autoSize=TextFieldAutoSize.LEFT;
-		width=400;
-		defaultTextFormat=_format;
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.moveTo(0,0);
+		graphics.lineTo(0, radius);
 	}
 }

@@ -44,6 +44,14 @@ THE SOFTWARE.
 		private var _target:DisplayObjectContainer;
 		private var _layout:ILayout;
 		
+		/**
+		 * Allows for DisplayObjects to be automatically added/removed from a layout when they are added/removed 
+		 * from a DisplayObjectContainer's display list.
+		 * 
+		 * @param target 		DisplayObjectContainer to monitor for children being added/removed
+		 * @param layout 		The layout to add/remove nodes from
+		 * 
+		 */		
 		public function AutoAddToLayoutBehavior(target:DisplayObjectContainer, layout:ILayout)
 		{
 			_target=target;
@@ -53,6 +61,9 @@ THE SOFTWARE.
 			_target.addEventListener(Event.REMOVED, removedHandler);
 		}
 		
+		/**
+		 * @private 
+		 */
 		private function addedHandler(event:Event):void
 		{
 			if(event.target.parent!=_target) return;
@@ -61,6 +72,9 @@ THE SOFTWARE.
 			_layout.executeUpdateMethod();
 		}
 		
+		/**
+		 * @private 
+		 */	
 		private function removedHandler(event:Event):void
 		{
 			if(event.target.parent!=_target) return;

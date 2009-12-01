@@ -1,4 +1,4 @@
-package
+package conceptsbasic
 {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.layouts.ILayout;
@@ -14,6 +14,10 @@ package
 
 	public class SwapLayouts extends Sprite
 	{
+		public static const SIZE:int=60;
+		public static const LAYOUT_WIDTH:Number=750;
+		public static const LAYOUT_HEIGHT:Number=350;
+		
 		private var _stack:Stack;
 		private var _verticalLine:VerticalLine;
 		private var _horizontalLine:HorizontalLine;
@@ -23,31 +27,26 @@ package
 		private var _stackButton:LayoutButton;
 		private var _verticalLineButton:LayoutButton;
 		private var _horizontalLineButton:LayoutButton;
-		private var _caption:Text;
 		
 		public function SwapLayouts()
 		{
-			stage.scaleMode=StageScaleMode.NO_SCALE;
-			stage.align=StageAlign.TOP_LEFT;
 			init();
 		}
 		
 		private function init():void
 		{
-			_size=60;
-			
 			/* 
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_stack = new Stack(135, 6, 350, 50);
-			_verticalLine = new VerticalLine(3, 200, 0);
-			_horizontalLine = new HorizontalLine(3, 0, 200);
+			_stack = new Stack(135, 6, 500, 50);
+			_verticalLine = new VerticalLine(3, LAYOUT_WIDTH/2, 0);
+			_horizontalLine = new HorizontalLine(3, 0, LAYOUT_HEIGHT/2);
 			
-			var s:Square;
-			for(var i:int=0; i<_size; i++)
+			var c:Circle;
+			for(var i:int=0; i<SIZE; i++)
 			{
-				s = new Square();
+				c = new Circle(10);
 				
 				/*
 				* The more layout instances that are having items added to themselves, the 
@@ -55,10 +54,10 @@ package
 				* new node's position. It is advised to set the 'moveToCoordinates' property 
 				* to 'false'.
 				*/
-				_stack.addToLayout(s, false);
-				_verticalLine.addToLayout(s, false);
-				_horizontalLine.addToLayout(s, false);
-				addChild(s);
+				_stack.addNode(c, false);
+				_verticalLine.addNode(c, false);
+				_horizontalLine.addNode(c, false);
+				addChild(c);
 			}
 		
 			/*
@@ -83,14 +82,9 @@ package
 			 * Ironically, this button layout is a prime case where a VerticalLine layout could 
 			 * be helpful...
 			*/
-			_stackButton.y=0;
-			_verticalLineButton.y=30;
-			_horizontalLineButton.y=60;
-			
-			_caption = new Text();
-			_caption.text='An example of how to manage multiple layouts sharing the same DisplayObjects';
-			_caption.y=400;
-			addChild(_caption);
+			_stackButton.x=20, _stackButton.y=20;
+			_verticalLineButton.x=20, _verticalLineButton.y=50;
+			_horizontalLineButton.x=20, _horizontalLineButton.y=80;
 			
 		}
 		
@@ -189,34 +183,16 @@ internal class LayoutButton extends Sprite
 	}
 }
 
-internal class Square extends Shape
+internal class Circle extends Shape
 {
-	public function Square():void
+	public function Circle(radius:Number)
 	{
-		graphics.lineStyle(1);
-		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(-10, -10, 20, 20);
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.beginFill(0xded3d1, .75);
+		graphics.drawCircle(0, 0, radius);
 		graphics.endFill();
-	}
-}
-
-internal class Text extends TextField
-{
-	private var _format:TextFormat;
-	
-	public function Text()
-	{
-		_format = new TextFormat();
-		_format.font='Arial';
-		_format.size=11;
-		_format.kerning=Kerning.ON;
-	
-		textColor=0x333333;
-		antiAliasType=AntiAliasType.ADVANCED;
-		wordWrap=true;
-		multiline=true;
-		autoSize=TextFieldAutoSize.LEFT;
-		width=400;
-		defaultTextFormat=_format;
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.moveTo(0,0);
+		graphics.lineTo(0, radius);
 	}
 }

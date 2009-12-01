@@ -38,17 +38,24 @@ THE SOFTWARE.
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	
-	import flash.geom.Matrix3D;
-	
-	public class InvalidationUpdaterProxy implements IProxyUpdater
+	public class InvalidationProxyUpdater implements IProxyUpdater
 	{
 		public static const NAME:String='invalidationUpdaterProxy';
 		private var _target:DisplayObjectContainer;
 		private var _layout:ILayout;
 		
-		public function InvalidationUpdaterProxy(target:DisplayObjectContainer, layout:ILayout)
+		/**
+		 * Performs a potentially more efficent method of rendering items on a stage by using 
+		 * <em>stage.invalidate()</em> when the specified layout is modified.
+		 * 
+		 * @param target 		DisplayObjectContainer with reference to the stage
+		 * @param layout 		The layout to apply changes to
+		 * 
+		 */
+		public function InvalidationProxyUpdater(target:DisplayObjectContainer, layout:ILayout)
 		{
 			_target=target;
+			_target.addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 			_layout=layout;
 			
 			_layout.proxyUpdater=this;
@@ -67,10 +74,21 @@ THE SOFTWARE.
 			_target.stage.invalidate();
 		}
 		
+		/**
+		 * @private 
+		 */
 		private function renderHandler(event:Event):void
 		{
 			_target.stage.removeEventListener(Event.RENDER, renderHandler);
 			_layout.updateAndRender();			
+		}
+		
+		/**
+		 * @private 
+		 */
+		private function addedToStageHandler(event:Event):void
+		{
+			update();
 		}
 
 	}

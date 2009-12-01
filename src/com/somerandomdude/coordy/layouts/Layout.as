@@ -36,8 +36,9 @@ package com.somerandomdude.coordy.layouts
 	import com.somerandomdude.coordy.nodes.INode;
 	
 	import flash.display.DisplayObject;
+	import flash.events.EventDispatcher;
 	
-	public class Layout
+	public class Layout extends EventDispatcher
 	{
 		
 		protected var _nodes:Array;
@@ -66,7 +67,7 @@ package com.somerandomdude.coordy.layouts
 			this._size=0;
 		}
 		
-		public function toString():String { return ""; }
+		override public function toString():String { return ""; }
 		
 		/**
 		 * Serializes the layout data of each node as a JSON string. Includes the 'type', 'size' and 'nodes' properties.
@@ -92,7 +93,24 @@ package com.somerandomdude.coordy.layouts
 		
 		public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
 		{
+			throw(new Error('Method must be overriden by child class'));
 			return null;
+		}
+		
+		public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			throw(new Error('Method must be overriden by child class'));
+			return null;
+		}
+		
+		/**
+		 * Adds a specified number of empty nodes to the layout
+		 * 
+		 * @param count The number of nodes to add to the layout 
+		*/
+		public function addNodes(count:int):void
+		{
+			for(var i:int=0; i<count; i++) addNode();
 		}
 		
 		/**
@@ -127,7 +145,7 @@ package com.somerandomdude.coordy.layouts
 		 * @return      the node object which the display object is linked to
 		 * @see         INode
 		 */
-		public function getNodeByLink(link:DisplayObject):INode
+		public function getNodeByLink(link:Object):INode
 		{
 			for(var i:int;i<this._nodes.length;i++)
 			{
@@ -220,13 +238,21 @@ package com.somerandomdude.coordy.layouts
 			this._size--;
 		}
 		
+		/**
+		 * Removes all nodes from the layout
+		 */
 		public function removeAllNodes():void
 		{
 			this.clearNodes();
 			this._size=0;
 		}
 		
-		public function removeNodeByLink(link:DisplayObject):void
+		/**
+		 * Removes the node that is linked to the specified object
+		 * 
+		 * @param link 
+		 */
+		public function removeNodeByLink(link:Object):void
 		{
 			for(var i:int=0; i<_size; i++)
 			{
@@ -234,14 +260,13 @@ package com.somerandomdude.coordy.layouts
 			}
 		}
 		
-		
 		/**
 		 * Adds a link between the specified display object to the node object at the specified index
 		 *
 		 * @param  object	item to add to collection
 		 * @param  index		position where to add the item
 		 */
-		public function addLinkAt(object:DisplayObject, index:uint):void
+		public function addLinkAt(object:Object, index:uint):void
 		{
 			_nodes[index].link=object;
 		}
@@ -249,11 +274,25 @@ package com.somerandomdude.coordy.layouts
 		/**
 		 * @protected 
 		 */		
-		protected function addNode(node:INode):int
+		protected function storeNode(node:INode):int
 		{
 			if(!this._nodes) this._nodes=new Array();
 			this._nodes.push(node);
 			this._size++;
+			
+			return size;
+		}
+		
+		/**
+		 * @protected 
+		 */		
+		protected function storeNodeAt(node:INode, index:int):int
+		{
+			if(!this._nodes) this._nodes=new Array();
+			if(index>=0&&index<this._size) this._nodes.splice(index, 0, node);
+			else this._nodes.push(node);
+			this._size++;
+			
 			return size;
 		}
 		

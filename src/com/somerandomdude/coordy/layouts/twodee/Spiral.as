@@ -33,8 +33,9 @@ THE SOFTWARE.
 package com.somerandomdude.coordy.layouts.twodee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.constants.PathAlignType;
-	import com.somerandomdude.coordy.nodes.twodee.INode2d;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
 	import com.somerandomdude.coordy.nodes.INode;
+	import com.somerandomdude.coordy.nodes.twodee.INode2d;
 	import com.somerandomdude.coordy.nodes.twodee.Node2d;
 	
 	import flash.display.*;
@@ -125,10 +126,10 @@ package com.somerandomdude.coordy.layouts.twodee {
 		 * 
 		 */		
 		public function Spiral(circumference:Number,
+								spiralConstant:Number=.15,
 								x:Number=0, 
 								y:Number=0, 
 								angleDelta:Number=30,
-								spiralConstant:Number=.15,
 								rotation:Number=0, 
 								jitterX:Number=0, 
 								jitterY:Number=0, 
@@ -157,7 +158,31 @@ package com.somerandomdude.coordy.layouts.twodee {
 		override public function toString():String { return LayoutType.ELLIPSE; }
 		
 		/**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)) return null;
+			var node:Node2d = new Node2d(object,0,0,((Math.random()>.5)?-1:1)*Math.random(),((Math.random()>.5)?-1:1)*Math.random());
+			this.storeNode(node);
+			
+			this.update();
+			
+			if(object&&moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}
+		
+		/**
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
@@ -169,11 +194,13 @@ package com.somerandomdude.coordy.layouts.twodee {
 			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
 			if(linkExists(object)) return null;
 			var node:Node2d = new Node2d(object,0,0,((Math.random()>.5)?-1:1)*Math.random(),((Math.random()>.5)?-1:1)*Math.random());
-			this.addNode(node);
+			this.storeNode(node);
 			
 			this.update();
 			
 			if(moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}

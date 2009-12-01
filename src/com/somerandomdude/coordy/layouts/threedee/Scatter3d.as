@@ -32,13 +32,9 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
-	import com.somerandomdude.coordy.helpers.SimpleZSorter;
-	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.ScatterNode3d;
-	
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 
 	public class Scatter3d extends Layout3d implements ILayout3d
 	{
@@ -111,9 +107,41 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * 
 		 */
 		override public function toString():String { return LayoutType.SCATTER_3D; }
+		
+		/**
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)) return null;
+			var p:int = (Math.round(Math.random())) ? -1:1;
+			var xPos:Number = (((Math.random()*_width*_jitter))*p)+_x;
+			p = (Math.round(Math.random())) ? -1:1;
+			var yPos:Number = (((Math.random()*_height*_jitter))*p)+_y;
+			p = (Math.round(Math.random())) ? -1:1;
+			var zPos:Number = (((Math.random()*_depth*_jitter))*p)+_z;
+			var node:ScatterNode3d = new ScatterNode3d(object,xPos,yPos,zPos,(_jitterRotation)?(Math.random()*p*360):0, (_jitterRotation)?(Math.random()*p*360):0, (_jitterRotation)?(Math.random()*p*360):0);
+			node.xRelation=(node.x-this._width/2)/this._width/2;
+			node.yRelation=(node.y-this._height/2)/this._height/2;
+			node.zRelation=(node.z-this._depth/2)/this._depth/2;
+			
+			this.storeNode(node);
+			
+			if(object&&moveToCoordinates) object.x=node.x,object.y=node.y, object.z=node.z;
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}
 			
 		/**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to organizer
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding cell's coordinates
@@ -125,19 +153,21 @@ package com.somerandomdude.coordy.layouts.threedee {
 			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
 			if(linkExists(object)) return null;
 			var p:int = (Math.round(Math.random())) ? -1:1;
-			var xPos:Number = (_width/2+((Math.random()*_width*_jitter)/2)*p)+_x;
+			var xPos:Number = (((Math.random()*_width*_jitter))*p)+_x;
 			p = (Math.round(Math.random())) ? -1:1;
-			var yPos:Number = (_height/2+((Math.random()*_height*_jitter)/2)*p)+_y;
+			var yPos:Number = (((Math.random()*_height*_jitter))*p)+_y;
 			p = (Math.round(Math.random())) ? -1:1;
-			var zPos:Number = (_depth/2+((Math.random()*_depth*_jitter)/2)*p)+_z;
-			var node:ScatterNode3d = new ScatterNode3d(object,xPos,yPos,zPos,(_jitterRotation)?(Math.random()*p*360):0);
+			var zPos:Number = (((Math.random()*_depth*_jitter))*p)+_z;
+			var node:ScatterNode3d = new ScatterNode3d(object,xPos,yPos,zPos,(_jitterRotation)?(Math.random()*p*360):0, (_jitterRotation)?(Math.random()*p*360):0, (_jitterRotation)?(Math.random()*p*360):0);
 			node.xRelation=(node.x-this._width/2)/this._width/2;
 			node.yRelation=(node.y-this._height/2)/this._height/2;
 			node.zRelation=(node.z-this._depth/2)/this._depth/2;
 			
-			this.addNode(node);
+			this.storeNode(node);
 			
 			if(moveToCoordinates) node.link.x=node.x,node.link.y=node.y, node.link.z=node.z;
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}
@@ -151,10 +181,13 @@ package com.somerandomdude.coordy.layouts.threedee {
 		{
 			for(var i:int=0; i<this._size; i++)
 			{
+				if(!_nodes[i].link) continue;
 				this._nodes[i].link.x=this._nodes[i].x;
 				this._nodes[i].link.y=this._nodes[i].y;
 				this._nodes[i].link.z=this._nodes[i].z;
-				this._nodes[i].link.rotationX=this._nodes[i].rotation;
+				this._nodes[i].link.rotationX=this._nodes[i].rotationX;
+				this._nodes[i].link.rotationY=this._nodes[i].rotationY;
+				this._nodes[i].link.rotationZ=this._nodes[i].rotationZ;
 			}
 		}
 		
@@ -186,11 +219,11 @@ package com.somerandomdude.coordy.layouts.threedee {
 			for(var i:int=0; i<this._size; i++)
 			{
 				p = (Math.round(Math.random())) ? -1:1;
-				xPos = (_width/2+((Math.random()*_width*_jitter)/2)*p)+_x;
+				xPos = (((Math.random()*_width*_jitter))*p)+_x;
 				p = (Math.round(Math.random())) ? -1:1;
-				yPos = (_height/2+((Math.random()*_height*_jitter)/2)*p)+_y;
+				yPos = (((Math.random()*_height*_jitter))*p)+_y;
 				p = (Math.round(Math.random())) ? -1:1;
-				zPos = (_depth/2+((Math.random()*_depth*_jitter)/2)*p)+_z;
+				zPos = (((Math.random()*_depth*_jitter))*p)+_z;
 				
 				this._nodes[i].x=xPos;
 				this._nodes[i].y=yPos;

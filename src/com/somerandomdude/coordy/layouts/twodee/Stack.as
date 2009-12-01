@@ -32,12 +32,12 @@ THE SOFTWARE.
 package com.somerandomdude.coordy.layouts.twodee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.constants.StackOrder;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
+	import com.somerandomdude.coordy.layouts.IOrderedLayout;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.twodee.OrderedNode;
-	
-	import flash.display.DisplayObjectContainer;
 
-	public class Stack extends Layout2d implements ILayout2d
+	public class Stack extends Layout2d implements ILayout2d, IOrderedLayout
 	{
 		private var _offset:Number;
 		private var _angle:Number;
@@ -125,9 +125,36 @@ package com.somerandomdude.coordy.layouts.twodee {
 		 * 
 		 */
 		override public function toString():String { return LayoutType.STACK; }
+		
+		/**
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)) return null;
+			var node:OrderedNode = new OrderedNode(object, this._size);
+			
+			
+			this.storeNode(node);
+			this.cleanOrder();
+			
+			this.update();
+			
+			if(object&&moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}
 			
 		 /**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
@@ -138,15 +165,17 @@ package com.somerandomdude.coordy.layouts.twodee {
 		{
 			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
 			if(linkExists(object)) return null;
-			if(!_nodes) _nodes = new Array();
 			var node:OrderedNode = new OrderedNode(object, this._size);
-			this.cleanOrder();
 			
-			this.addNode(node);
+			
+			this.storeNode(node);
+			this.cleanOrder();
 			
 			this.update();
 			
 			if(moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}
@@ -155,24 +184,25 @@ package com.somerandomdude.coordy.layouts.twodee {
 		 * Adds object to layout in the specified order within the layout
 		 *
 		 * @param  object  Object to add to layout
-		 * @param  order   Order in which the DisplayObject is put in the layout
+		 * @param  index   Index at which the DisplayObject is put in the layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
 		 * 
 		 * @return newly created node object containing a link to the object
 		 */	
-		public function addToLayoutAt(object:Object, order:int, moveToCoordinates:Boolean=true):INode
+		public function addToLayoutAt(object:Object, index:int, moveToCoordinates:Boolean=true):INode
 		{
 			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "rotation"');
 			if(linkExists(object)) return null;
 			if(!_nodes) _nodes = new Array;
-			var node:OrderedNode = new OrderedNode(object,order,0,0);
+			var node:OrderedNode = new OrderedNode(object,index,0,0);
 			
-			if(order>=0&&order<this._size) this._nodes.splice(order, 0, node);
-			else this._nodes.push(node);
+			storeNodeAt(node, index);
 			this.cleanOrder();
 			this.update();
 			
 			if(moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}
@@ -197,7 +227,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 			if(!this._nodes) return;
 			
 			this.cleanOrder();
-			this.setDepths();
+			
 			var rad:Number = this._angle*Math.PI/180;
 			if(this._order==StackOrder.ASCENDING) this._nodes.sortOn("order", Array.NUMERIC|Array.DESCENDING);
 			
@@ -208,16 +238,6 @@ package com.somerandomdude.coordy.layouts.twodee {
 				node.x=this._x+(Math.cos(rad)*_offset*i)+(node.jitterX*this._jitterX);
 				node.y=this._y+(Math.sin(rad)*_offset*i)+(node.jitterY*this._jitterY);
 			}
-		}
-		
-		/**
-		 * Sets the depths of the target's children to reflect the order of the stack
-		 * 
-		 */		
-		public function setDepths():void
-		{
-			this._nodes.sortOn('order');
-			if(this._order==StackOrder.ASCENDING) _nodes.reverse();
 		}
 		
 		/**

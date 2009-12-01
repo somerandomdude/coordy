@@ -54,7 +54,9 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("Cl
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol">&nbsp;</td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
 <a class="signatureLink" href="#AutoAddToLayoutBehavior()">AutoAddToLayoutBehavior</a>(target:DisplayObjectContainer, layout:<a href="../layouts/ILayout.html">ILayout</a>)</div>
-<div class="summaryTableDescription"></div>
+<div class="summaryTableDescription">
+   Allows for DisplayObjects to be automatically added/removed from a layout when they are added/removed 
+   from a DisplayObjectContainer's display list.</div>
 </td><td class="summaryTableOwnerCol">AutoAddToLayoutBehavior</td>
 </tr>
 </table>
@@ -73,16 +75,23 @@ showHideInherited();
 </tr>
 </table>
 <div class="detailBody">
-<code>public function AutoAddToLayoutBehavior(target:DisplayObjectContainer, layout:<a href="../layouts/ILayout.html">ILayout</a>)</code><span class="label">Parameters</span>
+<code>public function AutoAddToLayoutBehavior(target:DisplayObjectContainer, layout:<a href="../layouts/ILayout.html">ILayout</a>)</code><p>
+   Allows for DisplayObjects to be automatically added/removed from a layout when they are added/removed 
+   from a DisplayObjectContainer's display list.
+   
+   </p><span class="label">Parameters</span>
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
-<td width="20px"></td><td><code><span class="label">target</span>:DisplayObjectContainer</code></td>
+<td width="20px"></td><td><code><span class="label">target</span>:DisplayObjectContainer</code> &mdash;   DisplayObjectContainer to monitor for children being added/removed
+   </td>
 </tr>
 <tr>
 <td class="paramSpacer">&nbsp;</td>
 </tr>
 <tr>
-<td width="20px"></td><td><code><span class="label">layout</span>:<a href="../layouts/ILayout.html">ILayout</a></code></td>
+<td width="20px"></td><td><code><span class="label">layout</span>:<a href="../layouts/ILayout.html">ILayout</a></code> &mdash;   The layout to add/remove nodes from
+   
+   </td>
 </tr>
 </table>
 </div>

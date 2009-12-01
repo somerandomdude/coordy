@@ -34,13 +34,10 @@ package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.constants.WaveFunction;
-	import com.somerandomdude.coordy.helpers.SimpleZSorter;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
+	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
 	import com.somerandomdude.coordy.nodes.threedee.Node3d;
-	import com.somerandomdude.coordy.nodes.INode;
-	
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 
 	public class Wave3d extends Layout3d implements ILayout3d
 	{
@@ -263,7 +260,31 @@ package com.somerandomdude.coordy.layouts.threedee {
 		override public function toString():String { return LayoutType.WAVE_3D; }
 		
 		/**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)) return null;
+			var node:Node3d = new Node3d(object,0,0,0,((Math.random()>.5)?-1:1)*Math.random(),((Math.random()>.5)?-1:1)*Math.random(),((Math.random()>.5)?-1:1)*Math.random());
+			this.storeNode(node as INode3d);
+			this.update();
+			
+			if(object&&moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}
+		
+		
+		/**
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
@@ -276,10 +297,12 @@ package com.somerandomdude.coordy.layouts.threedee {
 			if(linkExists(object)) return null;
 			
 			var node:Node3d = new Node3d(object,0,0,0,((Math.random()>.5)?-1:1)*Math.random(),((Math.random()>.5)?-1:1)*Math.random(),((Math.random()>.5)?-1:1)*Math.random());
-			this.addNode(node as INode3d);
+			this.storeNode(node as INode3d);
 			this.update();
 			
 			if(moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}
@@ -313,13 +336,10 @@ package com.somerandomdude.coordy.layouts.threedee {
 				//in future, add option to align wave to center or top by adding height/2 to all nodes' y property
 				
 				c.z = ((_functionZ((Math.PI*(i+1)/(this._size/2)+r)*_frequency)*((this._depth+(_depthMultiplier*i))/2)))+_z+(c.jitterZ*this._jitterZ);
-			
-				var angle:Number = Math.atan2(c.y-_y, c.z-_z);
-				c.rotationX=180-angle*180/PI;
 				
-				angle = Math.atan2(c.x-_x, c.y-_y);
-				
-				c.rotationZ=180-angle*180/PI;
+				if(_functionY==Math.sin) c.rotationZ = Math.cos(PI*(i+1)/(_size/2)*_frequency)*180/PI;
+				else if(_functionY==Math.cos) c.rotationZ = Math.sin(PI*(i+1)/(_size/2)*_frequency)*180/PI;
+				else c.rotationZ = 0;
 				
 				if(this._alignType==PathAlignType.ALIGN_PERPENDICULAR) c.rotationZ+=90; 
 				c.rotationZ+=this._alignAngleOffset;
@@ -336,13 +356,13 @@ package com.somerandomdude.coordy.layouts.threedee {
 			for(var i:int=0; i<this._size; i++)
 			{
 				c=this._nodes[i];
+				if(!c.link) continue;
 				c.link.x=c.x;
 				c.link.y=c.y;
 				c.link.z=c.z;
 				
 				if(this._alignType==PathAlignType.NONE) continue;
 				
-				c.link.rotationX=c.rotationX;
 				c.link.rotationZ=c.rotationZ;
 			}
 		}

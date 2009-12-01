@@ -1,24 +1,23 @@
-package
+package conceptsbasic
 {
 	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.layouts.twodee.Wave;
 	
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	
 	public class UpdateLayoutProperties extends Sprite
 	{
+		public static const SIZE:int=100;
+		public static const LAYOUT_WIDTH:Number=750;
+		public static const LAYOUT_HEIGHT:Number=350;
 		private var _wave:Wave;
-		private var _caption:Text;
 		
 		public function UpdateLayoutProperties()
 		{
-			stage.scaleMode=StageScaleMode.NO_SCALE;
-			stage.align=StageAlign.TOP_LEFT;
-			init();
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
 		
 		private function init():void
@@ -27,14 +26,14 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_wave = new Wave(360, 360, 20, 200);
+			_wave = new Wave(LAYOUT_WIDTH-40, LAYOUT_HEIGHT, 20, LAYOUT_HEIGHT/2);
 			
-			var s:Square;
-			for(var i:int=0; i<100; i++)
+			var c:Circle;
+			for(var i:int=0; i<SIZE; i++)
 			{
-				s = new Square();				
-				_wave.addToLayout(s, false);
-				addChild(s);
+				c = new Circle(10);				
+				_wave.addToLayout(c, false);
+				addChild(c);
 			}
 			_wave.updateAndRender();
 			_wave.updateMethod=LayoutUpdateMethod.NONE;
@@ -46,19 +45,18 @@ package
 			_wave.alignType=PathAlignType.ALIGN_PARALLEL;
 			
 			stage.addEventListener(MouseEvent.CLICK, clickHandler);
-			
-			_caption = new Text();
-			_caption.text='A basic example of changing a layout\'s properties. Click anywhere to tween the layout randomly';
-			_caption.y=400;
-			addChild(_caption);
+
 		}
 		
 		private function updateLayout():void
 		{
-			var x:Number=Math.random()*50;
-			var y:Number=Math.random()*50 +125;
-			var width:Number=200+Math.random()*200;
+			
+			var width:Number=500+Math.random()*200;
 			var height:Number=200+Math.random()*200;
+			
+			var x:Number=(LAYOUT_WIDTH-width)/2;
+			var y:Number=(LAYOUT_HEIGHT/2)+(Math.random()*50*((Math.random()>.5)?1:-1));
+			
 			var frequency:Number=Math.random()*5;
 			
 			/*
@@ -81,45 +79,27 @@ package
 		{
 			updateLayout();
 		}
+		
+		private function addedToStageHandler(event:Event):void
+		{
+			init();
+		}
 
 	}
 }
 
-import flash.display.Shape;
-import flash.text.TextField;
-import flash.text.engine.Kerning;
-import flash.text.AntiAliasType;
-import flash.text.TextFormat;
-import flash.text.TextFieldAutoSize;
+import flash.display.Shape;	
 
-internal class Square extends Shape
+internal class Circle extends Shape
 {
-	public function Square():void
+	public function Circle(radius:Number)
 	{
-		graphics.lineStyle(1);
-		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(-10, -10, 20, 20);
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.beginFill(0xded3d1, .75);
+		graphics.drawCircle(0, 0, radius);
 		graphics.endFill();
-	}
-}
-
-internal class Text extends TextField
-{
-	private var _format:TextFormat;
-	
-	public function Text()
-	{
-		_format = new TextFormat();
-		_format.font='Arial';
-		_format.size=11;
-		_format.kerning=Kerning.ON;
-	
-		textColor=0x333333;
-		antiAliasType=AntiAliasType.ADVANCED;
-		wordWrap=true;
-		multiline=true;
-		autoSize=TextFieldAutoSize.LEFT;
-		width=400;
-		defaultTextFormat=_format;
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.moveTo(0,0);
+		graphics.lineTo(0, radius);
 	}
 }

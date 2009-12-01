@@ -35,14 +35,11 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
 	import com.somerandomdude.coordy.helpers.Distribute;
 	import com.somerandomdude.coordy.helpers.Vertex;
-	import com.somerandomdude.coordy.nodes.threedee.INode3d;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.Node3d;
-
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 
 	public class Spheroid3d extends Layout3d implements ILayout3d
 	{
@@ -182,7 +179,30 @@ package com.somerandomdude.coordy.layouts.threedee {
 		override public function toString():String { return LayoutType.SPHEROID_3D; }
 		
 		/**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)) return null;
+			var node:Node3d = new Node3d(object,0,0,0,Math.random()*((Math.random()>.5?1:-1)), Math.random()*((Math.random()>.5?1:-1)), Math.random()*((Math.random()>.5?1:-1)));
+			this.storeNode(node);
+			
+			if(object&&moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}
+		
+		
+		/**
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
@@ -194,9 +214,11 @@ package com.somerandomdude.coordy.layouts.threedee {
 			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
 			if(linkExists(object)) return null;
 			var node:Node3d = new Node3d(object,0,0,0,Math.random()*((Math.random()>.5?1:-1)), Math.random()*((Math.random()>.5?1:-1)), Math.random()*((Math.random()>.5?1:-1)));
-			this.addNode(node);
+			this.storeNode(node);
 			
 			if(moveToCoordinates) this.render();
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}
@@ -240,7 +262,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 			{
 				
 				var c:Node3d = this._nodes[i];
-				
+				if(!_verts||!_verts[i]) continue;
 				c.x=(this._verts[i].x*this._width/2);
 				c.y=(this._verts[i].y*this._height/2);
 				c.z=(this._verts[i].z*this._depth/2);

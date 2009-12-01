@@ -32,12 +32,9 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutType;
-	import com.somerandomdude.coordy.nodes.threedee.GridNode3d;
-	import com.somerandomdude.coordy.nodes.threedee.INode3d;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
 	import com.somerandomdude.coordy.nodes.INode;
-
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
+	import com.somerandomdude.coordy.nodes.threedee.GridNode3d;
 
 	public class Grid3d extends Layout3d implements ILayout3d
 	{
@@ -45,9 +42,10 @@ package com.somerandomdude.coordy.layouts.threedee {
 		private var _rows:uint;
 		private var _columns:uint;
 		private var _layers:uint;
-		private var _hPadding:uint=0;
-		private var _yPadding:uint=0;
-		private var _zPadding:uint=0;
+		private var _hPadding:Number=0;
+		private var _yPadding:Number=0;
+		private var _zPadding:Number=0;
+		private var _maxNodes:int;
 		
 		/**
 		 * Accessor for columns property
@@ -181,6 +179,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 			this._rows=rows;
 			this._columns=columns;
 			this._layers=layers;
+			this._maxNodes=_rows*_columns*_layers;
 			this._hPadding=paddingX;
 			this._yPadding=paddingY;
 			this._zPadding=paddingZ;
@@ -190,7 +189,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 			this._jitterX=jitterX;
 			this._jitterY=jitterY;
 			this._jitterZ=jitterZ;
-			this.initGrid();
 		}
 		
 		/**
@@ -257,34 +255,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		}
 		
 		/**
-		 * Adds node link of object at specified grid coordinates
-		 *
-		 * @param  object  Object to add to layout 
-		 * @param  column  column index of grid
-		 * @param  row  row index of grid
-		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding cell's coordinates
-		 */
-		 
-		public function addItemAt(object:DisplayObject, column:uint, row:uint, moveToCoordinates:Boolean=true, addToStage:Boolean=true):INode3d
-		{
-			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
-			if(linkExists(object)) return null;
-			var node:GridNode3d = this.getNodeFromCoordinates(column, row);
-			node.link=object;
-			if(moveToCoordinates)
-			{
-				object.x=node.x;
-				object.y=node.y;
-			}
-			if(addToStage)
-			{
-				this._target.addChild(object);
-			}
-			
-			return node;
-		}
-		
-		/**
 		 * Returns node at specified grid coordinates
 		 *
 		 * @param  column  column index of grid
@@ -297,7 +267,38 @@ package com.somerandomdude.coordy.layouts.threedee {
 		}
 		
 		/**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)||_size>=_maxNodes) return null;
+		
+			var w:Number=(_width-((_columns-1)*_hPadding))/_columns;
+			var h:Number=(_height-((_rows-1)*_yPadding))/_rows;
+			var d:Number=(_depth-((_layers-1)*_zPadding))/_layers;
+			
+			var c:int = _size%_columns;
+			var r:int = Math.floor(_size/(_rows))%_rows;
+			var l:int = Math.floor(_size/(_rows*_columns));
+				
+			var node:GridNode3d = new GridNode3d(object,c,r,l,((w*c)+(c*_hPadding)+_x),((h*r)+(r*_yPadding)+_y),((d*l)+(l*_zPadding)+_z));
+			storeNode(node);
+			
+			if(object&&moveToCoordinates) object.x=node.x, object.y=node.y, object.z=node.z;
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}
+		
+		/**
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
@@ -307,12 +308,21 @@ package com.somerandomdude.coordy.layouts.threedee {
 		override public function addToLayout(object:Object, moveToCoordinates:Boolean=true):INode
 		{
 			if(!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
-			if(linkExists(object)) return null;
-			var node:GridNode3d=this.getNextAvailableNode() as GridNode3d;
-			if(!node) return null;
+			if(object&&linkExists(object)||_size>=_maxNodes) return null;
+		
+			var w:Number=(_width-((_columns-1)*_hPadding))/_columns;
+			var h:Number=(_height-((_rows-1)*_yPadding))/_rows;
+			var d:Number=(_depth-((_layers-1)*_zPadding))/_layers;
 			
-			node.link=object;
+			var c:int = _size%_columns;
+			var r:int = Math.floor(_size/(_rows))%_rows;
+			var l:int = Math.floor(_size/(_rows*_columns));
+				
+			var node:GridNode3d = new GridNode3d(object,c,r,l,((w*c)+(c*_hPadding)+_x),((h*r)+(r*_yPadding)+_y),((d*l)+(l*_zPadding)+_z));
+			storeNode(node);
 			if(moveToCoordinates) object.x=node.x, object.y=node.y, object.z=node.z;
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 		}
@@ -344,7 +354,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 			var r:int;
 			var l:int;
 			var node:GridNode3d;
-			for(var i:int=0; i<total; i++)
+			for(var i:int=0; i<_size; i++)
 			{
 				node = this._nodes[i];
 				
@@ -356,33 +366,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 				node.y = ((_h*r)+(r*_yPadding)+_y)+(node.jitterY*this._jitterY);
 				node.z = ((_d*l)+(l*_zPadding)+_z)+(node.jitterZ*this._jitterZ);
 				
-			}
-		}
-		
-		/**
-		* @private
-		*/
-		private function initGrid():void
-		{
-			this.clearNodes();
-			
-			var _w:Number=(_width-((_columns-1)*_hPadding))/_columns;
-			var _h:Number=(_height-((_rows-1)*_yPadding))/_rows;
-			var _d:Number=(_depth-((_layers-1)*_zPadding))/_layers;
-			
-			var total:uint = _columns*_rows*_layers;
-			var c:uint;
-			var r:uint;
-			var l:uint;
-			
-			for(var i:int=0; i<total; i++)
-			{
-				c = i%_columns;
-				r = Math.floor(i/(_rows))%_rows;
-				l = Math.floor(i/(_rows*_columns));
-				
-				var node:GridNode3d = new GridNode3d(null,c,r,l,((_w*c)+(c*_hPadding)+_x),((_h*r)+(r*_yPadding)+_y),((_d*l)+(l*_zPadding)+_z));
-				this.addNode(node);
 			}
 		}
 	}

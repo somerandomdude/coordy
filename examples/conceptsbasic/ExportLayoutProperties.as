@@ -1,27 +1,24 @@
-package
+package conceptsbasic
 {
 	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.constants.PathAlignType;
 	import com.somerandomdude.coordy.layouts.twodee.Ellipse;
 	
 	import flash.display.Sprite;
-	import flash.display.StageAlign;
-	import flash.display.StageScaleMode;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
-	import flash.text.TextField;
-	import flash.text.TextFormat;
 	
 	public class ExportLayoutProperties extends Sprite
 	{
+		public static const SIZE:int=20;
+		public static const LAYOUT_WIDTH:Number=750;
+		public static const LAYOUT_HEIGHT:Number=350;
 		private var _ellipse:Ellipse;
-		private var _caption:Text;
 		private var _output:Output;
 		
 		public function ExportLayoutProperties()
 		{
-			stage.scaleMode=StageScaleMode.NO_SCALE;
-			stage.align=StageAlign.TOP_LEFT;
-			init();
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
 		}
 		
 		private function init():void
@@ -30,14 +27,14 @@ package
 			* For explanations on basic setup and adding items to the layout, refer to the
 			* 'AddChildren' and/or 'AddToLayout' example clases.
 			*/
-			_ellipse = new Ellipse(200, 200, 100, 100);
+			_ellipse = new Ellipse(200, 200, 120, 120);
 			
-			var s:Square;
-			for(var i:int=0; i<20; i++)
+			var c:Circle;
+			for(var i:int=0; i<SIZE; i++)
 			{
-				s = new Square();				
-				_ellipse.addToLayout(s, false);
-				addChild(s);
+				c = new Circle(10);				
+				_ellipse.addNode(c, false);
+				addChild(c);
 			}
 			_ellipse.updateAndRender();
 			_ellipse.updateMethod=LayoutUpdateMethod.NONE;
@@ -49,16 +46,11 @@ package
 			_ellipse.alignType=PathAlignType.ALIGN_PARALLEL;
 			
 			stage.addEventListener(MouseEvent.CLICK, clickHandler);
-			
-			_caption = new Text();
-			_caption.text='An example of data exporting for a layout\'s properties (in this case JSON format). Data can be exported in XML or JSON format. Click anywhere to update layout.';
-			_caption.y=400;
-			addChild(_caption);
 		
 			_output = new Output();
-			_output.width=200;
-			_output.height=400;
-			_output.x=199;
+			_output.width=300;
+			_output.height=300;
+			_output.x=LAYOUT_WIDTH-320, _output.y=(LAYOUT_HEIGHT-_output.height)/2
 			addChild(_output);
 			
 			/*
@@ -71,10 +63,11 @@ package
 		
 		private function updateLayout():void
 		{
-			var x:Number=100;
-			var y:Number=100;
-			var width:Number=100+Math.random()*100;
-			var height:Number=100+Math.random()*100;
+			var width:Number=100+Math.random()*200;
+			var height:Number=100+Math.random()*200;
+			var x:Number=20+width/2;
+			var y:Number=20+height/2;
+			
 			
 			/*
 			* When updating multiple properties such as the example below, it is best to set the layout's
@@ -97,46 +90,31 @@ package
 			updateLayout();
 			_output.text=_ellipse.toJSON();
 		}
+		
+		private function addedToStageHandler(event:Event):void
+		{
+			init();
+		}
 
 	}
 }
 
-import flash.display.Shape;
+import flash.display.Shape;	
 import flash.text.TextField;
-import flash.text.engine.Kerning;
+import flash.text.TextFormat
 import flash.text.AntiAliasType;
-import flash.text.TextFormat;
-import flash.text.TextFieldAutoSize;
 
-internal class Square extends Shape
+internal class Circle extends Shape
 {
-	public function Square():void
+	public function Circle(radius:Number)
 	{
-		graphics.lineStyle(1);
-		graphics.beginFill(0xffffff, .7);
-		graphics.drawRect(-10, -10, 20, 20);
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.beginFill(0xded3d1, .75);
+		graphics.drawCircle(0, 0, radius);
 		graphics.endFill();
-	}
-}
-
-internal class Text extends TextField
-{
-	private var _format:TextFormat;
-	
-	public function Text()
-	{
-		_format = new TextFormat();
-		_format.font='Arial';
-		_format.size=11;
-		_format.kerning=Kerning.ON;
-	
-		textColor=0x333333;
-		antiAliasType=AntiAliasType.ADVANCED;
-		wordWrap=true;
-		multiline=true;
-		autoSize=TextFieldAutoSize.LEFT;
-		width=400;
-		defaultTextFormat=_format;
+		graphics.lineStyle(1, 0x5d504f);
+		graphics.moveTo(0,0);
+		graphics.lineTo(0, radius);
 	}
 }
 

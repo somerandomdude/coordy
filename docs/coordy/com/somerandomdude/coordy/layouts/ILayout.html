@@ -38,7 +38,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <td class="classHeaderTableLabel">Interface</td><td class="classSignature">public interface ILayout extends <a href="ICoreLayout.html">ICoreLayout</a></td>
 </tr>
 <tr>
-<td class="classHeaderTableLabel">Subinterfaces</td><td><a href="twodee/ILayout2d.html">ILayout2d</a>, <a href="threedee/ILayout3d.html">ILayout3d</a></td>
+<td class="classHeaderTableLabel">Subinterfaces</td><td><a href="twodee/ILayout2d.html">ILayout2d</a>, <a href="threedee/ILayout3d.html">ILayout3d</a>, <a href="../layouts/IOrderedLayout.html">IOrderedLayout</a></td>
 </tr>
 </table>
 <p></p>
@@ -98,7 +98,22 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="ICoreLayout.html#addLinkAt()">addLinkAt</a>(object:DisplayObject, index:uint):void</div>
+<a class="signatureLink" href="ICoreLayout.html#addLinkAt()">addLinkAt</a>(object:Object, index:uint):void</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="ICoreLayout.html">ICoreLayout</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="ICoreLayout.html#addNode()">addNode</a>(object:Object = null, moveToCoordinates:Boolean = true):<a href="../nodes/INode.html">INode</a>
+</div>
+<div class="summaryTableDescription"></div>
+</td><td class="summaryTableOwnerCol"><a href="ICoreLayout.html">ICoreLayout</a></td>
+</tr>
+<tr class="hideInheritedMethod">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<a class="signatureLink" href="ICoreLayout.html#addNodes()">addNodes</a>(count:int):void</div>
 <div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="ICoreLayout.html">ICoreLayout</a></td>
 </tr>
@@ -128,7 +143,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="ICoreLayout.html#getNodeByLink()">getNodeByLink</a>(link:DisplayObject):<a href="../nodes/INode.html">INode</a>
+<a class="signatureLink" href="ICoreLayout.html#getNodeByLink()">getNodeByLink</a>(link:Object):<a href="../nodes/INode.html">INode</a>
 </div>
 <div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="ICoreLayout.html">ICoreLayout</a></td>
@@ -164,7 +179,7 @@ if (!isEclipse() || window.name != ECLIPSE_FRAME_NAME) {titleBar_setSubTitle("In
 <tr class="hideInheritedMethod">
 <td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableInheritanceCol"><img class="inheritedSummaryImage" title="Inherited" alt="Inherited" src="../../../../images/inheritedSummary.gif"></td><td class="summaryTableSignatureCol">
 <div class="summarySignature">
-<a class="signatureLink" href="ICoreLayout.html#removeNodeByLink()">removeNodeByLink</a>(object:DisplayObject):void</div>
+<a class="signatureLink" href="ICoreLayout.html#removeNodeByLink()">removeNodeByLink</a>(object:Object):void</div>
 <div class="summaryTableDescription"></div>
 </td><td class="summaryTableOwnerCol"><a href="ICoreLayout.html">ICoreLayout</a></td>
 </tr>

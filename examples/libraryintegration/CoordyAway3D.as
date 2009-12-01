@@ -1,4 +1,5 @@
-package {
+package libraryintegration
+{
 	import away3d.containers.*;
 	import away3d.core.base.*;
 	import away3d.primitives.*;
@@ -11,6 +12,8 @@ package {
 	
 	public class CoordyAway3D extends Sprite
 	{
+		public static const SIZE:int=100;
+		
 		private var _view:View3D;
 		private var _wave:Wave3d;
 		private var _angle:Number=0;
@@ -20,7 +23,12 @@ package {
 		
 		public function CoordyAway3D()
 		{
-			_view = new View3D({x:300, y:200});
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+		}
+		
+		private function init():void
+		{
+			_view = new View3D({x:350, y:200});
 			addChild(_view);
 			
 			_plane = new Plane({material:"yellow#", name:"plane", y:-100, width:1000, height:1000, pushback:true});
@@ -32,24 +40,29 @@ package {
 			_view.camera.moveBackward(1500);
 			_view.camera.moveUp(1700);
 			
-			_wave = new Wave3d(700, 700, 300);
+			_wave = new Wave3d(1400, 700, 700);
 			_wave.updateMethod=LayoutUpdateMethod.NONE;
-			_wave.x=-350
+			_wave.x=-700
 		
 			var cube:Object3D;
-			for(var i:int=0; i<90; i++)
+			for(var i:int=0; i<SIZE; i++)
 			{
-				cube = new Cube({material:"red#", name:"cube", x: -10, y:-10, z: -10, width:20, height:20, depth:20});
+				cube = new Cube({material:0x5d504f, name:"cube", x: -15, y:-15, z: -15, width:30, height:30, depth:30});
 
 				_wave.addToLayout(cube, true);
 				_view.scene.addChild(cube)
 				
 			}
 		
-			this.addEventListener(Event.ENTER_FRAME, onRenderTick);
+			this.addEventListener(Event.ENTER_FRAME, enterFrameHandler);
 		}
 		
-		private function onRenderTick(event:Event=null):void
+		private function addedToStageHandler(event:Event):void
+		{
+			init();
+		}
+		
+		private function enterFrameHandler(event:Event):void
 		{
 			_angle+=2;
 			_angle2+=1;
@@ -66,7 +79,7 @@ package {
 			_wave.jitterX=Math.cos(_angle*Math.PI/180)*90;
 			_wave.jitterY=Math.cos(_angle*Math.PI/180)*90;
 			_wave.jitterZ=Math.cos(_angle*Math.PI/180)*90;
-			_wave.frequency=1.5+Math.sin(_angle*Math.PI/180)*.25;
+			_wave.frequency=2+Math.sin(_angle*Math.PI/180);
 			
 			_wave.updateAndRender();
 			_view.render();

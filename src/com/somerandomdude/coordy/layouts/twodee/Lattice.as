@@ -34,12 +34,9 @@ package com.somerandomdude.coordy.layouts.twodee {
 	import com.somerandomdude.coordy.constants.LatticeOrder;
 	import com.somerandomdude.coordy.constants.LatticeType;
 	import com.somerandomdude.coordy.constants.LayoutType;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.twodee.GridNode;
-	import com.somerandomdude.coordy.nodes.twodee.INode2d;
-
-	import flash.display.DisplayObject;
-	import flash.display.DisplayObjectContainer;
 
 	public class Lattice extends Layout2d implements ILayout2d
 	{
@@ -270,7 +267,39 @@ package com.somerandomdude.coordy.layouts.twodee {
 		override public function toString():String { return LayoutType.LATTICE; }
 		
 		/**
-		 * Adds object to layout in next available position
+		 * Adds object to layout in next available position.
+		 *
+		 * @param  object  Object to add to layout
+		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding nodes's coordinates
+		 * 
+		 * @return newly created node object containing a link to the object
+		 */
+		override public function addNode(object:Object=null, moveToCoordinates:Boolean=true):INode
+		{
+			if(object&&!validateObject(object)) throw new Error('Object does not implement at least one of the following properties: "x", "y", "z", "rotationX", "rotationY", "rotationZ"');
+			if(object&&linkExists(object)) return null;
+			if(!_allowOverflow&&size>=_maxCells) return null;
+			
+			var c:uint = (_order==LatticeOrder.ORDER_VERTICALLY) ? (size)%_columns:(size)%Math.floor(((size)/_rows));
+			var r:uint = (_order==LatticeOrder.ORDER_VERTICALLY) ? Math.floor((size)/_columns):(size)%_rows;
+			var node:GridNode = new GridNode(object, c,r);
+			
+			this.storeNode(node);
+			this.adjustLattice();
+			this.update();
+			
+			if(object&&moveToCoordinates) this.render();
+			
+			if(_order==LatticeOrder.ORDER_VERTICALLY) this._columns = Math.ceil(this._size/_rows);
+			else if(_order==LatticeOrder.ORDER_HORIZONTALLY) this._rows = Math.ceil(this._size/_columns);
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
+			
+			return node;
+		}	
+		
+		/**
+		 * Adds object to layout in next available position <strong>This method is depreceated.</strong>
 		 *
 		 * @param  object  Object to add to layout
 		 * @param  moveToCoordinates  automatically move DisplayObject to corresponding node's coordinates
@@ -288,7 +317,7 @@ package com.somerandomdude.coordy.layouts.twodee {
 			var node:GridNode = new GridNode(object, c,r);
 			node.link=object;
 
-			this.addNode(node);
+			this.storeNode(node);
 			this.adjustLattice();
 			this.update();
 			
@@ -296,6 +325,8 @@ package com.somerandomdude.coordy.layouts.twodee {
 			
 			if(_order==LatticeOrder.ORDER_VERTICALLY) this._columns = Math.ceil(this._size/_rows);
 			else if(_order==LatticeOrder.ORDER_HORIZONTALLY) this._rows = Math.ceil(this._size/_columns);
+			
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.ADD, node));
 			
 			return node;
 			

@@ -32,17 +32,14 @@ THE SOFTWARE.
  */
 package com.somerandomdude.coordy.layouts.threedee {
 	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
+	import com.somerandomdude.coordy.events.CoordyNodeEvent;
 	import com.somerandomdude.coordy.layouts.Layout;
 	import com.somerandomdude.coordy.nodes.INode;
 	import com.somerandomdude.coordy.nodes.threedee.INode3d;
 	import com.somerandomdude.coordy.proxyupdaters.IProxyUpdater;
-	
-	import flash.display.DisplayObjectContainer;
 
 	public class Layout3d extends Layout implements ILayout3d
 	{
-		protected var _target:DisplayObjectContainer;
-		
 		protected var _x:Number;
 		protected var _y:Number;
 		protected var _z:Number;
@@ -75,13 +72,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 			this._updateMethod=value.name;
 			this._updateFunction=value.update;
 		}
-		
-		/**
-		 * Accessor for layout target
-		 *
-		 * @return	Display target of layout organizer   
-		 */
-		public function get target():DisplayObjectContainer { return _target; }
 		
 		/**
 		 * Specifies whether layout properties (x, y, width, height, etc.) adjust the layout 
@@ -243,9 +233,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		 * Core class for all 3D layouts. Cannot be instantiated as is - use child classes.
 		 * 
 		 */		
-		public function Layout3d()
-		{
-		}
+		public function Layout3d() {}
 		
 		/**
 		 * Adds object to layout in next available position. <strong>Note</strong> - This method is to be 
@@ -263,21 +251,6 @@ package com.somerandomdude.coordy.layouts.threedee {
 		}
 		
 		/**
-		 * Adds all children currently present in the target of the layout
-		 * 
-		 * @param moveToCoordinates
-		 * 
-		 */		
-		public function addChildren(moveToCoordinates:Boolean=true):void
-		{
-			removeAllNodes();
-			for(var i:int=0; i<_target.numChildren; i++)
-			{
-				this.addToLayout(_target.getChildAt(i), moveToCoordinates);
-			}
-		}
-		
-		/**
 		 * Removes specified cell and its link from layout organizer and adjusts layout appropriately
 		 *
 		 * @param  cell  cell object to remove
@@ -286,6 +259,7 @@ package com.somerandomdude.coordy.layouts.threedee {
 		{
 			super.removeNode(node);
 			this._updateFunction();
+			dispatchEvent(new CoordyNodeEvent(CoordyNodeEvent.REMOVE, node));
 		}
 		
 		/**

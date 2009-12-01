@@ -50,6 +50,12 @@ package com.somerandomdude.coordy.layouts.threedee {
 		function get height():Number;
 		function set depth(value:Number):void;
 		function get depth():Number;
+		function set jitterX(value:Number):void;
+		function get jitterX():Number;
+		function set jitterY(value:Number):void;
+		function get jitterY():Number;
+		function set jitterZ(value:Number):void;
+		function get jitterZ():Number;
 		
 		function renderNode(node:INode3d):void;
 		

@@ -30,47 +30,51 @@ THE SOFTWARE.
  * @description
  * @url 
  */
- 
- package com.somerandomdude.coordy.proxyupdaters
+package com.somerandomdude.coordy.proxyupdaters
 {
-	import com.somerandomdude.coordy.helpers.SimpleZSorter;
-	import com.somerandomdude.coordy.layouts.threedee.ILayout3d;
+	import com.somerandomdude.coordy.constants.StackOrder;
+	import com.somerandomdude.coordy.layouts.IOrderedLayout;
+	import com.somerandomdude.coordy.nodes.twodee.OrderedNode;
 	
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
-	import flash.events.Event;
 	
-	public class InvalidationZSortUpdaterProxy implements IProxyUpdater
+	public class OrderSortProxyUpdater implements IProxyUpdater
 	{
-		public static const NAME:String='invalidationUpdaterProxy';
-		private var _target:DisplayObjectContainer;
-		private var _layout:ILayout3d;
-		
-		public function InvalidationZSortUpdaterProxy(target:DisplayObjectContainer, layout:ILayout3d)
-		{
-			_target=target;
-			_layout=layout;
-			
-			_layout.proxyUpdater=this;
-		}
+		public static const NAME:String='orderSortUpdaterProxy';
 		
 		public function get name():String { return NAME; }
 		
-		public function update():void
+		private var _target:DisplayObjectContainer;
+		private var _layout:IOrderedLayout;
+		
+		
+		/**
+		 * Modifies a layout's update method to set the child index of a DisplayObjectContainer's children according
+		 * to the order of nodes in the specified layout 
+		 * 
+		 * @param target 		DisplayObjectContainer containing the items to stack
+		 * @param layout 		The layout containing references to the target's children
+		 * 
+		 */
+		public function OrderSortProxyUpdater(target:DisplayObjectContainer, layout:IOrderedLayout)
 		{
-			if(!_target.stage) 
-			{
-				_layout.update();
-				return;
-			}
-			_target.stage.addEventListener(Event.RENDER, renderHandler);
-			_target.stage.invalidate();
+			_target=target;
+			_layout=layout;
 		}
 		
-		private function renderHandler(event:Event):void
+		public function update():void
 		{
-			_target.stage.removeEventListener(Event.RENDER, renderHandler);
-			_layout.updateAndRender();			
-			SimpleZSorter.sortLayout(_target, _layout);
+			if(!_layout.size) return;
+			_layout.nodes.sortOn("order", Array.NUMERIC);
+			if(_layout.order==StackOrder.DESCENDING) _layout.nodes.reverse();
+			var n:OrderedNode;
+			for(var i:int=0; i<_layout.size; i++)
+			{
+				n=_layout.nodes[i];
+				if(!n.link||!n.link is DisplayObject) continue;
+				_target.setChildIndex(_layout.nodes[i].link, i);
+			}
 		}
 
 	}

@@ -1,4 +1,5 @@
-package {
+package libraryintegration
+{
 	import com.somerandomdude.coordy.constants.LayoutUpdateMethod;
 	import com.somerandomdude.coordy.layouts.threedee.Wave3d;
 	
@@ -13,8 +14,10 @@ package {
 	import org.papervision3d.scenes.Scene3D;
 	import org.papervision3d.view.BasicView;
 
-	public class CoordyPapervision extends BasicView
+	public class CoordyPapervision3D extends BasicView
 	{
+		public static const SIZE:int=100;
+		
 		private var _scene3d:Scene3D;
 		private var _camera3d:Camera3D;
 		private var _wave:Wave3d;
@@ -23,15 +26,21 @@ package {
 		private var _angle3:Number=0;
 		private var _container:DisplayObject3D;
 		
-		public function CoordyPapervision()
+		public function CoordyPapervision3D()
 		{
-			_container = new DisplayObject3D();
 			super(0, 0, true, true, "Target");
-			_wave = new Wave3d(700, 700, 300);
-			_wave.updateMethod=LayoutUpdateMethod.NONE;
-			_wave.x=-350
+			addEventListener(Event.ADDED_TO_STAGE, addedToStageHandler);
+		}
+		
+		private function init():void
+		{			
+			_container = new DisplayObject3D();
 			
-			var flatShadeMaterial:FlatShadeMaterial =new FlatShadeMaterial(new PointLight3D(), 0xFFFFFF, 0xff1e00);
+			_wave = new Wave3d(1400, 400, 400);
+			_wave.updateMethod=LayoutUpdateMethod.NONE;
+			_wave.x=-700
+			
+			var flatShadeMaterial:FlatShadeMaterial =new FlatShadeMaterial(new PointLight3D(), 0xFFFFFF, 0x5d504f);
  
 			var materialsList:MaterialsList = new MaterialsList();
 			materialsList.addMaterial(flatShadeMaterial, "all");
@@ -39,7 +48,7 @@ package {
 			var cube:Cube;		
 			
 			scene.addChild(_container);
-			for(var i:int=0; i<90; i++)
+			for(var i:int=0; i<SIZE; i++)
 			{
 				cube = new Cube(materialsList, 20, 20, 20);
 				_wave.addToLayout(cube, true);
@@ -47,12 +56,16 @@ package {
 				
 			}
 
-			camera.x = camera.y = camera.z = 600;
+			camera.x = camera.y = camera.z = 800;
 			camera.focus = 400;
-			camera.zoom = 2;
+			camera.zoom = 1.4;
 			
 			startRendering();
-			
+		}
+		
+		private function addedToStageHandler(event:Event):void
+		{
+			init();
 		}
 		
 		override protected function onRenderTick(event:Event=null):void
@@ -67,8 +80,11 @@ package {
 			_container.rotationY-=1;
 			_container.rotationZ+=1;
 			_wave.rotation=Math.cos(_angle3*Math.PI/180)*360;
+			_wave.width=1000+Math.sin(_angle2*Math.PI/180)*400;
 			_wave.height=400+Math.sin(_angle2*Math.PI/180)*160;
 			_wave.depth=400+Math.sin(_angle2*Math.PI/180)*160;
+			_wave.heightMultiplier=Math.sin(_angle2*Math.PI/180)*6;
+			_wave.x=-(_wave.width/2);
 			
 			_wave.jitterX=Math.cos(_angle*Math.PI/180)*90;
 			_wave.jitterY=Math.cos(_angle*Math.PI/180)*90;
